@@ -14,11 +14,9 @@
 		050FCC242A1C91E200270F97 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 050FCC232A1C91E200270F97 /* Preview Assets.xcassets */; };
 		05388A932A83798700C8A69A /* CalendarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05388A922A83798700C8A69A /* CalendarViewModel.swift */; };
 		05477D082A7577BD00C16F4A /* View+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05477D072A7577BD00C16F4A /* View+Extensions.swift */; };
-		05477D2B2A758E6A00C16F4A /* ToDoListItemView2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05477D2A2A758E6A00C16F4A /* ToDoListItemView2.swift */; };
 		05477D2D2A77ED7400C16F4A /* ToDoItemDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05477D2C2A77ED7400C16F4A /* ToDoItemDetailView.swift */; };
 		05477D2F2A77ED8000C16F4A /* ToDoItemDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05477D2E2A77ED8000C16F4A /* ToDoItemDetailViewModel.swift */; };
 		05477D312A77F47500C16F4A /* ToDoViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05477D302A77F47500C16F4A /* ToDoViewFactory.swift */; };
-		05477D332A77FEE500C16F4A /* ToDoItemAddView2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05477D322A77FEE500C16F4A /* ToDoItemAddView2.swift */; };
 		05477D352A7A85BF00C16F4A /* LocationSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05477D342A7A85BF00C16F4A /* LocationSelectionView.swift */; };
 		05477D382A7C16A100C16F4A /* LocationModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 05477D362A7C16A100C16F4A /* LocationModel.xcdatamodeld */; };
 		05477D3A2A7C172600C16F4A /* LocationCoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05477D392A7C172600C16F4A /* LocationCoreDataManager.swift */; };
@@ -72,11 +70,9 @@
 		050FCC232A1C91E200270F97 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		05388A922A83798700C8A69A /* CalendarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewModel.swift; sourceTree = "<group>"; };
 		05477D072A7577BD00C16F4A /* View+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extensions.swift"; sourceTree = "<group>"; };
-		05477D2A2A758E6A00C16F4A /* ToDoListItemView2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoListItemView2.swift; sourceTree = "<group>"; };
 		05477D2C2A77ED7400C16F4A /* ToDoItemDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoItemDetailView.swift; sourceTree = "<group>"; };
 		05477D2E2A77ED8000C16F4A /* ToDoItemDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoItemDetailViewModel.swift; sourceTree = "<group>"; };
 		05477D302A77F47500C16F4A /* ToDoViewFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoViewFactory.swift; sourceTree = "<group>"; };
-		05477D322A77FEE500C16F4A /* ToDoItemAddView2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoItemAddView2.swift; sourceTree = "<group>"; };
 		05477D342A7A85BF00C16F4A /* LocationSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSelectionView.swift; sourceTree = "<group>"; };
 		05477D372A7C16A100C16F4A /* LocationModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = LocationModel.xcdatamodel; sourceTree = "<group>"; };
 		05477D392A7C172600C16F4A /* LocationCoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationCoreDataManager.swift; sourceTree = "<group>"; };
@@ -284,9 +280,7 @@
 			children = (
 				05733A892A51A42E00DF3B78 /* ToDoListView.swift */,
 				0500E9492A482D7700A3F338 /* ToDoListItemView.swift */,
-				05477D2A2A758E6A00C16F4A /* ToDoListItemView2.swift */,
 				058B7CA82A55C495005C07BD /* ToDoItemAddView.swift */,
-				05477D322A77FEE500C16F4A /* ToDoItemAddView2.swift */,
 				05477D2C2A77ED7400C16F4A /* ToDoItemDetailView.swift */,
 				05477D342A7A85BF00C16F4A /* LocationSelectionView.swift */,
 				05477D452A7C3A7F00C16F4A /* LocationSearchView.swift */,
@@ -388,7 +382,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				05477D482A7C3B4100C16F4A /* LocationCheckView.swift in Sources */,
-				05477D2B2A758E6A00C16F4A /* ToDoListItemView2.swift in Sources */,
 				0500E94A2A482D7700A3F338 /* ToDoListItemView.swift in Sources */,
 				05477D412A7C220D00C16F4A /* Location+Extensions.swift in Sources */,
 				056B2B502A5FC8AC00D52CFF /* ToDoModel.xcdatamodeld in Sources */,
@@ -398,7 +391,6 @@
 				05477D4F2A8222AB00C16F4A /* CalendarView.swift in Sources */,
 				056B2B522A5FC9D600D52CFF /* ToDoCoreDataManager.swift in Sources */,
 				05477D382A7C16A100C16F4A /* LocationModel.xcdatamodeld in Sources */,
-				05477D332A77FEE500C16F4A /* ToDoItemAddView2.swift in Sources */,
 				05F233BB2A2AF3D10091D5B3 /* LocationService.swift in Sources */,
 				05EEE1042A8551C7007AD5F7 /* UITextViewWrapper.swift in Sources */,
 				05477D082A7577BD00C16F4A /* View+Extensions.swift in Sources */,
