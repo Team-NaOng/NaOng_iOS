@@ -26,11 +26,12 @@ class CalendarViewModel: NSObject, ObservableObject, NSFetchedResultsControllerD
     }
     
     func deleteItems(offsets: IndexSet) {
-        offsets.map { toDoItems[$0] }.forEach(viewContext.delete)
-        do {
-            try viewContext.save()
-        } catch {
-            print(error)
+        offsets.map { toDoItems[$0] }.forEach { todo in
+            do {
+                try todo.delete(viewContext: viewContext)
+            } catch {
+                print(error)
+            }
         }
     }
 

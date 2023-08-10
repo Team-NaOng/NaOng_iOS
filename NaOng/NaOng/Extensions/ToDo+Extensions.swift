@@ -9,8 +9,4 @@ import CoreData
 
 extension ToDo: CoreDataBaseProtocol {
     typealias ManagedObject = ToDo
-
-    static var viewContext: NSManagedObjectContext {
-        ToDoCoreDataManager.shared.persistentContainer.viewContext
-    }
 }

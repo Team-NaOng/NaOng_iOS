@@ -57,7 +57,7 @@ struct ToDoListView: View {
                     } else {
                         List {
                             ForEach($toDoListViewModel.toDoItems) { item in
-                                let viewModel = ToDoListItemViewModel(toDoItem: item.wrappedValue)
+                                let viewModel = ToDoListItemViewModel(toDoItem: item.wrappedValue, viewContext: viewContext)
                                 ToDoListItemView(toDoListItemViewModel: viewModel)
                                     .listRowSeparator(.hidden)
                                     .listRowInsets(.init(top: 0, leading: 0, bottom: 0, trailing: 0))

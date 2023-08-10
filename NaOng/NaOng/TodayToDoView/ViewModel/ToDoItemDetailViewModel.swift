@@ -34,7 +34,7 @@ class ToDoItemDetailViewModel: ObservableObject {
             toDoItem.alarmTime = alarmTime
             toDoItem.isRepeat = isRepeat
             
-            try toDoItem.save()
+            try toDoItem.save(viewContext: viewContext)
         } catch {
             print("error!")
         }

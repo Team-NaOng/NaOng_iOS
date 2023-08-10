@@ -13,9 +13,11 @@ class ToDoListItemViewModel: ObservableObject {
     @Published var backgroundColor: String = "white"
     
     private(set) var toDoItem: ToDo
+    private let viewContext: NSManagedObjectContext
 
-    init(toDoItem: ToDo) {
+    init(toDoItem: ToDo, viewContext: NSManagedObjectContext) {
         self.toDoItem = toDoItem
+        self.viewContext = viewContext
 
         setMarkerName()
         setBackgroundColor()
@@ -27,7 +29,7 @@ class ToDoListItemViewModel: ObservableObject {
             let isDone = currentToDoItem.isDone ? false : true
             currentToDoItem.isDone = isDone
             
-            try currentToDoItem.save()
+            try currentToDoItem.save(viewContext: viewContext)
         } catch {
             print("error!")
         }

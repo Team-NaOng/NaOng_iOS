@@ -10,25 +10,23 @@ import CoreData
 protocol CoreDataBaseProtocol {
     associatedtype ManagedObject: NSManagedObject
     
-    static var viewContext: NSManagedObjectContext { get }
-    
-    func save() throws
-//    func delete() throws
+    func save(viewContext: NSManagedObjectContext) throws
+    func delete(viewContext: NSManagedObjectContext) throws
     static func all() -> NSFetchRequest<ManagedObject>?
 }
 
 extension CoreDataBaseProtocol {
-    func save() throws {
-        try Self.viewContext.save()
+    func save(viewContext: NSManagedObjectContext) throws {
+        try viewContext.save()
     }
-//
-//    func delete() throws {
-//        guard let managedObject = self as? NSManagedObject else {
-//            throw CoreDataError.invalidManagedObject
-//        }
-//        Self.viewContext.delete(managedObject)
-//        try save()
-//    }
+
+    func delete(viewContext: NSManagedObjectContext) throws {
+        guard let managedObject = self as? NSManagedObject else {
+            throw CoreDataError.invalidManagedObject
+        }
+        viewContext.delete(managedObject)
+        try save(viewContext: viewContext)
+    }
     
     static func all() -> NSFetchRequest<ManagedObject>? {
         let request = fetchRequest(ManagedObject.self)
