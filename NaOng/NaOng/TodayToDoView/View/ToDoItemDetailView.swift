@@ -9,7 +9,6 @@ import SwiftUI
 
 struct ToDoItemDetailView: View {
     @Environment(\.presentationMode) var presentationMode
-    @Environment(\.managedObjectContext) var managedObjectContext
     
     @ObservedObject private var toDoItemDetailViewModel: ToDoItemDetailViewModel
     
@@ -25,14 +24,7 @@ struct ToDoItemDetailView: View {
                     text: $toDoItemDetailViewModel.content),
                 height: 200
             )
-            
-            ToDoViewFactory.makeToDoMoldView(
-                content: ToDoViewFactory.makeToDoDatePicker(
-                    selection: $toDoItemDetailViewModel.alarmTime,
-                    title: "진행 날짜",
-                    displayedComponent: .date)
-            )
-            
+
             ToDoViewFactory.makeToDoMoldView(
                 content: ToDoViewFactory.makeToDoToggle(
                     isOn: $toDoItemDetailViewModel.isRepeat,
@@ -45,12 +37,21 @@ struct ToDoItemDetailView: View {
                     selection: $toDoItemDetailViewModel.alarmType)
             )
             
-            ToDoViewFactory.makeToDoMoldView(
-                content: ToDoViewFactory.makeAlarmTimeView(
-                    selection: $toDoItemDetailViewModel.alarmTime,
-                    title: "알림 시간",
-                    displayedComponent: .hourAndMinute)
-            )
+            if toDoItemDetailViewModel.alarmType == "위치" {
+                ToDoViewFactory.makeToDoMoldView(
+                    content: ToDoViewFactory.makeAlarmLocationView(
+                        title: "알림 위치",
+                        selectedLocation: "도로명 주소 수정하기",
+                        destination: LocationSelectionView(locationSelectionViewModel: LocationSelectionViewModel(viewContext: Location.viewContext)))
+                )
+            } else {
+                ToDoViewFactory.makeToDoMoldView(
+                    content: ToDoViewFactory.makeAlarmTimeView(
+                        selection: $toDoItemDetailViewModel.alarmTime,
+                        title: "알림 시간",
+                        displayedComponent: [.hourAndMinute, .date])
+                )
+            }
             
             Spacer()
         }
@@ -65,6 +66,9 @@ struct ToDoItemDetailView: View {
                 })
                 .frame(width: 50, height: 50)
         )
+        .onAppear {
+            toDoItemDetailViewModel.setUpToDoFormData()
+        }
     }
 }
 

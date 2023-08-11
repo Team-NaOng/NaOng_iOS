@@ -9,10 +9,10 @@ import Foundation
 import CoreData
 
 class ToDoItemDetailViewModel: ObservableObject {
-    @Published var content: String
-    @Published var alarmType: String
-    @Published var alarmTime: Date
-    @Published var isRepeat: Bool
+    @Published var content: String = ""
+    @Published var alarmType: String = ""
+    @Published var alarmTime: Date = Date()
+    @Published var isRepeat: Bool = false
     
     private var toDoItem: ToDo
     private let viewContext: NSManagedObjectContext
@@ -20,11 +20,7 @@ class ToDoItemDetailViewModel: ObservableObject {
     init(viewContext: NSManagedObjectContext, toDoItem: ToDo) {
         self.viewContext = viewContext
         self.toDoItem = toDoItem
-        
-        self.content = self.toDoItem.content ?? ""
-        self.alarmType = self.toDoItem.alarmType ?? "위치"
-        self.alarmTime = self.toDoItem.alarmTime ?? Date()
-        self.isRepeat = self.toDoItem.isRepeat
+        self.setUpToDoFormData()
     }
     
     func EditToDo() {
@@ -38,5 +34,12 @@ class ToDoItemDetailViewModel: ObservableObject {
         } catch {
             print("error!")
         }
+    }
+    
+    func setUpToDoFormData() {
+        self.content = self.toDoItem.content ?? ""
+        self.alarmType = self.toDoItem.alarmType ?? "위치"
+        self.alarmTime = self.toDoItem.alarmTime ?? Date()
+        self.isRepeat = self.toDoItem.isRepeat
     }
 }
