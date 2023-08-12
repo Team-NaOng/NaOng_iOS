@@ -22,7 +22,8 @@ struct ToDoListView: View {
                     Spacer()
                     
                     NavigationLink {
-                        NotificationSettingView()
+                        let notificationListViewModel = NotificationListViewModel(viewContext: viewContext)
+                        NotificationListView(notificationListViewModel: notificationListViewModel)
                     } label: {
                         Image(systemName: "bell")
                     }

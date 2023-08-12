@@ -12,6 +12,9 @@
 		050FCC1F2A1C91E100270F97 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050FCC1E2A1C91E100270F97 /* ContentView.swift */; };
 		050FCC212A1C91E200270F97 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 050FCC202A1C91E200270F97 /* Assets.xcassets */; };
 		050FCC242A1C91E200270F97 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 050FCC232A1C91E200270F97 /* Preview Assets.xcassets */; };
+		05173EA42A87728A00CDF988 /* NotificationListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05173EA32A87728A00CDF988 /* NotificationListView.swift */; };
+		05173EA62A8772B300CDF988 /* NotificationListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05173EA52A8772B300CDF988 /* NotificationListViewModel.swift */; };
+		05173EA82A880E6C00CDF988 /* NotificationListItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05173EA72A880E6C00CDF988 /* NotificationListItemView.swift */; };
 		05388A932A83798700C8A69A /* CalendarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05388A922A83798700C8A69A /* CalendarViewModel.swift */; };
 		05477D082A7577BD00C16F4A /* View+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05477D072A7577BD00C16F4A /* View+Extensions.swift */; };
 		05477D2D2A77ED7400C16F4A /* ToDoItemDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05477D2C2A77ED7400C16F4A /* ToDoItemDetailView.swift */; };
@@ -68,6 +71,9 @@
 		050FCC1E2A1C91E100270F97 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		050FCC202A1C91E200270F97 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		050FCC232A1C91E200270F97 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		05173EA32A87728A00CDF988 /* NotificationListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationListView.swift; sourceTree = "<group>"; };
+		05173EA52A8772B300CDF988 /* NotificationListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationListViewModel.swift; sourceTree = "<group>"; };
+		05173EA72A880E6C00CDF988 /* NotificationListItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationListItemView.swift; sourceTree = "<group>"; };
 		05388A922A83798700C8A69A /* CalendarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewModel.swift; sourceTree = "<group>"; };
 		05477D072A7577BD00C16F4A /* View+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extensions.swift"; sourceTree = "<group>"; };
 		05477D2C2A77ED7400C16F4A /* ToDoItemDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoItemDetailView.swift; sourceTree = "<group>"; };
@@ -271,6 +277,7 @@
 				05CD8E992A57631B00C1C187 /* ToDoItemAddViewModel.swift */,
 				05477D2E2A77ED8000C16F4A /* ToDoItemDetailViewModel.swift */,
 				05477D3B2A7C177000C16F4A /* LocationSelectionViewModel.swift */,
+				05173EA52A8772B300CDF988 /* NotificationListViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -285,6 +292,8 @@
 				05477D342A7A85BF00C16F4A /* LocationSelectionView.swift */,
 				05477D452A7C3A7F00C16F4A /* LocationSearchView.swift */,
 				05477D472A7C3B4100C16F4A /* LocationCheckView.swift */,
+				05173EA32A87728A00CDF988 /* NotificationListView.swift */,
+				05173EA72A880E6C00CDF988 /* NotificationListItemView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -386,6 +395,7 @@
 				05477D412A7C220D00C16F4A /* Location+Extensions.swift in Sources */,
 				056B2B502A5FC8AC00D52CFF /* ToDoModel.xcdatamodeld in Sources */,
 				05477D3C2A7C177000C16F4A /* LocationSelectionViewModel.swift in Sources */,
+				05173EA62A8772B300CDF988 /* NotificationListViewModel.swift in Sources */,
 				056B2B762A64158000D52CFF /* ToDo+Extensions.swift in Sources */,
 				05D69E432A696AD30074C84A /* SettingView.swift in Sources */,
 				05477D4F2A8222AB00C16F4A /* CalendarView.swift in Sources */,
@@ -397,6 +407,7 @@
 				0549F2D12A38613B002B1248 /* LocationFetcher.swift in Sources */,
 				05477D2F2A77ED8000C16F4A /* ToDoItemDetailViewModel.swift in Sources */,
 				05477D442A7C228100C16F4A /* CoreDataBaseProtocol.swift in Sources */,
+				05173EA82A880E6C00CDF988 /* NotificationListItemView.swift in Sources */,
 				05CCE8B32A51A6BE0037FF74 /* ToDoListViewModel.swift in Sources */,
 				056B2B732A640F9F00D52CFF /* ToDoListItemViewModel.swift in Sources */,
 				05D69E452A69791F0074C84A /* NotificationSettingView.swift in Sources */,
@@ -409,6 +420,7 @@
 				05EEE1062A856098007AD5F7 /* UITextView+Extensions.swift in Sources */,
 				05477D3A2A7C172600C16F4A /* LocationCoreDataManager.swift in Sources */,
 				05477D4B2A7F690500C16F4A /* NotificationManager.swift in Sources */,
+				05173EA42A87728A00CDF988 /* NotificationListView.swift in Sources */,
 				05388A932A83798700C8A69A /* CalendarViewModel.swift in Sources */,
 				05477D3F2A7C1B7900C16F4A /* CoreDataError.swift in Sources */,
 				050FCC1D2A1C91E100270F97 /* NaOngApp.swift in Sources */,

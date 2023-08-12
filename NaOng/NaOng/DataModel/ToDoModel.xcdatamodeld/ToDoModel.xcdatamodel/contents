@@ -9,6 +9,7 @@
         <attribute name="content" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="isDone" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="isNotificationRemove" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="isRepeat" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
     </entity>
 </model>
