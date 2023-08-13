@@ -7,22 +7,33 @@
 
 import SwiftUI
 import CoreData
+import Combine
 
 struct ContentView: View {
-    /*
-     해야할 일을 적어둔 다이어리가 살아 움직인다?!
-     "내 이름 나옹.
-     내가 너의 할일을 알려줄께!"
-     */
-    
     @Environment(\.managedObjectContext) var managedObjectContext
+    @EnvironmentObject var localNotificationManager: LocalNotificationManager
     
     var body: some View {
         let viewContext = ToDoCoreDataManager.shared.persistentContainer.viewContext
-        ToDoListView(toDoListViewModel: ToDoListViewModel(viewContext: viewContext))
+        let toDoListViewModel = ToDoListViewModel(viewContext: viewContext, localNotificationManager: localNotificationManager)
+        
+        ToDoListView(toDoListViewModel: toDoListViewModel)
             .preferredColorScheme(.light)
-            .task {
+            .onAppear {
                 //LocationService.shared.loadLocation()
+                NotificationCenter.default.addObserver(
+                    forName: UIApplication.didBecomeActiveNotification,
+                    object: nil,
+                    queue: nil) { _ in
+                        localNotificationManager.sendDeliveredEvent()
+                    }
+                let name = Notification.Name("removeAllDeliveredNotifications")
+                NotificationCenter.default.addObserver(
+                    forName: name,
+                    object: nil,
+                    queue: nil) { _ in
+                        localNotificationManager.sendRemovedEvent()
+                    }
             }
     }
 }

@@ -23,9 +23,9 @@ class ToDoItemAddViewModel: ObservableObject {
     func addToDo() {
         do {
             let toDoItem = ToDo(context: viewContext)
-            toDoItem.id = UUID()
+            toDoItem.id = UUID().uuidString
             toDoItem.isDone = false
-            toDoItem.isNotificationRemove = false
+            toDoItem.isNotificationVisible = true
             toDoItem.content = content
             toDoItem.alarmType = alarmType
             toDoItem.alarmTime = alarmTime
@@ -33,6 +33,8 @@ class ToDoItemAddViewModel: ObservableObject {
             
             toDoItem.alarmDate = alarmTime.getFormatDate()
 
+            
+            print("👻\(toDoItem.id)")
             try toDoItem.save(viewContext: viewContext)
             scheduleNotification(for: toDoItem)
         } catch {
@@ -42,9 +44,9 @@ class ToDoItemAddViewModel: ObservableObject {
     
     private func scheduleNotification(for toDoItem: ToDo) {
         if toDoItem.alarmType == "위치" {
-            NotificationManager.shared.setLocalNotification(toDo: toDoItem)
+            LocalNotificationManager().setLocalNotification(toDo: toDoItem)
         } else {
-            NotificationManager.shared.setCalendarNotification(toDo: toDoItem)
+            LocalNotificationManager().setCalendarNotification(toDo: toDoItem)
         }
     }
 }

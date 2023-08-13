@@ -22,13 +22,13 @@ struct ToDoListView: View {
                     Spacer()
                     
                     NavigationLink {
-                        let notificationListViewModel = NotificationListViewModel(viewContext: viewContext)
+                        let localNotificationManager = LocalNotificationManager()
+                        let notificationListViewModel = NotificationListViewModel(viewContext: viewContext, localNotificationManager: localNotificationManager)
                         NotificationListView(notificationListViewModel: notificationListViewModel)
                     } label: {
-                        Image(systemName: "bell")
+                        Image(systemName: toDoListViewModel.notificationButtonName)
                     }
                     .buttonStyle(.plain)
-                    
                     
                     NavigationLink {
                         SettingView()
@@ -103,13 +103,17 @@ struct ToDoListView: View {
                 Image("backgroundPinkImage")
             )
         }
+        .onAppear {
+            toDoListViewModel.bind()
+        }
     }
 }
 
 struct ToDoListView_Previews: PreviewProvider {
     static var previews: some View {
+        let localNotificationManager = LocalNotificationManager()
         let viewContext = ToDoCoreDataManager.shared.persistentContainer.viewContext
-        let toDoListViewModel = ToDoListViewModel(viewContext: viewContext)
+        let toDoListViewModel = ToDoListViewModel(viewContext: viewContext, localNotificationManager: localNotificationManager)
         ToDoListView(toDoListViewModel: toDoListViewModel)
     }
 }

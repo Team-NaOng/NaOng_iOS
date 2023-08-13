@@ -12,16 +12,26 @@ import CoreData
 @MainActor
 class NotificationListViewModel: NSObject, ObservableObject, NSFetchedResultsControllerDelegate {
     private(set) var groupedToDoItems: [String : [ToDo]] = [:]
+
     private var fetchedResultsController: NSFetchedResultsController<ToDo> = NSFetchedResultsController()
     private let viewContext: NSManagedObjectContext
+    private let localNotificationManager: LocalNotificationManager
     
-    init(viewContext: NSManagedObjectContext) {
+    init(viewContext: NSManagedObjectContext, localNotificationManager: LocalNotificationManager) {
         self.viewContext = viewContext
+        self.localNotificationManager = localNotificationManager
         
         super.init()
         fetchedResultsController.delegate = self
 
         self.fetchGroupedToDoItems()
+    }
+    
+    func clearDeliveredNotification() {
+        localNotificationManager.removeAllDeliveredNotification()
+        localNotificationManager.clearBadgeNumber()
+        localNotificationManager.postRemovedEvent()
+        
     }
     
     func fetchGroupedToDoItems() {
@@ -31,7 +41,7 @@ class NotificationListViewModel: NSObject, ObservableObject, NSFetchedResultsCon
     
     private func fetchTodoItems() -> [ToDo] {
         let fetchRequest: NSFetchRequest<ToDo> = ToDo.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "alarmTime <= %@ AND isNotificationRemove == %@", argumentArray: [Date(), false])
+        fetchRequest.predicate = NSPredicate(format: "alarmTime <= %@ AND isNotificationVisible == %@", argumentArray: [Date(), false])
         
         let sortDescriptor = NSSortDescriptor(keyPath: \ToDo.alarmTime, ascending: true)
         fetchRequest.sortDescriptors = [sortDescriptor]

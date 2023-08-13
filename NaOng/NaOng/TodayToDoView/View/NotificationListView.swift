@@ -34,13 +34,21 @@ struct NotificationListView: View {
         .onAppear {
             notificationListViewModel.fetchGroupedToDoItems()
         }
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button("모두 읽음 표시") {
+                    notificationListViewModel.clearDeliveredNotification()
+                }
+            }
+        }
     }
 }
 
 struct NotificationListView_Previews: PreviewProvider {
     static var previews: some View {
         let viewContext = ToDoCoreDataManager.shared.persistentContainer.viewContext
-        let vm = NotificationListViewModel(viewContext: viewContext)
+        let localNotificationManager = LocalNotificationManager()
+        let vm = NotificationListViewModel(viewContext: viewContext, localNotificationManager: localNotificationManager)
         NotificationListView(notificationListViewModel: vm)
     }
 }

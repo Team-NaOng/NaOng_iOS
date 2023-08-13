@@ -12,14 +12,15 @@ struct NaOngApp: App {
     var body: some Scene {
         WindowGroup {
             let viewContext = ToDoCoreDataManager.shared.persistentContainer.viewContext
+            let localNotificationManager = LocalNotificationManager()
             ContentView()
                 .environment(\.managedObjectContext, viewContext)
+                .environmentObject(localNotificationManager)
                 .onAppear {
-                    NotificationManager.shared.requestAuthorization()
+                    localNotificationManager.requestAuthorization()
+                    UNUserNotificationCenter.current().delegate = localNotificationManager
+                    UserDefaults.standard.set(0, forKey: "badgeUserDefaultsKey")
                 }
-//            let vm = CalendarViewModel(viewContext: viewContext)
-//            CalendarView(calendarViewModel: vm)
-//                .environment(\.managedObjectContext, viewContext)
         }
     }
 }
