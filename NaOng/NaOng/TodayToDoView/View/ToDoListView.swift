@@ -64,7 +64,7 @@ struct ToDoListView: View {
                                     .listRowInsets(.init(top: 0, leading: 0, bottom: 0, trailing: 0))
                                     .overlay {
                                         NavigationLink {
-                                            let toDoItemDetailViewModel = ToDoItemDetailViewModel(viewContext: viewContext, toDoItem: item.wrappedValue)
+                                            let toDoItemDetailViewModel = ToDoItemDetailViewModel(viewContext: viewContext, toDoItem: item.wrappedValue, localNotificationManager: LocalNotificationManager())
                                             ToDoItemDetailView(toDoItemDetailViewModel: toDoItemDetailViewModel)
                                         } label: {
                                             EmptyView()

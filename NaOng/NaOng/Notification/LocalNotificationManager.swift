@@ -43,9 +43,8 @@ class LocalNotificationManager: NSObject, ObservableObject {
         }
     }
     
-    func setCalendarNotification(toDo:ToDo) {
-        increaseBadgeNumber()
-        let content = getNotificationContent(subtitle: toDo.content, badge: getBadgeNumber() as NSNumber)
+    func setCalendarNotification(toDo:ToDo, badge: NSNumber? = nil) {
+        let content = getNotificationContent(subtitle: toDo.content, badge: unwrapBadgeNumber(badge:badge))
         
         guard let date = toDo.alarmTime else {
             return
@@ -63,7 +62,7 @@ class LocalNotificationManager: NSObject, ObservableObject {
             content: content,
             trigger: trigger)
     }
-    
+
     func setLocalNotification(toDo:ToDo) {
         increaseBadgeNumber()
         let content = getNotificationContent(subtitle: toDo.content, badge: getBadgeNumber() as NSNumber)
@@ -81,6 +80,26 @@ class LocalNotificationManager: NSObject, ObservableObject {
             trigger: trigger)
     }
     
+    func editLocalNotification(toDo:ToDo) {
+        guard let id = toDo.id else {
+            return
+        }
+        
+        UNUserNotificationCenter.current().getPendingNotificationRequests {
+            [weak self] notificationRequests in
+            let requests = notificationRequests.filter {
+                $0.identifier == id
+            }
+            
+            self?.removePendingNotificationNotification(id: id)
+            
+            if let request = requests.first {
+                let badge = request.content.badge ?? 0
+                self?.setCalendarNotification(toDo:toDo, badge: badge)
+            }
+        }
+    }
+    
     func removeAllDeliveredNotification() {
         UNUserNotificationCenter.current().removeAllDeliveredNotifications()
         clearBadgeNumber()
@@ -88,10 +107,11 @@ class LocalNotificationManager: NSObject, ObservableObject {
     
     func removePendingNotificationNotification(id: String) {
         UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [id])
-        decreaseBadgeNumber()
     }
     
     func changeBadgeNumberInPendingNotificationRequest() {
+        decreaseBadgeNumber()
+
         UNUserNotificationCenter.current().getPendingNotificationRequests { notificationRequests in
             let badgeNumber = notificationRequests.count
             UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
@@ -126,6 +146,15 @@ class LocalNotificationManager: NSObject, ObservableObject {
 
     private func getBadgeNumber() -> Int {
         return UserDefaults.standard.integer(forKey: "badgeUserDefaultsKey")
+    }
+    
+    private func unwrapBadgeNumber(badge: NSNumber?) -> NSNumber {
+        guard let newBadge = badge else {
+            increaseBadgeNumber()
+            return getBadgeNumber() as NSNumber
+        }
+        
+        return newBadge
     }
     
     private func changeBadge(number: Int) {

@@ -16,10 +16,12 @@ class ToDoItemDetailViewModel: ObservableObject {
     
     private var toDoItem: ToDo
     private let viewContext: NSManagedObjectContext
+    private let localNotificationManager: LocalNotificationManager
     
-    init(viewContext: NSManagedObjectContext, toDoItem: ToDo) {
+    init(viewContext: NSManagedObjectContext, toDoItem: ToDo, localNotificationManager: LocalNotificationManager) {
         self.viewContext = viewContext
         self.toDoItem = toDoItem
+        self.localNotificationManager = localNotificationManager
         self.setUpToDoFormData()
     }
     
@@ -34,6 +36,8 @@ class ToDoItemDetailViewModel: ObservableObject {
         } catch {
             print("error!")
         }
+        
+        localNotificationManager.editLocalNotification(toDo: toDoItem)
     }
     
     func setUpToDoFormData() {
