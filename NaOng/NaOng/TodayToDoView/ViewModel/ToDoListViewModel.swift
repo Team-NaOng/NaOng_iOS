@@ -104,11 +104,18 @@ class ToDoListViewModel: NSObject, ObservableObject {
 
     func deleteItems(offsets: IndexSet) {
         offsets.map { toDoItems[$0] }.forEach { todo in
+            guard let id = todo.id else {
+                return
+            }
+
             do {
                 try todo.delete(viewContext: viewContext)
             } catch {
                 print(error)
             }
+            
+            localNotificationManager.removePendingNotificationNotification(id: id)
+            localNotificationManager.changeBadgeNumberInPendingNotificationRequest()
         }
     }
 }

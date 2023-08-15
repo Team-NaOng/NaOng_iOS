@@ -29,9 +29,7 @@ class NotificationListViewModel: NSObject, ObservableObject, NSFetchedResultsCon
     
     func clearDeliveredNotification() {
         localNotificationManager.removeAllDeliveredNotification()
-        localNotificationManager.clearBadgeNumber()
         localNotificationManager.postRemovedEvent()
-        
     }
     
     func fetchGroupedToDoItems() {

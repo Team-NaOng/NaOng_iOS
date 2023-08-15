@@ -44,7 +44,8 @@ class LocalNotificationManager: NSObject, ObservableObject {
     }
     
     func setCalendarNotification(toDo:ToDo) {
-        let content = getNotificationContent(subtitle: toDo.content)
+        increaseBadgeNumber()
+        let content = getNotificationContent(subtitle: toDo.content, badge: getBadgeNumber() as NSNumber)
         
         guard let date = toDo.alarmTime else {
             return
@@ -64,7 +65,8 @@ class LocalNotificationManager: NSObject, ObservableObject {
     }
     
     func setLocalNotification(toDo:ToDo) {
-        let content = getNotificationContent(subtitle: toDo.content)
+        increaseBadgeNumber()
+        let content = getNotificationContent(subtitle: toDo.content, badge: getBadgeNumber() as NSNumber)
         let region = LocationService.shared.getCircularRegion(
             latitude: toDo.alarmLocationLatitude,
             longitude: toDo.alarmLocationLongitude,
@@ -81,20 +83,34 @@ class LocalNotificationManager: NSObject, ObservableObject {
     
     func removeAllDeliveredNotification() {
         UNUserNotificationCenter.current().removeAllDeliveredNotifications()
+        clearBadgeNumber()
     }
     
-    func removeAllPendingNotificationNotification() {
-        UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
+    func removePendingNotificationNotification(id: String) {
+        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [id])
+        decreaseBadgeNumber()
     }
     
-    private func getNotificationContent(subtitle: String?) -> UNMutableNotificationContent {
+    func changeBadgeNumberInPendingNotificationRequest() {
+        UNUserNotificationCenter.current().getPendingNotificationRequests { notificationRequests in
+            let badgeNumber = notificationRequests.count
+            UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
+            notificationRequests.reversed().enumerated().forEach { [weak self] index, request in
+                let subtitle = request.content.subtitle
+                let badge = (badgeNumber - index) as NSNumber
+                if let content = self?.getNotificationContent(subtitle: subtitle, badge: badge) {
+                    self?.addNotificationCenter(id: request.identifier, content: content, trigger: request.trigger)
+                }
+            }
+        }
+    }
+
+    private func getNotificationContent(subtitle: String?, badge: NSNumber) -> UNMutableNotificationContent {
         let content = UNMutableNotificationContent()
         content.title = "나옹"
         content.subtitle = subtitle ?? "할 일 했나옹?"
         content.sound = .default
-        
-        increaseBadgeNumber()
-        content.badge = (getBadgeNumber()) as NSNumber
+        content.badge = badge
         
         return content
     }
@@ -107,29 +123,33 @@ class LocalNotificationManager: NSObject, ObservableObject {
         
         UNUserNotificationCenter.current().add(request)
     }
-    
-    func increaseBadgeNumber() {
-        var badgeNumber = getBadgeNumber()
-        badgeNumber += 1
-        UserDefaults.standard.set(badgeNumber, forKey: "badgeUserDefaultsKey")
+
+    private func getBadgeNumber() -> Int {
+        return UserDefaults.standard.integer(forKey: "badgeUserDefaultsKey")
     }
     
-    func decreaseBadgeNumber() {
+    private func changeBadge(number: Int) {
+        UserDefaults.standard.set(number, forKey: "badgeUserDefaultsKey")
+    }
+    
+    private func clearBadgeNumber() {
+        changeBadge(number: 0)
+        UIApplication.shared.applicationIconBadgeNumber = getBadgeNumber()
+    }
+
+    private func increaseBadgeNumber() {
+        var badgeNumber = getBadgeNumber()
+        badgeNumber += 1
+        changeBadge(number: badgeNumber)
+    }
+    
+    private func decreaseBadgeNumber() {
         var badgeNumber = getBadgeNumber()
         badgeNumber -= 1
         if badgeNumber < 0 {
             badgeNumber = 0
         }
-        UserDefaults.standard.set(badgeNumber, forKey: "badgeUserDefaultsKey")
-    }
-    
-    func clearBadgeNumber() {
-        UserDefaults.standard.set(0, forKey: "badgeUserDefaultsKey")
-        UIApplication.shared.applicationIconBadgeNumber = getBadgeNumber()
-    }
-
-    func getBadgeNumber() -> Int {
-        return UserDefaults.standard.integer(forKey: "badgeUserDefaultsKey")
+        changeBadge(number: badgeNumber)
     }
 }
 
