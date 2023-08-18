@@ -15,6 +15,8 @@
 		05173EA42A87728A00CDF988 /* NotificationListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05173EA32A87728A00CDF988 /* NotificationListView.swift */; };
 		05173EA62A8772B300CDF988 /* NotificationListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05173EA52A8772B300CDF988 /* NotificationListViewModel.swift */; };
 		05173EA82A880E6C00CDF988 /* NotificationListItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05173EA72A880E6C00CDF988 /* NotificationListItemView.swift */; };
+		0534F99B2A8F9A2B00A90BF7 /* LocalNotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0534F99A2A8F9A2B00A90BF7 /* LocalNotificationManager.swift */; };
+		0534F99D2A8F9AC000A90BF7 /* CustomNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0534F99C2A8F9AC000A90BF7 /* CustomNavigationBar.swift */; };
 		05388A932A83798700C8A69A /* CalendarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05388A922A83798700C8A69A /* CalendarViewModel.swift */; };
 		05477D082A7577BD00C16F4A /* View+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05477D072A7577BD00C16F4A /* View+Extensions.swift */; };
 		05477D2D2A77ED7400C16F4A /* ToDoItemDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05477D2C2A77ED7400C16F4A /* ToDoItemDetailView.swift */; };
@@ -29,7 +31,6 @@
 		05477D442A7C228100C16F4A /* CoreDataBaseProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05477D432A7C228100C16F4A /* CoreDataBaseProtocol.swift */; };
 		05477D462A7C3A7F00C16F4A /* LocationSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05477D452A7C3A7F00C16F4A /* LocationSearchView.swift */; };
 		05477D482A7C3B4100C16F4A /* LocationCheckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05477D472A7C3B4100C16F4A /* LocationCheckView.swift */; };
-		05477D4B2A7F690500C16F4A /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05477D4A2A7F690500C16F4A /* NotificationManager.swift */; };
 		05477D4F2A8222AB00C16F4A /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05477D4E2A8222AB00C16F4A /* CalendarView.swift */; };
 		0549F2D12A38613B002B1248 /* LocationFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0549F2D02A38613B002B1248 /* LocationFetcher.swift */; };
 		056B2B502A5FC8AC00D52CFF /* ToDoModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 056B2B4E2A5FC8AC00D52CFF /* ToDoModel.xcdatamodeld */; };
@@ -74,6 +75,8 @@
 		05173EA32A87728A00CDF988 /* NotificationListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationListView.swift; sourceTree = "<group>"; };
 		05173EA52A8772B300CDF988 /* NotificationListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationListViewModel.swift; sourceTree = "<group>"; };
 		05173EA72A880E6C00CDF988 /* NotificationListItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationListItemView.swift; sourceTree = "<group>"; };
+		0534F99A2A8F9A2B00A90BF7 /* LocalNotificationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalNotificationManager.swift; sourceTree = "<group>"; };
+		0534F99C2A8F9AC000A90BF7 /* CustomNavigationBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomNavigationBar.swift; sourceTree = "<group>"; };
 		05388A922A83798700C8A69A /* CalendarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewModel.swift; sourceTree = "<group>"; };
 		05477D072A7577BD00C16F4A /* View+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extensions.swift"; sourceTree = "<group>"; };
 		05477D2C2A77ED7400C16F4A /* ToDoItemDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoItemDetailView.swift; sourceTree = "<group>"; };
@@ -88,7 +91,6 @@
 		05477D432A7C228100C16F4A /* CoreDataBaseProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataBaseProtocol.swift; sourceTree = "<group>"; };
 		05477D452A7C3A7F00C16F4A /* LocationSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSearchView.swift; sourceTree = "<group>"; };
 		05477D472A7C3B4100C16F4A /* LocationCheckView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationCheckView.swift; sourceTree = "<group>"; };
-		05477D4A2A7F690500C16F4A /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		05477D4E2A8222AB00C16F4A /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		0549F2D02A38613B002B1248 /* LocationFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationFetcher.swift; sourceTree = "<group>"; };
 		056B2B4F2A5FC8AC00D52CFF /* ToDoModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ToDoModel.xcdatamodel; sourceTree = "<group>"; };
@@ -188,7 +190,7 @@
 		05477D492A7F686600C16F4A /* Notification */ = {
 			isa = PBXGroup;
 			children = (
-				05477D4A2A7F690500C16F4A /* NotificationManager.swift */,
+				0534F99A2A8F9A2B00A90BF7 /* LocalNotificationManager.swift */,
 			);
 			path = Notification;
 			sourceTree = "<group>";
@@ -312,6 +314,7 @@
 			children = (
 				05EEE1032A8551C7007AD5F7 /* UITextViewWrapper.swift */,
 				05477D302A77F47500C16F4A /* ToDoViewFactory.swift */,
+				0534F99C2A8F9AC000A90BF7 /* CustomNavigationBar.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -403,6 +406,7 @@
 				05477D382A7C16A100C16F4A /* LocationModel.xcdatamodeld in Sources */,
 				05F233BB2A2AF3D10091D5B3 /* LocationService.swift in Sources */,
 				05EEE1042A8551C7007AD5F7 /* UITextViewWrapper.swift in Sources */,
+				0534F99B2A8F9A2B00A90BF7 /* LocalNotificationManager.swift in Sources */,
 				05477D082A7577BD00C16F4A /* View+Extensions.swift in Sources */,
 				0549F2D12A38613B002B1248 /* LocationFetcher.swift in Sources */,
 				05477D2F2A77ED8000C16F4A /* ToDoItemDetailViewModel.swift in Sources */,
@@ -419,11 +423,11 @@
 				05CD8E9A2A57631B00C1C187 /* ToDoItemAddViewModel.swift in Sources */,
 				05EEE1062A856098007AD5F7 /* UITextView+Extensions.swift in Sources */,
 				05477D3A2A7C172600C16F4A /* LocationCoreDataManager.swift in Sources */,
-				05477D4B2A7F690500C16F4A /* NotificationManager.swift in Sources */,
 				05173EA42A87728A00CDF988 /* NotificationListView.swift in Sources */,
 				05388A932A83798700C8A69A /* CalendarViewModel.swift in Sources */,
 				05477D3F2A7C1B7900C16F4A /* CoreDataError.swift in Sources */,
 				050FCC1D2A1C91E100270F97 /* NaOngApp.swift in Sources */,
+				0534F99D2A8F9AC000A90BF7 /* CustomNavigationBar.swift in Sources */,
 				05477D312A77F47500C16F4A /* ToDoViewFactory.swift in Sources */,
 				05477D2D2A77ED7400C16F4A /* ToDoItemDetailView.swift in Sources */,
 				058B7CA92A55C495005C07BD /* ToDoItemAddView.swift in Sources */,
