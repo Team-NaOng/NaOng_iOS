@@ -67,7 +67,6 @@ class ToDoListViewModel: NSObject, ObservableObject {
         localNotificationManager.deliveredNotificationsPublisher
             .receive(on: DispatchQueue.main)
             .sink { [weak self] notifications in
-                print(notifications)
                 self?.setNotificationButtonName(isEmpty: notifications.isEmpty)
                 
                 notifications.forEach { [weak self] notification in
@@ -114,8 +113,7 @@ class ToDoListViewModel: NSObject, ObservableObject {
                 print(error)
             }
             
-            localNotificationManager.removePendingNotificationNotification(id: id)
-            localNotificationManager.changeBadgeNumberInPendingNotificationRequest()
+            localNotificationManager.removePendingNotification(id: id)
         }
     }
 }

@@ -44,7 +44,9 @@ class LocalNotificationManager: NSObject, ObservableObject {
     }
     
     func setCalendarNotification(toDo:ToDo, badge: NSNumber? = nil) {
-        let content = getNotificationContent(subtitle: toDo.content, badge: unwrapBadgeNumber(badge:badge))
+        let content = getNotificationContent(
+            subtitle: toDo.content,
+            categoryIdentifier: toDo.alarmTime?.getFormatDate("yyyy-MM-dd HH:mm:ss") ?? "")
         
         guard let date = toDo.alarmTime else {
             return
@@ -61,11 +63,13 @@ class LocalNotificationManager: NSObject, ObservableObject {
             id: toDo.id ?? UUID().uuidString,
             content: content,
             trigger: trigger)
+        changeBadgeNumberInPendingNotificationRequest()
     }
 
     func setLocalNotification(toDo:ToDo) {
-        increaseBadgeNumber()
-        let content = getNotificationContent(subtitle: toDo.content, badge: getBadgeNumber() as NSNumber)
+        let content = getNotificationContent(
+            subtitle: toDo.content,
+            categoryIdentifier: toDo.alarmTime?.getFormatDate("yyyy-MM-dd HH:mm:ss") ?? "")
         let region = LocationService.shared.getCircularRegion(
             latitude: toDo.alarmLocationLatitude,
             longitude: toDo.alarmLocationLongitude,
@@ -91,7 +95,7 @@ class LocalNotificationManager: NSObject, ObservableObject {
                 $0.identifier == id
             }
             
-            self?.removePendingNotificationNotification(id: id)
+            self?.removePendingNotification(id: id)
             
             if let request = requests.first {
                 let badge = request.content.badge ?? 0
@@ -100,37 +104,45 @@ class LocalNotificationManager: NSObject, ObservableObject {
         }
     }
     
-    func removeAllDeliveredNotification() {
-        UNUserNotificationCenter.current().removeAllDeliveredNotifications()
-        clearBadgeNumber()
-    }
-    
-    func removePendingNotificationNotification(id: String) {
-        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [id])
-    }
-    
     func changeBadgeNumberInPendingNotificationRequest() {
-        decreaseBadgeNumber()
-
         UNUserNotificationCenter.current().getPendingNotificationRequests { notificationRequests in
-            let badgeNumber = notificationRequests.count
-            UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
-            notificationRequests.reversed().enumerated().forEach { [weak self] index, request in
-                let subtitle = request.content.subtitle
-                let badge = (badgeNumber - index) as NSNumber
-                if let content = self?.getNotificationContent(subtitle: subtitle, badge: badge) {
+            if notificationRequests.count < 2 {
+                return
+            }
+
+            let sortedNotification = notificationRequests.sorted { $0.content.categoryIdentifier < $1.content.categoryIdentifier
+            }
+            
+            sortedNotification.enumerated().forEach { [weak self] index, request in
+                let badgeNumber = (index + 1) as NSNumber
+                if let content = self?.getNotificationContent(
+                    subtitle: request.content.subtitle,
+                    categoryIdentifier: request.content.categoryIdentifier,
+                    badge: badgeNumber) {
                     self?.addNotificationCenter(id: request.identifier, content: content, trigger: request.trigger)
                 }
             }
         }
     }
+    
+    func removeAllDeliveredNotification() {
+        UNUserNotificationCenter.current().removeAllDeliveredNotifications()
+        changeBadgeNumberInPendingNotificationRequest()
+        UIApplication.shared.applicationIconBadgeNumber = 0
+    }
+    
+    func removePendingNotification(id: String) {
+        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [id])
+        changeBadgeNumberInPendingNotificationRequest()
+    }
 
-    private func getNotificationContent(subtitle: String?, badge: NSNumber) -> UNMutableNotificationContent {
+    private func getNotificationContent(subtitle: String?, categoryIdentifier: String, badge: NSNumber = 1) -> UNMutableNotificationContent {
         let content = UNMutableNotificationContent()
         content.title = "나옹"
         content.subtitle = subtitle ?? "할 일 했나옹?"
         content.sound = .default
         content.badge = badge
+        content.categoryIdentifier = categoryIdentifier
         
         return content
     }
@@ -143,59 +155,24 @@ class LocalNotificationManager: NSObject, ObservableObject {
         
         UNUserNotificationCenter.current().add(request)
     }
-
-    private func getBadgeNumber() -> Int {
-        return UserDefaults.standard.integer(forKey: "badgeUserDefaultsKey")
-    }
-    
-    private func unwrapBadgeNumber(badge: NSNumber?) -> NSNumber {
-        guard let newBadge = badge else {
-            increaseBadgeNumber()
-            return getBadgeNumber() as NSNumber
-        }
-        
-        return newBadge
-    }
-    
-    private func changeBadge(number: Int) {
-        UserDefaults.standard.set(number, forKey: "badgeUserDefaultsKey")
-    }
-    
-    private func clearBadgeNumber() {
-        changeBadge(number: 0)
-        UIApplication.shared.applicationIconBadgeNumber = getBadgeNumber()
-    }
-
-    private func increaseBadgeNumber() {
-        var badgeNumber = getBadgeNumber()
-        badgeNumber += 1
-        changeBadge(number: badgeNumber)
-    }
-    
-    private func decreaseBadgeNumber() {
-        var badgeNumber = getBadgeNumber()
-        badgeNumber -= 1
-        if badgeNumber < 0 {
-            badgeNumber = 0
-        }
-        changeBadge(number: badgeNumber)
-    }
 }
 
 extension LocalNotificationManager: UNUserNotificationCenterDelegate {
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         let notification = response.notification
         deliveredNotificationsSubject.send([notification])
+
+        let badgeNumber = UIApplication.shared.applicationIconBadgeNumber
+        if badgeNumber > 0 {
+            UIApplication.shared.applicationIconBadgeNumber = badgeNumber - 1
+        }
         
-        decreaseBadgeNumber()
-        UIApplication.shared.applicationIconBadgeNumber = getBadgeNumber()
         completionHandler()
     }
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         deliveredNotificationsSubject.send([notification])
-        
-        decreaseBadgeNumber()
+
         let options: UNNotificationPresentationOptions = [.banner, .badge, .sound]
         completionHandler(options)
     }
