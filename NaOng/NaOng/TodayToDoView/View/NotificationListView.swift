@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct NotificationListView: View {
+    @Environment(\.presentationMode) var presentationMode
+
     @ObservedObject private var notificationListViewModel: NotificationListViewModel
     
     init(notificationListViewModel: NotificationListViewModel) {
@@ -34,10 +36,24 @@ struct NotificationListView: View {
         .onAppear {
             notificationListViewModel.fetchGroupedToDoItems()
         }
+        .navigationBarBackButtonHidden(true)
         .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button {
+                    presentationMode.wrappedValue.dismiss()
+                } label: {
+                    Image(systemName: "chevron.backward")
+                        .foregroundColor(.black)
+                }
+            }
+            
             ToolbarItem(placement: .navigationBarTrailing) {
-                Button("모두 읽음 표시") {
+                Button {
                     notificationListViewModel.clearDeliveredNotification()
+                } label: {
+                    Text("모두 읽음 표시")
+                        .font(.custom("Binggrae", size: 15))
+                        .foregroundColor(.black)
                 }
             }
         }

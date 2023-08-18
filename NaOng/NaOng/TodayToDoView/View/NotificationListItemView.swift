@@ -24,7 +24,7 @@ struct NotificationListItemView: View {
             Spacer()
         }
         .padding(10)
-        .background(Color.gray)
+        .background(Color("secondary"))
         .cornerRadius(5)
     }
 }
