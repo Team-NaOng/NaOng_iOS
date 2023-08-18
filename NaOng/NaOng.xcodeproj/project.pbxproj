@@ -156,9 +156,10 @@
 				050FCC202A1C91E200270F97 /* Assets.xcassets */,
 				050FCC222A1C91E200270F97 /* Preview Content */,
 				0549F2CF2A386118002B1248 /* Location */,
-				058B7CAA2A55C8D2005C07BD /* WholeToDoView */,
 				05CCE8B12A51A66D0037FF74 /* TodayToDoView */,
-				05D69E412A696A520074C84A /* Setting */,
+				058B7CAA2A55C8D2005C07BD /* WholeToDoView */,
+				0534F9A82A8FED2400A90BF7 /* NotificationListView */,
+				05D69E412A696A520074C84A /* SettingView */,
 			);
 			path = NaOng;
 			sourceTree = "<group>";
@@ -183,6 +184,32 @@
 			isa = PBXGroup;
 			children = (
 				0534F9A62A8FBBC000A90BF7 /* SettingViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		0534F9A82A8FED2400A90BF7 /* NotificationListView */ = {
+			isa = PBXGroup;
+			children = (
+				0534F9A92A8FED3E00A90BF7 /* View */,
+				0534F9AA2A8FED4800A90BF7 /* ViewModel */,
+			);
+			path = NotificationListView;
+			sourceTree = "<group>";
+		};
+		0534F9A92A8FED3E00A90BF7 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				05173EA32A87728A00CDF988 /* NotificationListView.swift */,
+				05173EA72A880E6C00CDF988 /* NotificationListItemView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		0534F9AA2A8FED4800A90BF7 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				05173EA52A8772B300CDF988 /* NotificationListViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -295,7 +322,6 @@
 				05CD8E992A57631B00C1C187 /* ToDoItemAddViewModel.swift */,
 				05477D2E2A77ED8000C16F4A /* ToDoItemDetailViewModel.swift */,
 				05477D3B2A7C177000C16F4A /* LocationSelectionViewModel.swift */,
-				05173EA52A8772B300CDF988 /* NotificationListViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -310,19 +336,17 @@
 				05477D342A7A85BF00C16F4A /* LocationSelectionView.swift */,
 				05477D452A7C3A7F00C16F4A /* LocationSearchView.swift */,
 				05477D472A7C3B4100C16F4A /* LocationCheckView.swift */,
-				05173EA32A87728A00CDF988 /* NotificationListView.swift */,
-				05173EA72A880E6C00CDF988 /* NotificationListItemView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
 		};
-		05D69E412A696A520074C84A /* Setting */ = {
+		05D69E412A696A520074C84A /* SettingView */ = {
 			isa = PBXGroup;
 			children = (
 				0534F9A22A8FBB9000A90BF7 /* View */,
 				0534F9A32A8FBB9600A90BF7 /* ViewModel */,
 			);
-			path = Setting;
+			path = SettingView;
 			sourceTree = "<group>";
 		};
 		05EEE1022A8551B2007AD5F7 /* Helper */ = {

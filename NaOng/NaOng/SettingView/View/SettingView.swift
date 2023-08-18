@@ -19,6 +19,11 @@ struct SettingView: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 30) {
+            
+            Text("설정")
+                .foregroundColor(.black)
+                .font(.custom("Binggrae-Bold", size: 30))
+            
             Button {
                 settingViewModel.openSettings()
             } label: {
@@ -55,19 +60,6 @@ struct SettingView: View {
             Spacer()
         }
         .padding()
-        .navigationBarBackButtonHidden(true)
-        .toolbar {
-            ToolbarItem(placement: .navigationBarLeading) {
-                Button {
-                    presentationMode.wrappedValue.dismiss()
-                } label: {
-                    Image(systemName: "chevron.backward")
-                        .foregroundColor(.black)
-                }
-            }
-        }
-        .navigationTitle("설정")
-        .applyCustomNavigationBar()
     }
 }
 

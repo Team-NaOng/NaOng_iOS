@@ -28,6 +28,7 @@ struct CalendarView: View {
                 .onChange(of: $calendarViewModel.date.wrappedValue) { newValue in
                     calendarViewModel.fetchTodoItems()
                 }
+                .padding()
             
             List {
                 ForEach($calendarViewModel.toDoItems) { item in
@@ -56,7 +57,7 @@ struct CalendarView: View {
             .listStyle(.plain)
             .buttonStyle(.plain)
             .background(Color("secondary"))
-            .frame(width: UIScreen.main.bounds.width - 50, height: 300)
+            .frame(width: UIScreen.main.bounds.width)
         }
         .overlay {
             Button {
@@ -73,13 +74,12 @@ struct CalendarView: View {
                         .foregroundColor(.black)
                 }
             }
-            .frame(width: UIScreen.main.bounds.width - 50, height: UIScreen.main.bounds.height - 150, alignment: .bottomTrailing) // 버튼을 오른쪽 끝으로 위치시킴
+            .frame(width: UIScreen.main.bounds.width - 50, height: UIScreen.main.bounds.height - 150, alignment: .bottomTrailing)
             .fullScreenCover(isPresented: $calendarViewModel.showingToDoItemAddView) {
                 let viewModel = ToDoItemAddViewModel(viewContext: viewContext)
                 ToDoItemAddView(toDoItemAddViewModel: viewModel)
             }
         }
-        .padding()
     }
 }
 

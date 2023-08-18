@@ -18,29 +18,6 @@ struct ToDoListView: View {
     var body: some View {
         NavigationView {
             VStack {
-                HStack() {
-                    Spacer()
-                    
-                    NavigationLink {
-                        let localNotificationManager = LocalNotificationManager()
-                        let notificationListViewModel = NotificationListViewModel(viewContext: viewContext, localNotificationManager: localNotificationManager)
-                        NotificationListView(notificationListViewModel: notificationListViewModel)
-                    } label: {
-                        Image(systemName: toDoListViewModel.notificationButtonName)
-                    }
-                    .buttonStyle(.plain)
-                    
-                    NavigationLink {
-                        let localNotificationManager = LocalNotificationManager()
-                        let settingViewModel = SettingViewModel(localNotificationManager: localNotificationManager)
-                        SettingView(settingViewModel: settingViewModel)
-                    } label: {
-                        Image(systemName: "gearshape")
-                    }
-                    .buttonStyle(.plain)
-                }
-                .padding(EdgeInsets(top: 15, leading: 0, bottom: 0, trailing: 15))
-                
                 Text("나가기 전에 생각했나옹?")
                     .foregroundColor(.black)
                     .font(.custom("Binggrae-Bold", size: 30))

@@ -13,40 +13,75 @@ struct ContentView: View {
     @Environment(\.managedObjectContext) var managedObjectContext
     @EnvironmentObject var localNotificationManager: LocalNotificationManager
     
+    private let viewContext = ToDoCoreDataManager.shared.persistentContainer.viewContext
+    
+    init() {
+        UITabBar.appearance().backgroundColor = UIColor.white
+    }
+    
     var body: some View {
-        let viewContext = ToDoCoreDataManager.shared.persistentContainer.viewContext
         let toDoListViewModel = ToDoListViewModel(viewContext: viewContext, localNotificationManager: localNotificationManager)
-        
-        ToDoListView(toDoListViewModel: toDoListViewModel)
-            .preferredColorScheme(.light)
-            .onAppear {
-                //LocationService.shared.loadLocation()
-                NotificationCenter.default.addObserver(
-                    forName: UIApplication.didBecomeActiveNotification,
-                    object: nil,
-                    queue: nil) { _ in
-                        localNotificationManager.sendAuthorizationStatusEvent()
-                    }
-                NotificationCenter.default.addObserver(
-                    forName: UIApplication.didBecomeActiveNotification,
-                    object: nil,
-                    queue: nil) { _ in
-                        localNotificationManager.sendDeliveredEvent()
-                    }
-                
-                let name = Notification.Name("removeAllDeliveredNotifications")
-                NotificationCenter.default.addObserver(
-                    forName: name,
-                    object: nil,
-                    queue: nil) { _ in
-                        localNotificationManager.sendRemovedEvent()
-                    }
-            }
+        TabView {
+            ToDoListView(toDoListViewModel: toDoListViewModel)
+                .preferredColorScheme(.light)
+                .tabItem {
+                    Image(systemName: "checklist")
+                        .foregroundColor(.black)
+                    Text("오늘 할 일")
+                        .font(.custom("Binggrae", size: 10))
+                        .foregroundColor(.black)
+                }
+            
+            let calendarViewModel = CalendarViewModel(viewContext: viewContext)
+            CalendarView(calendarViewModel: calendarViewModel)
+                .tabItem {
+                    Image(systemName: "calendar")
+                        .foregroundColor(.black)
+                    Text("전체 할 일")
+                        .font(.custom("Binggrae", size: 10))
+                        .foregroundColor(.black)
+                }
+            
+            let notificationListViewModel = NotificationListViewModel(viewContext: viewContext, localNotificationManager: localNotificationManager)
+            NotificationListView(notificationListViewModel: notificationListViewModel)
+                .tabItem {
+                    Image(systemName: toDoListViewModel.notificationButtonName)
+                    Text("알림 목록")
+                        .font(.custom("Binggrae", size: 10))
+                        .foregroundColor(.black)
+                }
+            
+            let settingViewModel = SettingViewModel(localNotificationManager: localNotificationManager)
+            SettingView(settingViewModel: settingViewModel)
+                .tabItem {
+                    Image(systemName: "gearshape")
+                    Text("설정")
+                        .font(.custom("Binggrae", size: 10))
+                        .foregroundColor(.black)
+                }
+        }
+        .tint(Color("primary"))
+        .onAppear {
+            NotificationCenter.default.addObserver(
+                forName: UIApplication.didBecomeActiveNotification,
+                object: nil,
+                queue: nil) { _ in
+                    localNotificationManager.sendAuthorizationStatusEvent()
+                }
+            NotificationCenter.default.addObserver(
+                forName: UIApplication.didBecomeActiveNotification,
+                object: nil,
+                queue: nil) { _ in
+                    localNotificationManager.sendDeliveredEvent()
+                }
+            
+            let name = Notification.Name("removeAllDeliveredNotifications")
+            NotificationCenter.default.addObserver(
+                forName: name,
+                object: nil,
+                queue: nil) { _ in
+                    localNotificationManager.sendRemovedEvent()
+                }
+        }
     }
 }
-
-//struct ContentView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ContentView()
-//    }
-//}

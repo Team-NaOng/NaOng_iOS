@@ -49,6 +49,7 @@ struct ToDoListItemView: View {
             toDoListItemViewModel.setMarkerName()
             toDoListItemViewModel.setBackgroundColor()
         }
+        .frame(width: UIScreen.main.bounds.width, alignment: .center)
     }
 }
 
