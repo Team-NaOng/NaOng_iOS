@@ -15,4 +15,8 @@ extension View {
             self
         }
     }
+    
+    func applyCustomNavigationBar(fontName: String = "Binggrae", size: CGFloat = 18) -> some View {
+        self.modifier(CustomNavigationBar(fontName: fontName, size: size))
+    }
 }

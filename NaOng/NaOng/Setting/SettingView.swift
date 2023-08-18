@@ -8,49 +8,63 @@
 import SwiftUI
 
 struct SettingView: View {
+    @Environment(\.presentationMode) var presentationMode
+    
     var body: some View {
-        NavigationView {
-            VStack(alignment: .leading, spacing: 30) {
-                NavigationLink {
-                    NotificationSettingView()
-                } label: {
-                    HStack {
-                        Image(systemName: "bell")
-                        Text("알림 설정")
-                            .font(.custom("Binggrae", size: 16))
-                        
-                        Spacer()
-                        
-                        Image(systemName: "chevron.right")
-                    }
-                }
-                .buttonStyle(.plain)
-
-
-                NavigationLink {
-                    LocationSettingView()
-                } label: {
-                    HStack {
-                        Image(systemName: "map")
-                        Text("위치 설정")
-                            .font(.custom("Binggrae", size: 16))
-                        
-                        Spacer()
-                        
-                        Image(systemName: "chevron.right")
-                    }
-                }
-                .buttonStyle(.plain)
-                
+        VStack(alignment: .leading, spacing: 30) {
+            NavigationLink {
+                NotificationSettingView()
+            } label: {
                 HStack {
-                    Image(systemName: "envelope")
-                    Text("문의 하기")
+                    Image(systemName: "bell")
+                    Text("알림 설정")
                         .font(.custom("Binggrae", size: 16))
+                    
+                    Spacer()
+                    
+                    Image(systemName: "chevron.right")
                 }
             }
-            .padding()
-            .navigationTitle("설정")
+            .buttonStyle(.plain)
+            
+            
+            NavigationLink {
+                LocationSettingView()
+            } label: {
+                HStack {
+                    Image(systemName: "map")
+                    Text("위치 설정")
+                        .font(.custom("Binggrae", size: 16))
+                    
+                    Spacer()
+                    
+                    Image(systemName: "chevron.right")
+                }
+            }
+            .buttonStyle(.plain)
+            
+            HStack {
+                Image(systemName: "envelope")
+                Text("문의 하기")
+                    .font(.custom("Binggrae", size: 16))
+            }
+            
+            Spacer()
         }
+        .padding()
+        .navigationBarBackButtonHidden(true)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button {
+                    presentationMode.wrappedValue.dismiss()
+                } label: {
+                    Image(systemName: "chevron.backward")
+                        .foregroundColor(.black)
+                }
+            }
+        }
+        .navigationTitle("설정")
+        .applyCustomNavigationBar()
     }
 }
 
@@ -65,24 +79,4 @@ struct SettingView_Previews: PreviewProvider {
     static var previews: some View {
         SettingView()
     }
-}
-
-struct SpecialNavBar: ViewModifier {
-
-    init() {
-        UINavigationBar.appearance().largeTitleTextAttributes = [.font: UIFont(name: "Binggrae", size: 30)!]
-    }
-
-    func body(content: Content) -> some View {
-        content
-    }
-
-}
-
-extension View {
-
-    func specialNavBar() -> some View {
-        self.modifier(SpecialNavBar())
-    }
-
 }
