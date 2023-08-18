@@ -25,8 +25,15 @@ struct ContentView: View {
                     forName: UIApplication.didBecomeActiveNotification,
                     object: nil,
                     queue: nil) { _ in
+                        localNotificationManager.sendAuthorizationStatusEvent()
+                    }
+                NotificationCenter.default.addObserver(
+                    forName: UIApplication.didBecomeActiveNotification,
+                    object: nil,
+                    queue: nil) { _ in
                         localNotificationManager.sendDeliveredEvent()
                     }
+                
                 let name = Notification.Name("removeAllDeliveredNotifications")
                 NotificationCenter.default.addObserver(
                     forName: name,

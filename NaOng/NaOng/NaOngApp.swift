@@ -19,7 +19,6 @@ struct NaOngApp: App {
                 .onAppear {
                     localNotificationManager.requestAuthorization()
                     UNUserNotificationCenter.current().delegate = localNotificationManager
-                    UserDefaults.standard.set(0, forKey: "badgeUserDefaultsKey")
                 }
         }
     }

@@ -6,14 +6,21 @@
 //
 
 import SwiftUI
+import UIKit
 
 struct SettingView: View {
     @Environment(\.presentationMode) var presentationMode
     
+    @ObservedObject private var settingViewModel: SettingViewModel
+    
+    init(settingViewModel: SettingViewModel) {
+        self.settingViewModel = settingViewModel
+    }
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 30) {
-            NavigationLink {
-                NotificationSettingView()
+            Button {
+                settingViewModel.openSettings()
             } label: {
                 HStack {
                     Image(systemName: "bell")
@@ -22,26 +29,22 @@ struct SettingView: View {
                     
                     Spacer()
                     
-                    Image(systemName: "chevron.right")
-                }
-            }
-            .buttonStyle(.plain)
-            
-            
-            NavigationLink {
-                LocationSettingView()
-            } label: {
-                HStack {
-                    Image(systemName: "map")
-                    Text("위치 설정")
+                    Text(settingViewModel.authorizationStatus)
                         .font(.custom("Binggrae", size: 16))
-                    
-                    Spacer()
-                    
+                        .foregroundColor(.gray)
                     Image(systemName: "chevron.right")
                 }
             }
-            .buttonStyle(.plain)
+            .foregroundColor(.black)
+            .alert("앱의 알림 설정으로 이동합니다.\n이동하는 화면에서 알림을 허용해 주세요.", isPresented: $settingViewModel.isShowingAlert) {
+
+                Button("취소", role: .cancel) { }
+                Button("확인", role: .destructive) {
+                    if let settingsUrl = URL(string: UIApplication.openSettingsURLString) {
+                        UIApplication.shared.open(settingsUrl)
+                    }
+                }
+            }
             
             HStack {
                 Image(systemName: "envelope")
@@ -69,14 +72,11 @@ struct SettingView: View {
 }
 
 
-struct LocationSettingView: View {
-    var body: some View {
-        Text("위치 설정")
+struct SettingView_Previews: PreviewProvider {
+    static var previews: some View {
+        let localNotificationManager = LocalNotificationManager()
+        let settingViewModel = SettingViewModel(localNotificationManager: localNotificationManager)
+        SettingView(settingViewModel: settingViewModel)
     }
 }
 
-struct SettingView_Previews: PreviewProvider {
-    static var previews: some View {
-        SettingView()
-    }
-}

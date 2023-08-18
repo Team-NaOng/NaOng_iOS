@@ -31,7 +31,9 @@ struct ToDoListView: View {
                     .buttonStyle(.plain)
                     
                     NavigationLink {
-                        SettingView()
+                        let localNotificationManager = LocalNotificationManager()
+                        let settingViewModel = SettingViewModel(localNotificationManager: localNotificationManager)
+                        SettingView(settingViewModel: settingViewModel)
                     } label: {
                         Image(systemName: "gearshape")
                     }

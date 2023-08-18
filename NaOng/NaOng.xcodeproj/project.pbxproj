@@ -17,6 +17,7 @@
 		05173EA82A880E6C00CDF988 /* NotificationListItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05173EA72A880E6C00CDF988 /* NotificationListItemView.swift */; };
 		0534F99B2A8F9A2B00A90BF7 /* LocalNotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0534F99A2A8F9A2B00A90BF7 /* LocalNotificationManager.swift */; };
 		0534F99D2A8F9AC000A90BF7 /* CustomNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0534F99C2A8F9AC000A90BF7 /* CustomNavigationBar.swift */; };
+		0534F9A72A8FBBC000A90BF7 /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0534F9A62A8FBBC000A90BF7 /* SettingViewModel.swift */; };
 		05388A932A83798700C8A69A /* CalendarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05388A922A83798700C8A69A /* CalendarViewModel.swift */; };
 		05477D082A7577BD00C16F4A /* View+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05477D072A7577BD00C16F4A /* View+Extensions.swift */; };
 		05477D2D2A77ED7400C16F4A /* ToDoItemDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05477D2C2A77ED7400C16F4A /* ToDoItemDetailView.swift */; };
@@ -45,7 +46,6 @@
 		05CCE8B32A51A6BE0037FF74 /* ToDoListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CCE8B22A51A6BE0037FF74 /* ToDoListViewModel.swift */; };
 		05CD8E9A2A57631B00C1C187 /* ToDoItemAddViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CD8E992A57631B00C1C187 /* ToDoItemAddViewModel.swift */; };
 		05D69E432A696AD30074C84A /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05D69E422A696AD30074C84A /* SettingView.swift */; };
-		05D69E452A69791F0074C84A /* NotificationSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05D69E442A69791F0074C84A /* NotificationSettingView.swift */; };
 		05EEE1042A8551C7007AD5F7 /* UITextViewWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05EEE1032A8551C7007AD5F7 /* UITextViewWrapper.swift */; };
 		05EEE1062A856098007AD5F7 /* UITextView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05EEE1052A856098007AD5F7 /* UITextView+Extensions.swift */; };
 		05EEE1082A8578CE007AD5F7 /* Date+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05EEE1072A8578CE007AD5F7 /* Date+Extensions.swift */; };
@@ -77,6 +77,7 @@
 		05173EA72A880E6C00CDF988 /* NotificationListItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationListItemView.swift; sourceTree = "<group>"; };
 		0534F99A2A8F9A2B00A90BF7 /* LocalNotificationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalNotificationManager.swift; sourceTree = "<group>"; };
 		0534F99C2A8F9AC000A90BF7 /* CustomNavigationBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomNavigationBar.swift; sourceTree = "<group>"; };
+		0534F9A62A8FBBC000A90BF7 /* SettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewModel.swift; sourceTree = "<group>"; };
 		05388A922A83798700C8A69A /* CalendarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewModel.swift; sourceTree = "<group>"; };
 		05477D072A7577BD00C16F4A /* View+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extensions.swift"; sourceTree = "<group>"; };
 		05477D2C2A77ED7400C16F4A /* ToDoItemDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoItemDetailView.swift; sourceTree = "<group>"; };
@@ -105,7 +106,6 @@
 		05CCE8B22A51A6BE0037FF74 /* ToDoListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoListViewModel.swift; sourceTree = "<group>"; };
 		05CD8E992A57631B00C1C187 /* ToDoItemAddViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoItemAddViewModel.swift; sourceTree = "<group>"; };
 		05D69E422A696AD30074C84A /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
-		05D69E442A69791F0074C84A /* NotificationSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSettingView.swift; sourceTree = "<group>"; };
 		05EEE1032A8551C7007AD5F7 /* UITextViewWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextViewWrapper.swift; sourceTree = "<group>"; };
 		05EEE1052A856098007AD5F7 /* UITextView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+Extensions.swift"; sourceTree = "<group>"; };
 		05EEE1072A8578CE007AD5F7 /* Date+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extensions.swift"; sourceTree = "<group>"; };
@@ -169,6 +169,22 @@
 				050FCC232A1C91E200270F97 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		0534F9A22A8FBB9000A90BF7 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				05D69E422A696AD30074C84A /* SettingView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		0534F9A32A8FBB9600A90BF7 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				0534F9A62A8FBBC000A90BF7 /* SettingViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		05477D3D2A7C1B5D00C16F4A /* Error */ = {
@@ -303,8 +319,8 @@
 		05D69E412A696A520074C84A /* Setting */ = {
 			isa = PBXGroup;
 			children = (
-				05D69E422A696AD30074C84A /* SettingView.swift */,
-				05D69E442A69791F0074C84A /* NotificationSettingView.swift */,
+				0534F9A22A8FBB9000A90BF7 /* View */,
+				0534F9A32A8FBB9600A90BF7 /* ViewModel */,
 			);
 			path = Setting;
 			sourceTree = "<group>";
@@ -394,6 +410,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				05477D482A7C3B4100C16F4A /* LocationCheckView.swift in Sources */,
+				0534F9A72A8FBBC000A90BF7 /* SettingViewModel.swift in Sources */,
 				0500E94A2A482D7700A3F338 /* ToDoListItemView.swift in Sources */,
 				05477D412A7C220D00C16F4A /* Location+Extensions.swift in Sources */,
 				056B2B502A5FC8AC00D52CFF /* ToDoModel.xcdatamodeld in Sources */,
@@ -414,7 +431,6 @@
 				05173EA82A880E6C00CDF988 /* NotificationListItemView.swift in Sources */,
 				05CCE8B32A51A6BE0037FF74 /* ToDoListViewModel.swift in Sources */,
 				056B2B732A640F9F00D52CFF /* ToDoListItemViewModel.swift in Sources */,
-				05D69E452A69791F0074C84A /* NotificationSettingView.swift in Sources */,
 				05733A8A2A51A42E00DF3B78 /* ToDoListView.swift in Sources */,
 				05477D352A7A85BF00C16F4A /* LocationSelectionView.swift in Sources */,
 				05EEE1082A8578CE007AD5F7 /* Date+Extensions.swift in Sources */,
