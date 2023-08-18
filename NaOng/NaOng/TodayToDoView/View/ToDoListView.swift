@@ -58,7 +58,8 @@ struct ToDoListView: View {
                     } else {
                         List {
                             ForEach($toDoListViewModel.toDoItems) { item in
-                                let viewModel = ToDoListItemViewModel(toDoItem: item.wrappedValue, viewContext: viewContext)
+                                let localNotificationManager = LocalNotificationManager()
+                                let viewModel = ToDoListItemViewModel(toDoItem: item.wrappedValue, viewContext: viewContext, localNotificationManager: localNotificationManager)
                                 ToDoListItemView(toDoListItemViewModel: viewModel)
                                     .listRowSeparator(.hidden)
                                     .listRowInsets(.init(top: 0, leading: 0, bottom: 0, trailing: 0))

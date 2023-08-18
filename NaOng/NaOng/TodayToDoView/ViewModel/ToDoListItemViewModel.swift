@@ -14,10 +14,12 @@ class ToDoListItemViewModel: ObservableObject {
     
     private(set) var toDoItem: ToDo
     private let viewContext: NSManagedObjectContext
+    private let localNotificationManager: LocalNotificationManager
 
-    init(toDoItem: ToDo, viewContext: NSManagedObjectContext) {
+    init(toDoItem: ToDo, viewContext: NSManagedObjectContext, localNotificationManager: LocalNotificationManager) {
         self.toDoItem = toDoItem
         self.viewContext = viewContext
+        self.localNotificationManager = localNotificationManager
 
         setMarkerName()
         setBackgroundColor()
@@ -25,13 +27,22 @@ class ToDoListItemViewModel: ObservableObject {
 
     func didTapDoneButton() {
         do {
-            let currentToDoItem = toDoItem
-            let isDone = currentToDoItem.isDone ? false : true
-            currentToDoItem.isDone = isDone
+            let isDone = toDoItem.isDone ? false : true
+            toDoItem.isDone = isDone
             
-            try currentToDoItem.save(viewContext: viewContext)
+            try toDoItem.save(viewContext: viewContext)
         } catch {
             print("error!")
+        }
+
+        guard let id = toDoItem.id else {
+            return
+        }
+        
+        if toDoItem.isDone {
+            localNotificationManager.removePendingNotification(id: id)
+        } else {
+            localNotificationManager.setCalendarNotification(toDo: toDoItem)
         }
     }
 

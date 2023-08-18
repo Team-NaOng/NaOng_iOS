@@ -55,8 +55,9 @@ struct ToDoListItemView: View {
 struct ToDoListItemView_Previews: PreviewProvider {
     static var previews: some View {
         let viewContext = ToDoCoreDataManager.shared.persistentContainer.viewContext
+        let localNotificationManager = LocalNotificationManager()
         let toDo = ToDo(context: viewContext)
-        let toDoListItemViewModel = ToDoListItemViewModel(toDoItem: toDo, viewContext: viewContext)
+        let toDoListItemViewModel = ToDoListItemViewModel(toDoItem: toDo, viewContext: viewContext, localNotificationManager: localNotificationManager)
         ToDoListItemView(toDoListItemViewModel: toDoListItemViewModel)
     }
 }

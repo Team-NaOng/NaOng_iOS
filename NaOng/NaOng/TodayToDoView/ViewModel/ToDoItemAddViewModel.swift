@@ -33,8 +33,6 @@ class ToDoItemAddViewModel: ObservableObject {
             
             toDoItem.alarmDate = alarmTime.getFormatDate()
 
-            
-            print("👻\(toDoItem.id)")
             try toDoItem.save(viewContext: viewContext)
             scheduleNotification(for: toDoItem)
         } catch {
