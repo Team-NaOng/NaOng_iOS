@@ -10,6 +10,7 @@ import UIKit
 
 struct SettingView: View {
     @Environment(\.presentationMode) var presentationMode
+    @Environment(\.openURL) var openURL
     
     @ObservedObject private var settingViewModel: SettingViewModel
     
@@ -51,10 +52,19 @@ struct SettingView: View {
                 }
             }
             
-            HStack {
-                Image(systemName: "envelope")
-                Text("문의 하기")
-                    .font(.custom("Binggrae", size: 16))
+            Button {
+                settingViewModel.openEditedEmail(openURL: openURL)
+            } label: {
+                HStack {
+                    Image(systemName: "envelope")
+                    Text("문의 하기")
+                        .font(.custom("Binggrae", size: 16))
+                }
+                .foregroundColor(.black)
+            }
+            .sheet(isPresented: $settingViewModel.isShowingEmail) {
+                MailView() 
+                .tint(.accentColor)
             }
             
             Spacer()

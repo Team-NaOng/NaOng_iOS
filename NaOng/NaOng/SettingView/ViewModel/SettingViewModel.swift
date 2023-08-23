@@ -5,13 +5,13 @@
 //  Created by seohyeon park on 2023/08/18.
 //
 
-import Foundation
 import Combine
-import UserNotifications
+import SwiftUI
 
 class SettingViewModel: ObservableObject {
     @Published var authorizationStatus: String = ""
     @Published var isShowingAlert: Bool = false
+    @Published var isShowingEmail: Bool = false
     
     private let localNotificationManager: LocalNotificationManager
     private var cancellables: Set<AnyCancellable> = []
@@ -38,5 +38,9 @@ class SettingViewModel: ObservableObject {
     
     func openSettings() {
         isShowingAlert = true
+    }
+    
+    func openEditedEmail(openURL: OpenURLAction) {
+        isShowingEmail = true
     }
 }
