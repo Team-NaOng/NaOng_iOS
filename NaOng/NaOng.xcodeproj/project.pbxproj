@@ -39,6 +39,9 @@
 		056B2B732A640F9F00D52CFF /* ToDoListItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 056B2B722A640F9F00D52CFF /* ToDoListItemViewModel.swift */; };
 		056B2B762A64158000D52CFF /* ToDo+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 056B2B752A64158000D52CFF /* ToDo+Extensions.swift */; };
 		05733A8A2A51A42E00DF3B78 /* ToDoListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05733A892A51A42E00DF3B78 /* ToDoListView.swift */; };
+		058A9E7D2A95E40D005A498A /* Bundle+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 058A9E7C2A95E40D005A498A /* Bundle+Extensions.swift */; };
+		058A9E7F2A95E70D005A498A /* MailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 058A9E7E2A95E70D005A498A /* MailView.swift */; };
+		058A9E822A95FDF4005A498A /* DeviceKit in Frameworks */ = {isa = PBXBuildFile; productRef = 058A9E812A95FDF4005A498A /* DeviceKit */; };
 		058B7CA32A558D12005C07BD /* BinggraeSamanco.otf in Resources */ = {isa = PBXBuildFile; fileRef = 058B7CA22A558D12005C07BD /* BinggraeSamanco.otf */; };
 		058B7CA62A558DEE005C07BD /* Binggrae.otf in Resources */ = {isa = PBXBuildFile; fileRef = 058B7CA42A558DEE005C07BD /* Binggrae.otf */; };
 		058B7CA72A558DEE005C07BD /* Binggrae-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 058B7CA52A558DEE005C07BD /* Binggrae-Bold.otf */; };
@@ -99,6 +102,8 @@
 		056B2B722A640F9F00D52CFF /* ToDoListItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoListItemViewModel.swift; sourceTree = "<group>"; };
 		056B2B752A64158000D52CFF /* ToDo+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ToDo+Extensions.swift"; sourceTree = "<group>"; };
 		05733A892A51A42E00DF3B78 /* ToDoListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoListView.swift; sourceTree = "<group>"; };
+		058A9E7C2A95E40D005A498A /* Bundle+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Extensions.swift"; sourceTree = "<group>"; };
+		058A9E7E2A95E70D005A498A /* MailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MailView.swift; sourceTree = "<group>"; };
 		058B7CA22A558D12005C07BD /* BinggraeSamanco.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = BinggraeSamanco.otf; sourceTree = "<group>"; };
 		058B7CA42A558DEE005C07BD /* Binggrae.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Binggrae.otf; sourceTree = "<group>"; };
 		058B7CA52A558DEE005C07BD /* Binggrae-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Binggrae-Bold.otf"; sourceTree = "<group>"; };
@@ -118,6 +123,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				058A9E822A95FDF4005A498A /* DeviceKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -176,6 +182,7 @@
 			isa = PBXGroup;
 			children = (
 				05D69E422A696AD30074C84A /* SettingView.swift */,
+				058A9E7E2A95E70D005A498A /* MailView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -282,6 +289,7 @@
 				05477D402A7C220D00C16F4A /* Location+Extensions.swift */,
 				05EEE1052A856098007AD5F7 /* UITextView+Extensions.swift */,
 				05EEE1072A8578CE007AD5F7 /* Date+Extensions.swift */,
+				058A9E7C2A95E40D005A498A /* Bundle+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -376,6 +384,9 @@
 			dependencies = (
 			);
 			name = NaOng;
+			packageProductDependencies = (
+				058A9E812A95FDF4005A498A /* DeviceKit */,
+			);
 			productName = NaOng;
 			productReference = 050FCC192A1C91E100270F97 /* NaOng.app */;
 			productType = "com.apple.product-type.application";
@@ -404,6 +415,9 @@
 				Base,
 			);
 			mainGroup = 050FCC102A1C91E100270F97;
+			packageReferences = (
+				058A9E802A95FDF4005A498A /* XCRemoteSwiftPackageReference "DeviceKit" */,
+			);
 			productRefGroup = 050FCC1A2A1C91E100270F97 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -435,6 +449,7 @@
 			files = (
 				05477D482A7C3B4100C16F4A /* LocationCheckView.swift in Sources */,
 				0534F9A72A8FBBC000A90BF7 /* SettingViewModel.swift in Sources */,
+				058A9E7F2A95E70D005A498A /* MailView.swift in Sources */,
 				0500E94A2A482D7700A3F338 /* ToDoListItemView.swift in Sources */,
 				05477D412A7C220D00C16F4A /* Location+Extensions.swift in Sources */,
 				056B2B502A5FC8AC00D52CFF /* ToDoModel.xcdatamodeld in Sources */,
@@ -463,6 +478,7 @@
 				05CD8E9A2A57631B00C1C187 /* ToDoItemAddViewModel.swift in Sources */,
 				05EEE1062A856098007AD5F7 /* UITextView+Extensions.swift in Sources */,
 				05477D3A2A7C172600C16F4A /* LocationCoreDataManager.swift in Sources */,
+				058A9E7D2A95E40D005A498A /* Bundle+Extensions.swift in Sources */,
 				05173EA42A87728A00CDF988 /* NotificationListView.swift in Sources */,
 				05388A932A83798700C8A69A /* CalendarViewModel.swift in Sources */,
 				05477D3F2A7C1B7900C16F4A /* CoreDataError.swift in Sources */,
@@ -681,6 +697,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		058A9E802A95FDF4005A498A /* XCRemoteSwiftPackageReference "DeviceKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/devicekit/DeviceKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		058A9E812A95FDF4005A498A /* DeviceKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 058A9E802A95FDF4005A498A /* XCRemoteSwiftPackageReference "DeviceKit" */;
+			productName = DeviceKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		05477D362A7C16A100C16F4A /* LocationModel.xcdatamodeld */ = {
