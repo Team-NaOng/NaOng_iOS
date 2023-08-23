@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 
 @MainActor
-class CalendarViewModel: NSObject, ObservableObject, NSFetchedResultsControllerDelegate {
+class CalendarViewModel: NSObject, ObservableObject {
     @Published var date: Date = Date()
     @Published var showingToDoItemAddView: Bool = false
     @Published var toDoItems: [ToDo] = [ToDo]()
@@ -21,7 +21,6 @@ class CalendarViewModel: NSObject, ObservableObject, NSFetchedResultsControllerD
         self.viewContext = viewContext
         
         super.init()
-        fetchedResultsController.delegate = self
         self.fetchTodoItems()
     }
     
@@ -47,7 +46,9 @@ class CalendarViewModel: NSObject, ObservableObject, NSFetchedResultsControllerD
             sectionNameKeyPath: nil,
             cacheName: nil
         )
-
+        
+        fetchedResultsController.delegate = self
+        
         do {
             try fetchedResultsController.performFetch()
             guard let toDoItems = fetchedResultsController.fetchedObjects else {
@@ -58,5 +59,15 @@ class CalendarViewModel: NSObject, ObservableObject, NSFetchedResultsControllerD
         } catch {
             print(error)
         }
+    }
+}
+
+extension CalendarViewModel: NSFetchedResultsControllerDelegate {
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        guard let toDoItems = controller.fetchedObjects as? [ToDo] else {
+            return
+        }
+        
+        self.toDoItems = toDoItems
     }
 }
