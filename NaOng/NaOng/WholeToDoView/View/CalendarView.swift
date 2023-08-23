@@ -54,33 +54,38 @@ struct CalendarView: View {
                             calendarViewModel.deleteItems(offsets: indexSet)
                         }
                     }
+                    
+                    Rectangle()
+                        .foregroundColor(Color("secondary"))
+                        .frame(width: UIScreen.main.bounds.width, height: 90)
+                        .listRowSeparator(.hidden)
+                        .listRowInsets(.init(top: 0, leading: 0, bottom: 0, trailing: 0))
                 }
                 .listStyle(.plain)
                 .buttonStyle(.plain)
                 .background(Color("secondary"))
                 .frame(width: UIScreen.main.bounds.width)
             }
-        }
-        
-        .overlay {
-            Button {
-                print($calendarViewModel.date)
-                calendarViewModel.showingToDoItemAddView = true
-            } label: {
-                ZStack {
-                    Circle()
-                        .frame(width: 70, height: 70)
-                        .foregroundColor(Color("primary"))
-                    
-                    Image(systemName: "plus")
-                        .font(.custom("Binggrae-Bold", size: 35))
-                        .foregroundColor(.black)
+            .overlay {
+                Button {
+                    print($calendarViewModel.date)
+                    calendarViewModel.showingToDoItemAddView = true
+                } label: {
+                    ZStack {
+                        Circle()
+                            .frame(width: 70, height: 70)
+                            .foregroundColor(Color("primary"))
+                        
+                        Image(systemName: "plus")
+                            .font(.custom("Binggrae-Bold", size: 35))
+                            .foregroundColor(.black)
+                    }
                 }
-            }
-            .frame(width: UIScreen.main.bounds.width - 50, height: UIScreen.main.bounds.height - 150, alignment: .bottomTrailing)
-            .fullScreenCover(isPresented: $calendarViewModel.showingToDoItemAddView) {
-                let viewModel = ToDoItemAddViewModel(viewContext: viewContext)
-                ToDoItemAddView(toDoItemAddViewModel: viewModel)
+                .frame(width: UIScreen.main.bounds.width - 30, height: UIScreen.main.bounds.height - 170, alignment: .bottomTrailing)
+                .fullScreenCover(isPresented: $calendarViewModel.showingToDoItemAddView) {
+                    let viewModel = ToDoItemAddViewModel(viewContext: viewContext)
+                    ToDoItemAddView(toDoItemAddViewModel: viewModel)
+                }
             }
         }
     }
