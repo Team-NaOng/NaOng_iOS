@@ -38,6 +38,7 @@
 		055E58EB2A973600005B91DC /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 055E58EA2A973600005B91DC /* NetworkManager.swift */; };
 		055E58ED2A973702005B91DC /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 055E58EC2A973702005B91DC /* NetworkError.swift */; };
 		055E58EF2A9738D1005B91DC /* URLRequestBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 055E58EE2A9738D1005B91DC /* URLRequestBuilder.swift */; };
+		055E58F12A97A8D5005B91DC /* LocationSearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 055E58F02A97A8D5005B91DC /* LocationSearchViewModel.swift */; };
 		056B2B502A5FC8AC00D52CFF /* ToDoModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 056B2B4E2A5FC8AC00D52CFF /* ToDoModel.xcdatamodeld */; };
 		056B2B522A5FC9D600D52CFF /* ToDoCoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 056B2B512A5FC9D600D52CFF /* ToDoCoreDataManager.swift */; };
 		056B2B732A640F9F00D52CFF /* ToDoListItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 056B2B722A640F9F00D52CFF /* ToDoListItemViewModel.swift */; };
@@ -105,6 +106,7 @@
 		055E58EA2A973600005B91DC /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		055E58EC2A973702005B91DC /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		055E58EE2A9738D1005B91DC /* URLRequestBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLRequestBuilder.swift; sourceTree = "<group>"; };
+		055E58F02A97A8D5005B91DC /* LocationSearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSearchViewModel.swift; sourceTree = "<group>"; };
 		056B2B4F2A5FC8AC00D52CFF /* ToDoModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ToDoModel.xcdatamodel; sourceTree = "<group>"; };
 		056B2B512A5FC9D600D52CFF /* ToDoCoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoCoreDataManager.swift; sourceTree = "<group>"; };
 		056B2B722A640F9F00D52CFF /* ToDoListItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoListItemViewModel.swift; sourceTree = "<group>"; };
@@ -350,6 +352,7 @@
 				05CD8E992A57631B00C1C187 /* ToDoItemAddViewModel.swift */,
 				05477D2E2A77ED8000C16F4A /* ToDoItemDetailViewModel.swift */,
 				05477D3B2A7C177000C16F4A /* LocationSelectionViewModel.swift */,
+				055E58F02A97A8D5005B91DC /* LocationSearchViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -485,6 +488,7 @@
 				05EEE1042A8551C7007AD5F7 /* UITextViewWrapper.swift in Sources */,
 				0534F99B2A8F9A2B00A90BF7 /* LocalNotificationManager.swift in Sources */,
 				05477D082A7577BD00C16F4A /* View+Extensions.swift in Sources */,
+				055E58F12A97A8D5005B91DC /* LocationSearchViewModel.swift in Sources */,
 				0549F2D12A38613B002B1248 /* LocationFetcher.swift in Sources */,
 				05477D2F2A77ED8000C16F4A /* ToDoItemDetailViewModel.swift in Sources */,
 				05477D442A7C228100C16F4A /* CoreDataBaseProtocol.swift in Sources */,
@@ -652,6 +656,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -686,6 +691,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

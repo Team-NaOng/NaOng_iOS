@@ -9,8 +9,8 @@ import Foundation
 
 class URLRequestBuilder {
     private var scheme: String = "https"
-    private var host: String = ""
-    private var path: String = ""
+    private var host: String = "business.juso.go.kr"
+    private var path: String = "/addrlink/addrLinkApi.do"
     private var queryItems: [URLQueryItem] = []
     private var httpMethod: String = "GET"
 
@@ -23,10 +23,22 @@ class URLRequestBuilder {
         self.path = path
         return self
     }
+    
+    func setBasicQueryItems() -> URLRequestBuilder {
+        let basicQueryItems: [URLQueryItem] = [
+            URLQueryItem(name: "confmKey", value: "U01TX0FVVEgyMDIzMDgyNDE0NTIzMjExNDA0NTA="),
+            URLQueryItem(name: "firstSort", value: "road"),
+            URLQueryItem(name: "resultType", value: "json")
+        ]
+        
+        basicQueryItems.forEach { item in
+            self.queryItems.append(item)
+        }
+        return self
+    }
 
     func addQueryItem(name: String, value: String) -> URLRequestBuilder {
         self.queryItems.append(URLQueryItem(name: name, value: value))
-        print(self.queryItems)
         return self
     }
 

@@ -60,7 +60,7 @@ struct Common: Codable {
  - lnbrSlno: 지번부번(호) (부번이 없는 경우 0)
  - emdNo: 읍면동일련번호
  */
-struct Juso: Codable {
+struct Juso: Codable, Hashable {
     let roadAddr: String
     let roadAddrPart1: String
     let roadAddrPart2: String

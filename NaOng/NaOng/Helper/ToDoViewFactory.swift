@@ -10,13 +10,14 @@ import SwiftUI
 class ToDoViewFactory {
     static func makeToDoMoldView<Content: View>(
         content: Content,
+        lineWidth: CGFloat = 5,
         width: CGFloat = UIScreen.main.bounds.width - 60,
         height: CGFloat = 50,
         background: Color = Color("secondary")
     ) -> some View {
         return ZStack() {
             RoundedRectangle(cornerRadius: 10)
-                .stroke(Color.black, lineWidth: 5)
+                .stroke(Color.black, lineWidth: lineWidth)
                 .frame(width: width, height: height)
                 .background(background)
             
@@ -38,6 +39,18 @@ class ToDoViewFactory {
             .frame(width: width, height: height)
             .cornerRadius(10)
         }
+    }
+    
+    static func makeToDoTextField(
+        title: String,
+        text: Binding<String>
+    ) -> some View {
+        return HStack() {
+            Image(systemName: "magnifyingglass")
+            
+            TextField(title, text: text)
+        }
+        .padding(20)
     }
     
     static func makeToDoDatePicker(

@@ -13,6 +13,7 @@ class ToDoItemAddViewModel: ObservableObject {
     @Published var alarmTime: Date = Date()
     @Published var isRepeat: Bool = false
     @Published var alarmType: String = "위치"
+    @Published var location: String = "위치를 선택해 주세요"
 
     private let viewContext: NSManagedObjectContext
     

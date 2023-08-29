@@ -8,13 +8,38 @@
 import SwiftUI
 
 struct LocationSearchView: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    
+    @ObservedObject private var locationSearchViewModel: LocationSearchViewModel
+    
+    init(locationSearchViewModel: LocationSearchViewModel) {
+        self.locationSearchViewModel = locationSearchViewModel
     }
-}
-
-struct LocationSearchView_Previews: PreviewProvider {
-    static var previews: some View {
-        LocationSearchView()
+    
+    var body: some View {
+        VStack {
+            ToDoViewFactory.makeToDoMoldView(
+                content: ToDoViewFactory.makeToDoTextField(
+                    title: "지번, 도로명, 건물명으로 검색",
+                    text: $locationSearchViewModel.keyword),
+                lineWidth: 2,
+                width: UIScreen.main.bounds.width - 20,
+                height: 40
+            )
+            .onSubmit {
+                locationSearchViewModel.searchLocation()
+                print(locationSearchViewModel.roadNameAddress.count)
+            }
+            
+            List(0..<locationSearchViewModel.roadNameAddress.count, id: \.self) { index in
+                Text(locationSearchViewModel.roadNameAddress[index].roadAddrPart1)
+                    .padding()
+                    .onAppear {
+                        if index == (locationSearchViewModel.roadNameAddress.count - 1) {
+                            locationSearchViewModel.scroll()
+                        }
+                    }
+            }
+        }
     }
 }

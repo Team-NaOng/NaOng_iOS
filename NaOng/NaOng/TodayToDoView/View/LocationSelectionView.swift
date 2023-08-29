@@ -17,7 +17,8 @@ struct LocationSelectionView: View {
     var body: some View {
         VStack {
             NavigationLink {
-                LocationSearchView()
+                let locationSearchViewModel = LocationSearchViewModel()
+                LocationSearchView(locationSearchViewModel: locationSearchViewModel)
             } label: {
                 ZStack {
                     RoundedRectangle(cornerRadius: 5)
