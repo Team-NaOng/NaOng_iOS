@@ -11,72 +11,60 @@ import Combine
 @MainActor
 class LocationSearchViewModel: NSObject, ObservableObject {
     @Published var keyword: String = ""
-    @Published var roadNameAddress: [Juso] = []
-    
+    @Published var documents: [Document] = []
+    private var meta: Meta?
     private var currentPage: Int = 1
-    private var lastIndex: Int = 1
-    
+
     func searchLocation() {
-        roadNameAddress = []
-        
-        let urlBuilder = URLRequestBuilder()
-            .addQueryItem(name: "currentPage", value: "\(currentPage)")
-            .addQueryItem(name: "countPerPage", value: "10")
-            .addQueryItem(name: "keyword", value: keyword)
-            .setBasicQueryItems()
-            .build()
-        
-        guard let urlRequest = urlBuilder else {
+        clearAPIData()
+
+        guard let urlRequest = getKakaoLocalURLRequest() else {
             return
         }
         
-        Task {
-            do {
-                let response: RoadNameAddress = try await NetworkManager.performRequest(urlRequest: urlRequest, responseType: RoadNameAddress.self)
-                
-                let juso = response.results.juso
-                if juso.isEmpty == false {
-                    roadNameAddress = juso
-                }
-                
-                let totalCount = Int(response.results.common.totalCount) ?? 0
-                lastIndex = (totalCount / 10) + 1
-                
-            } catch {
-                print("Error: \(error)")
-            }
-        }
+        performKakaoLocalRequest(urlRequest)
     }
     
     func scroll() {
         currentPage += 1
-        
-        if (lastIndex > 1) && (lastIndex >= currentPage) {
-            let urlBuilder = URLRequestBuilder()
-                .addQueryItem(name: "currentPage", value: "\(currentPage)")
-                .addQueryItem(name: "countPerPage", value: "10")
-                .addQueryItem(name: "keyword", value: keyword)
-                .setBasicQueryItems()
-                .build()
-            
-            guard let urlRequest = urlBuilder else {
-                return
-            }
-            
-            Task {
-                do {
-                    let response: RoadNameAddress = try await NetworkManager.performRequest(urlRequest: urlRequest, responseType: RoadNameAddress.self)
-                    
-                    let juso = response.results.juso
-                    if juso.isEmpty == false {
-                        roadNameAddress.append(contentsOf: juso)
-                    }
-                    
-                    print(currentPage, lastIndex)
-                    
-                } catch {
-                    print("Error: \(error)")
-                }
+
+        guard let meta = self.meta,
+              meta.isEnd == false,
+              let urlRequest = getKakaoLocalURLRequest(page: currentPage) else {
+            return
+        }
+
+        performKakaoLocalRequest(urlRequest)
+    }
+    
+    private func clearAPIData() {
+        documents = []
+        meta = nil
+        currentPage = 1
+    }
+    
+    private func getKakaoLocalURLRequest(page: Int = 1, size: Int = 30) -> URLRequest? {
+        return URLRequestBuilder()
+            .setHost("dapi.kakao.com")
+            .setPath("/v2/local/search/address.json")
+            .addQueryItem(name: "query", value: keyword)
+            .addQueryItem(name: "page", value: String(page))
+            .addQueryItem(name: "size", value: String(size))
+            .addHeader(key: "Authorization", value: "KakaoAK 54412f054c336a5a856d29cc91bfffcc")
+            .build()
+    }
+    
+    private func performKakaoLocalRequest(_ urlRequest: URLRequest) {
+        Task {
+            do {
+                let response: KakaoLocal = try await NetworkManager.performRequest(
+                    urlRequest: urlRequest,
+                    responseType: KakaoLocal.self)
+                
+                meta = response.meta
+                documents.append(contentsOf: response.documents)
+            } catch {
+                print("Error: \(error)")
             }
         }
     }

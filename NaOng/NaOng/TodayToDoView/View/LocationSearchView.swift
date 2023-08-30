@@ -31,20 +31,19 @@ struct LocationSearchView: View {
             )
             .onSubmit {
                 locationSearchViewModel.searchLocation()
-                print(locationSearchViewModel.roadNameAddress.count)
             }
             
-            List(0..<locationSearchViewModel.roadNameAddress.count, id: \.self) { index in
-                Text(locationSearchViewModel.roadNameAddress[index].roadAddrPart1)
+            List(0..<locationSearchViewModel.documents.count, id: \.self) { index in
+                Text(locationSearchViewModel.documents[index].addressName)
                     .padding()
                     .onAppear {
-                        if index == (locationSearchViewModel.roadNameAddress.count - 1) {
+                        if index == (locationSearchViewModel.documents.count - 1) {
                             locationSearchViewModel.scroll()
                         }
                     }
                     .onTapGesture {
                         path.removeAll()
-                        location = locationSearchViewModel.roadNameAddress[index].roadAddrPart1
+                        location = locationSearchViewModel.documents[index].addressName
                     }
             }
         }

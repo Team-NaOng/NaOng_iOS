@@ -9,10 +9,11 @@ import Foundation
 
 class URLRequestBuilder {
     private var scheme: String = "https"
-    private var host: String = "business.juso.go.kr"
-    private var path: String = "/addrlink/addrLinkApi.do"
-    private var queryItems: [URLQueryItem] = []
+    private var host: String = ""
+    private var path: String = ""
     private var httpMethod: String = "GET"
+    private var queryItems: [URLQueryItem] = []
+    private var header: [String : String] = [:]
 
     func setHost(_ host: String) -> URLRequestBuilder {
         self.host = host
@@ -24,16 +25,8 @@ class URLRequestBuilder {
         return self
     }
     
-    func setBasicQueryItems() -> URLRequestBuilder {
-        let basicQueryItems: [URLQueryItem] = [
-            URLQueryItem(name: "confmKey", value: "U01TX0FVVEgyMDIzMDgyNDE0NTIzMjExNDA0NTA="),
-            URLQueryItem(name: "firstSort", value: "road"),
-            URLQueryItem(name: "resultType", value: "json")
-        ]
-        
-        basicQueryItems.forEach { item in
-            self.queryItems.append(item)
-        }
+    func setHTTPMethod(_ method: String) -> URLRequestBuilder {
+        self.httpMethod = method
         return self
     }
 
@@ -41,9 +34,9 @@ class URLRequestBuilder {
         self.queryItems.append(URLQueryItem(name: name, value: value))
         return self
     }
-
-    func setHTTPMethod(_ method: String) -> URLRequestBuilder {
-        self.httpMethod = method
+    
+    func addHeader(key: String, value: String) -> URLRequestBuilder {
+        self.header[key] = value
         return self
     }
 
@@ -52,7 +45,10 @@ class URLRequestBuilder {
         urlComponents.scheme = scheme
         urlComponents.host = host
         urlComponents.path = path
-        urlComponents.queryItems = queryItems
+        
+        if queryItems.isEmpty == false {
+            urlComponents.queryItems = queryItems
+        }
         
         guard let url = urlComponents.url else {
             return nil
@@ -60,6 +56,13 @@ class URLRequestBuilder {
         
         var request = URLRequest(url: url)
         request.httpMethod = httpMethod
+        
+        if header.isEmpty == false {
+            header.forEach { key, value in
+                request.addValue(value, forHTTPHeaderField: key)
+            }
+        }
+        
         return request
     }
 }

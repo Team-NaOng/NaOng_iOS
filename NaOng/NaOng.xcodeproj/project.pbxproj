@@ -58,6 +58,7 @@
 		05EEE1062A856098007AD5F7 /* UITextView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05EEE1052A856098007AD5F7 /* UITextView+Extensions.swift */; };
 		05EEE1082A8578CE007AD5F7 /* Date+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05EEE1072A8578CE007AD5F7 /* Date+Extensions.swift */; };
 		05F233BB2A2AF3D10091D5B3 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F233BA2A2AF3D10091D5B3 /* LocationService.swift */; };
+		05FD378D2A9FA045006FDAEC /* KakaoLocal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05FD378C2A9FA045006FDAEC /* KakaoLocal.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -126,6 +127,7 @@
 		05EEE1072A8578CE007AD5F7 /* Date+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extensions.swift"; sourceTree = "<group>"; };
 		05F233B92A29C79B0091D5B3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		05F233BA2A2AF3D10091D5B3 /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
+		05FD378C2A9FA045006FDAEC /* KakaoLocal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoLocal.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -299,6 +301,7 @@
 				056B2B512A5FC9D600D52CFF /* ToDoCoreDataManager.swift */,
 				05477D392A7C172600C16F4A /* LocationCoreDataManager.swift */,
 				055E58E72A972E98005B91DC /* RoadNameAddress.swift */,
+				05FD378C2A9FA045006FDAEC /* KakaoLocal.swift */,
 			);
 			path = DataModel;
 			sourceTree = "<group>";
@@ -509,6 +512,7 @@
 				058A9E7D2A95E40D005A498A /* Bundle+Extensions.swift in Sources */,
 				05173EA42A87728A00CDF988 /* NotificationListView.swift in Sources */,
 				05388A932A83798700C8A69A /* CalendarViewModel.swift in Sources */,
+				05FD378D2A9FA045006FDAEC /* KakaoLocal.swift in Sources */,
 				05477D3F2A7C1B7900C16F4A /* CoreDataError.swift in Sources */,
 				050FCC1D2A1C91E100270F97 /* NaOngApp.swift in Sources */,
 				0534F99D2A8F9AC000A90BF7 /* CustomNavigationBar.swift in Sources */,
