@@ -12,11 +12,13 @@ struct LocationSearchView: View {
 
     @Binding var path: [LocationViewStack]
     @Binding var location: String
+    @Binding var coordinates: Coordinates
     
-    init(locationSearchViewModel: LocationSearchViewModel, path: Binding<[LocationViewStack]>, location: Binding<String>) {
+    init(locationSearchViewModel: LocationSearchViewModel, path: Binding<[LocationViewStack]>, location: Binding<String>, coordinates: Binding<Coordinates>) {
         self.locationSearchViewModel = locationSearchViewModel
         _path = path
         _location = location
+        _coordinates = coordinates
     }
     
     var body: some View {
@@ -44,6 +46,10 @@ struct LocationSearchView: View {
                     .onTapGesture {
                         path.removeAll()
                         location = locationSearchViewModel.documents[index].addressName
+                        let locationCoordinates = Coordinates(
+                            lat: Double(locationSearchViewModel.documents[index].y) ?? 0.0,
+                            lon: Double(locationSearchViewModel.documents[index].x) ?? 0.0)
+                        coordinates = locationCoordinates
                     }
             }
         }

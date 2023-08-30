@@ -113,7 +113,11 @@ struct ToDoItemAddView: View {
                     LocationSelectionView(locationSelectionViewModel: LocationSelectionViewModel(viewContext: Location.viewContext), path: $toDoItemAddViewModel.path)
                 case .second:
                     let locationSearchViewModel = LocationSearchViewModel()
-                    LocationSearchView(locationSearchViewModel: locationSearchViewModel, path: $toDoItemAddViewModel.path, location: $toDoItemAddViewModel.location)
+                    LocationSearchView(
+                        locationSearchViewModel: locationSearchViewModel,
+                        path: $toDoItemAddViewModel.path,
+                        location: $toDoItemAddViewModel.location,
+                        coordinates: $toDoItemAddViewModel.coordinates)
                 case .third:
                     LocationCheckView()
                 }

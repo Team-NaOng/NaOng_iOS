@@ -14,6 +14,7 @@ class ToDoItemAddViewModel: ObservableObject {
     @Published var isRepeat: Bool = false
     @Published var alarmType: String = "위치"
     @Published var location: String = "위치를 선택해 주세요"
+    @Published var coordinates: Coordinates = Coordinates(lat: 0.0, lon: 0.0)
     @Published var path: [LocationViewStack] = [LocationViewStack]()
 
     private let viewContext: NSManagedObjectContext
@@ -36,7 +37,8 @@ class ToDoItemAddViewModel: ObservableObject {
             toDoItem.alarmType = alarmType
             toDoItem.alarmTime = alarmTime
             toDoItem.isRepeat = isRepeat
-            
+            toDoItem.alarmLocationLatitude = coordinates.lat
+            toDoItem.alarmLocationLongitude = coordinates.lon
             toDoItem.alarmDate = alarmTime.getFormatDate()
 
             try toDoItem.save(viewContext: viewContext)

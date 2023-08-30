@@ -44,8 +44,8 @@ class LocationService: NSObject {
             center: center,
             radius: radius,
             identifier: identifier)
-        circularRegion.notifyOnEntry = true
-        circularRegion.notifyOnExit = false
+        circularRegion.notifyOnEntry = false
+        circularRegion.notifyOnExit = true
         return circularRegion
     }
 }
