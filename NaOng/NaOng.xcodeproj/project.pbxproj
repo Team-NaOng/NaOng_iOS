@@ -34,7 +34,6 @@
 		05477D482A7C3B4100C16F4A /* LocationCheckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05477D472A7C3B4100C16F4A /* LocationCheckView.swift */; };
 		05477D4F2A8222AB00C16F4A /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05477D4E2A8222AB00C16F4A /* CalendarView.swift */; };
 		0549F2D12A38613B002B1248 /* LocationFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0549F2D02A38613B002B1248 /* LocationFetcher.swift */; };
-		055E58E82A972E98005B91DC /* RoadNameAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 055E58E72A972E98005B91DC /* RoadNameAddress.swift */; };
 		055E58EB2A973600005B91DC /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 055E58EA2A973600005B91DC /* NetworkManager.swift */; };
 		055E58ED2A973702005B91DC /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 055E58EC2A973702005B91DC /* NetworkError.swift */; };
 		055E58EF2A9738D1005B91DC /* URLRequestBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 055E58EE2A9738D1005B91DC /* URLRequestBuilder.swift */; };
@@ -103,7 +102,6 @@
 		05477D472A7C3B4100C16F4A /* LocationCheckView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationCheckView.swift; sourceTree = "<group>"; };
 		05477D4E2A8222AB00C16F4A /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		0549F2D02A38613B002B1248 /* LocationFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationFetcher.swift; sourceTree = "<group>"; };
-		055E58E72A972E98005B91DC /* RoadNameAddress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoadNameAddress.swift; sourceTree = "<group>"; };
 		055E58EA2A973600005B91DC /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		055E58EC2A973702005B91DC /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		055E58EE2A9738D1005B91DC /* URLRequestBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLRequestBuilder.swift; sourceTree = "<group>"; };
@@ -300,7 +298,6 @@
 				056B2B4E2A5FC8AC00D52CFF /* ToDoModel.xcdatamodeld */,
 				056B2B512A5FC9D600D52CFF /* ToDoCoreDataManager.swift */,
 				05477D392A7C172600C16F4A /* LocationCoreDataManager.swift */,
-				055E58E72A972E98005B91DC /* RoadNameAddress.swift */,
 				05FD378C2A9FA045006FDAEC /* KakaoLocal.swift */,
 			);
 			path = DataModel;
@@ -476,7 +473,6 @@
 				05477D482A7C3B4100C16F4A /* LocationCheckView.swift in Sources */,
 				0534F9A72A8FBBC000A90BF7 /* SettingViewModel.swift in Sources */,
 				058A9E7F2A95E70D005A498A /* MailView.swift in Sources */,
-				055E58E82A972E98005B91DC /* RoadNameAddress.swift in Sources */,
 				0500E94A2A482D7700A3F338 /* ToDoListItemView.swift in Sources */,
 				05477D412A7C220D00C16F4A /* Location+Extensions.swift in Sources */,
 				056B2B502A5FC8AC00D52CFF /* ToDoModel.xcdatamodeld in Sources */,
