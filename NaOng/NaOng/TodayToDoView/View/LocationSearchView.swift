@@ -8,12 +8,15 @@
 import SwiftUI
 
 struct LocationSearchView: View {
-    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    
     @ObservedObject private var locationSearchViewModel: LocationSearchViewModel
+
+    @Binding var path: [LocationViewStack]
+    @Binding var location: String
     
-    init(locationSearchViewModel: LocationSearchViewModel) {
+    init(locationSearchViewModel: LocationSearchViewModel, path: Binding<[LocationViewStack]>, location: Binding<String>) {
         self.locationSearchViewModel = locationSearchViewModel
+        _path = path
+        _location = location
     }
     
     var body: some View {
@@ -38,6 +41,10 @@ struct LocationSearchView: View {
                         if index == (locationSearchViewModel.roadNameAddress.count - 1) {
                             locationSearchViewModel.scroll()
                         }
+                    }
+                    .onTapGesture {
+                        path.removeAll()
+                        location = locationSearchViewModel.roadNameAddress[index].roadAddrPart1
                     }
             }
         }

@@ -7,6 +7,13 @@
 
 import SwiftUI
 
+
+enum LocationViewStack {
+    case first
+    case second
+    case third
+}
+
 struct ToDoItemAddView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.managedObjectContext) var managedObjectContext
@@ -18,7 +25,7 @@ struct ToDoItemAddView: View {
     }
     
     var body: some View {
-        NavigationView {
+        NavigationStack(path: $toDoItemAddViewModel.path) {
             VStack() {
                 Button {
                     dismiss()
@@ -67,10 +74,14 @@ struct ToDoItemAddView: View {
                     
                     if toDoItemAddViewModel.alarmType == "위치" {
                         ToDoViewFactory.makeToDoMoldView(
-                            content: ToDoViewFactory.makeAlarmLocationView(
-                                title: "알림 위치",
-                                selectedLocation: toDoItemAddViewModel.location,
-                                destination: LocationSelectionView(locationSelectionViewModel: LocationSelectionViewModel(viewContext: Location.viewContext)))
+                            content: Button {
+                                toDoItemAddViewModel.addPath(.first)
+                            } label: {
+                                ToDoViewFactory.makeAlarmLocationView(
+                                    title: "알람 위치",
+                                    selectedLocation: toDoItemAddViewModel.location
+                                )
+                            }
                         )
                     } else {
                         ToDoViewFactory.makeToDoMoldView(
@@ -94,6 +105,17 @@ struct ToDoItemAddView: View {
                         )
                     }
                     .padding()
+                }
+            }
+            .navigationDestination(for: LocationViewStack.self) { myStack in
+                switch myStack {
+                case .first:
+                    LocationSelectionView(locationSelectionViewModel: LocationSelectionViewModel(viewContext: Location.viewContext), path: $toDoItemAddViewModel.path)
+                case .second:
+                    let locationSearchViewModel = LocationSearchViewModel()
+                    LocationSearchView(locationSearchViewModel: locationSearchViewModel, path: $toDoItemAddViewModel.path, location: $toDoItemAddViewModel.location)
+                case .third:
+                    LocationCheckView()
                 }
             }
         }

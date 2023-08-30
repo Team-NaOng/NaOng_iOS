@@ -38,12 +38,12 @@ struct ToDoItemDetailView: View {
             )
             
             if toDoItemDetailViewModel.alarmType == "위치" {
-                ToDoViewFactory.makeToDoMoldView(
-                    content: ToDoViewFactory.makeAlarmLocationView(
-                        title: "알림 위치",
-                        selectedLocation: "도로명 주소 수정하기",
-                        destination: LocationSelectionView(locationSelectionViewModel: LocationSelectionViewModel(viewContext: Location.viewContext)))
-                )
+//                ToDoViewFactory.makeToDoMoldView(
+//                    content: ToDoViewFactory.makeAlarmLocationView(
+//                        title: "알림 위치",
+//                        selectedLocation: "도로명 주소 수정하기",
+//                        destination: LocationSelectionView(locationSelectionViewModel: LocationSelectionViewModel(viewContext: Location.viewContext), path: $path))
+//                )
             } else {
                 ToDoViewFactory.makeToDoMoldView(
                     content: ToDoViewFactory.makeAlarmTimeView(

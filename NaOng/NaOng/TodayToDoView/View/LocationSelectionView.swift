@@ -9,16 +9,17 @@ import SwiftUI
 
 struct LocationSelectionView: View {
     @ObservedObject private var locationSelectionViewModel: LocationSelectionViewModel
+    @Binding var path: [LocationViewStack]
     
-    init(locationSelectionViewModel: LocationSelectionViewModel) {
+    init(locationSelectionViewModel: LocationSelectionViewModel, path: Binding<[LocationViewStack]>) {
         self.locationSelectionViewModel = locationSelectionViewModel
+        _path = path
     }
     
     var body: some View {
         VStack {
-            NavigationLink {
-                let locationSearchViewModel = LocationSearchViewModel()
-                LocationSearchView(locationSearchViewModel: locationSearchViewModel)
+            Button {
+                path.append(.second)
             } label: {
                 ZStack {
                     RoundedRectangle(cornerRadius: 5)
@@ -34,8 +35,8 @@ struct LocationSelectionView: View {
             }
             .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20))
             
-            NavigationLink {
-                LocationCheckView()
+            Button {
+                path.append(.third)
             } label: {
                 HStack {
                     Image(systemName: "paperplane.circle")
@@ -75,13 +76,5 @@ struct LocationSelectionView: View {
         .navigationTitle("주소 설정")
         .navigationBarItems(trailing: EditButton())
         .foregroundColor(.black)
-    }
-}
-
-struct LocationSelectionView_Previews: PreviewProvider {
-    static var previews: some View {
-        let viewContext = Location.viewContext
-        let locationSelectionViewModel = LocationSelectionViewModel(viewContext: viewContext)
-        LocationSelectionView(locationSelectionViewModel: locationSelectionViewModel)
     }
 }

@@ -111,11 +111,10 @@ class ToDoViewFactory {
         )
     }
     
-    static func makeAlarmLocationView<Destination: View>(
+    static func makeAlarmLocationView(
         width: CGFloat = UIScreen.main.bounds.width - 60,
         title: String,
-        selectedLocation: String,
-        destination : Destination
+        selectedLocation: String
     ) -> some View {
         return HStack {
             ToDoViewFactory.makeToDoTitle(title: title)
@@ -125,12 +124,8 @@ class ToDoViewFactory {
             ToDoViewFactory.makeToDoTitle(title: selectedLocation)
                 .lineLimit(1)
             
-            NavigationLink {
-                destination
-            } label: {
-                Image(systemName: "chevron.right")
-                    .foregroundColor(.black)
-            }
+            Image(systemName: "chevron.right")
+                .foregroundColor(.black)
         }
         .padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10))
         .frame(width: width)
