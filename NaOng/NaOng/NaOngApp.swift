@@ -17,6 +17,7 @@ struct NaOngApp: App {
                 .environment(\.managedObjectContext, viewContext)
                 .environmentObject(localNotificationManager)
                 .onAppear {
+                    LocationService.shared.loadLocation()
                     localNotificationManager.requestAuthorization()
                     UNUserNotificationCenter.current().delegate = localNotificationManager
                 }
