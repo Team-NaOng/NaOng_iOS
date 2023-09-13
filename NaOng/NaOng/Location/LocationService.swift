@@ -11,8 +11,8 @@ import SwiftUI
 class LocationService: NSObject {
     static let shared = LocationService()
     private var locationManager: CLLocationManager?
-    @AppStorage("userLatitude") private var latitude: Double = 0
-    @AppStorage("userLongitude") private var longitude: Double = 0
+    private var latitude: Double = 0
+    private var longitude: Double = 0
 
     private override init() {
         super.init()

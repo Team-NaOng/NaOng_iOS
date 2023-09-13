@@ -8,13 +8,13 @@
 import SwiftUI
 
 struct LocationCheckView: View {
+    @State var draw: Bool = false
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-    }
-}
-
-struct LocationCheckView_Previews: PreviewProvider {
-    static var previews: some View {
-        LocationCheckView()
+        KakaoMapView(draw: $draw).onAppear(perform: {
+            self.draw = true
+        }).onDisappear(perform: {
+            self.draw = false
+        }).frame(maxWidth: .infinity, maxHeight: .infinity)
+        
     }
 }
