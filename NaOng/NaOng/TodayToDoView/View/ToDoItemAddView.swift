@@ -119,7 +119,9 @@ struct ToDoItemAddView: View {
                         location: $toDoItemAddViewModel.location,
                         coordinates: $toDoItemAddViewModel.coordinates)
                 case .third:
-                    LocationCheckView()
+                    LocationCheckView(
+                        path: $toDoItemAddViewModel.path
+                    )
                 }
             }
         }

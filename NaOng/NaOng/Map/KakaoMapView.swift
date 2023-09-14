@@ -10,9 +10,7 @@ import KakaoMapsSDK
 
 struct KakaoMapView: UIViewRepresentable {
     @Binding var draw: Bool
-    
-    /// UIView를 상속한 KMViewContainer를 생성한다.
-    /// 뷰 생성과 함께 KMControllerDelegate를 구현한 Coordinator를 생성하고, 엔진을 생성 및 초기화한다.
+
     func makeUIView(context: Self.Context) -> KMViewContainer {
         let view: KMViewContainer = KMViewContainer()
         view.sizeToFit()
