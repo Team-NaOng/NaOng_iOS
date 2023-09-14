@@ -22,11 +22,6 @@ struct KakaoMapView: UIViewRepresentable {
         return view
     }
     
-    
-    /// Updates the presented `UIView` (and coordinator) to the latest
-    /// configuration.
-    /// draw가 true로 설정되면 엔진을 시작하고 렌더링을 시작한다.
-    /// draw가 false로 설정되면 렌더링을 멈추고 엔진을 stop한다.
     func updateUIView(_ uiView: KMViewContainer, context: Self.Context) {
         if draw {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
@@ -40,47 +35,50 @@ struct KakaoMapView: UIViewRepresentable {
         }
     }
     
-    /// Coordinator 생성
     func makeCoordinator() -> KakaoMapCoordinator {
-        return KakaoMapCoordinator(viewName: "mapview")
+        return KakaoMapCoordinator()
     }
     
-    /// Cleans up the presented `UIView` (and coordinator) in
-    /// anticipation of their removal.
     static func dismantleUIView(_ uiView: KMViewContainer, coordinator: KakaoMapCoordinator) {
         
     }
     
-    /// Coordinator 구현. KMControllerDelegate를 adopt한다.
     class KakaoMapCoordinator: NSObject, MapControllerDelegate {
         var controller: KMController?
         var first: Bool
-
-        init(viewName: String) {
+        
+        private var _mapTapEventHandler: DisposableEventHandler?
+        
+        override init() {
             first = true
             super.init()
         }
         
-        // KMController 객체 생성 및 event delegate 지정
+        deinit {
+            _mapTapEventHandler?.dispose()
+        }
+        
         func createController(_ view: KMViewContainer) {
             controller = KMController(viewContainer: view)
             controller?.delegate = self
         }
         
-        // KMControllerDelegate Protocol method구현
-        
-        /// 엔진 생성 및 초기화 이후, 렌더링 준비가 완료되면 아래 addViews를 호출한다.
-        /// 원하는 뷰를 생성한다.
         func addViews() {
             let defaultPosition: MapPoint = MapPoint(longitude: 127.108678, latitude: 37.402001)
             let mapviewInfo: MapviewInfo = MapviewInfo(viewName: "mapview", viewInfoName: "map", defaultPosition: defaultPosition, defaultLevel: 7)
             
-            if controller?.addView(mapviewInfo) == Result.OK {
-                let _ = controller?.getView("mapview") as! KakaoMap
+            guard controller?.addView(mapviewInfo) == Result.OK,
+                  let mapView = controller?.getView("mapview") as? KakaoMap else {
+                return
+            }
+            
+            _mapTapEventHandler = mapView.addMapTappedEventHandler(target: self) { [weak self] coordinator in
+                return { param in
+                    self?.mapDidTapped(param)
+                }
             }
         }
         
-        /// KMViewContainer 리사이징 될 때 호출.
         func containerDidResized(_ size: CGSize) {
             guard let mapView: KakaoMap = controller?.getView("mapview") as? KakaoMap else {
                 return
@@ -94,6 +92,16 @@ struct KakaoMapView: UIViewRepresentable {
                 mapView.moveCamera(cameraUpdate)
                 first = false
             }
+        }
+        
+        func mapDidTapped(_ param: ViewInteractionEventParam) {
+            guard let mapView = param.view as? KakaoMap else {
+                return
+            }
+            
+            let position = mapView.getPosition(param.point)
+            
+            print("❗️: \( position.wgsCoord.latitude), \(position.wgsCoord.latitude)")
         }
     }
 }
