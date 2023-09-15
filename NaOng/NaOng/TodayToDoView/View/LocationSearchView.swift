@@ -36,7 +36,7 @@ struct LocationSearchView: View {
             }
             
             List(0..<locationSearchViewModel.documents.count, id: \.self) { index in
-                Text(locationSearchViewModel.documents[index].addressName)
+                Text(locationSearchViewModel.documents[index].addressName ?? "위치")
                     .padding()
                     .onAppear {
                         if index == (locationSearchViewModel.documents.count - 1) {
@@ -45,10 +45,10 @@ struct LocationSearchView: View {
                     }
                     .onTapGesture {
                         path.removeAll()
-                        location = locationSearchViewModel.documents[index].addressName
+                        location = locationSearchViewModel.documents[index].addressName ?? "위치"
                         let locationCoordinates = Coordinates(
-                            lat: Double(locationSearchViewModel.documents[index].y) ?? 0.0,
-                            lon: Double(locationSearchViewModel.documents[index].x) ?? 0.0)
+                            lat: Double(locationSearchViewModel.documents[index].y ?? "0.0") ?? 0.0,
+                            lon: Double(locationSearchViewModel.documents[index].x ?? "0.0") ?? 0.0)
                         coordinates = locationCoordinates
                     }
             }

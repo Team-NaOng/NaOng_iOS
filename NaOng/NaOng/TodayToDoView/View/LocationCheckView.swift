@@ -8,19 +8,25 @@
 import SwiftUI
 
 struct LocationCheckView: View {
+    @ObservedObject private var locationCheckViewModel: LocationCheckViewModel
+    
     @Binding var path: [LocationViewStack]
+    
+    init(locationCheckViewModel: LocationCheckViewModel, path: Binding<[LocationViewStack]>) {
+        self.locationCheckViewModel = locationCheckViewModel
+        _path = path
+    }
 
-    @State var draw: Bool = false
     var body: some View {
         VStack {
-            KakaoMapView(draw: $draw).onAppear(perform: {
-                self.draw = true
+            KakaoMapView(draw: $locationCheckViewModel.draw).onAppear(perform: {
+                locationCheckViewModel.draw = true
             }).onDisappear(perform: {
-                self.draw = false
+                locationCheckViewModel.draw = false
             }).frame(maxWidth: .infinity, maxHeight: .infinity)
             
             VStack(alignment: .leading) {
-                Text("주소")
+                Text(locationCheckViewModel.currentLocation)
                     .font(.custom("Binggrae-Bold", size: 20))
                     .padding()
 

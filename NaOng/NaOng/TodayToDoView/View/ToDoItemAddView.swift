@@ -110,7 +110,10 @@ struct ToDoItemAddView: View {
             .navigationDestination(for: LocationViewStack.self) { myStack in
                 switch myStack {
                 case .first:
-                    LocationSelectionView(locationSelectionViewModel: LocationSelectionViewModel(viewContext: Location.viewContext), path: $toDoItemAddViewModel.path)
+                    let locationSelectionViewModel = LocationSelectionViewModel(viewContext: Location.viewContext)
+                    LocationSelectionView(
+                        locationSelectionViewModel: locationSelectionViewModel,
+                        path: $toDoItemAddViewModel.path)
                 case .second:
                     let locationSearchViewModel = LocationSearchViewModel()
                     LocationSearchView(
@@ -119,9 +122,10 @@ struct ToDoItemAddView: View {
                         location: $toDoItemAddViewModel.location,
                         coordinates: $toDoItemAddViewModel.coordinates)
                 case .third:
+                    let locationCheckViewModel = LocationCheckViewModel()
                     LocationCheckView(
-                        path: $toDoItemAddViewModel.path
-                    )
+                        locationCheckViewModel: locationCheckViewModel,
+                        path: $toDoItemAddViewModel.path)
                 }
             }
         }

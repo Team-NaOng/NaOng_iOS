@@ -23,10 +23,10 @@ struct KakaoLocal: Codable {
  - roadAddress: 도로명주소 상세 정보
 */
 struct Document: Codable {
-    let addressName: String
-    let addressType: String
-    let x: String
-    let y: String
+    let addressName: String?
+    let addressType: String?
+    let x: String?
+    let y: String?
     let address: Address?
     let roadAddress: RoadAddress
 
@@ -56,18 +56,18 @@ struct Document: Codable {
  - y: Y 좌표값, 경위도인 경우 latitude (위도)
 */
 struct Address: Codable {
-    let addressName: String
-    let region1DepthName: String
-    let region2DepthName: String
-    let region3DepthName: String
-    let region3DepthHName: String
-    let hCode: String
-    let bCode: String
-    let mountainYn: String
-    let mainAddressNo: String
+    let addressName: String?
+    let region1DepthName: String?
+    let region2DepthName: String?
+    let region3DepthName: String?
+    let region3DepthHName: String?
+    let hCode: String?
+    let bCode: String?
+    let mountainYn: String?
+    let mainAddressNo: String?
     let subAddressNo: String
-    let x: String
-    let y: String
+    let x: String?
+    let y: String?
 
     enum CodingKeys: String, CodingKey {
         case addressName = "address_name"
@@ -101,18 +101,18 @@ struct Address: Codable {
  - y: Y 좌표값, 경위도인 경우 latitude (위도)
 */
 struct RoadAddress: Codable {
-    let addressName: String
-    let region1DepthName: String
-    let region2DepthName: String
-    let region3DepthName: String
-    let roadName: String
-    let undergroundYn: String
-    let mainBuildingNo: String
-    let subBuildingNo: String
-    let buildingName: String
-    let zoneNo: String
-    let x: String
-    let y: String
+    let addressName: String?
+    let region1DepthName: String?
+    let region2DepthName: String?
+    let region3DepthName: String?
+    let roadName: String?
+    let undergroundYn: String?
+    let mainBuildingNo: String?
+    let subBuildingNo: String?
+    let buildingName: String?
+    let zoneNo: String?
+    let x: String?
+    let y: String?
 
     enum CodingKeys: String, CodingKey {
         case addressName = "address_name"
@@ -137,9 +137,9 @@ struct RoadAddress: Codable {
  - isEnd: 현재 페이지가 마지막 페이지인지 여부, 값이 false면 page를 증가시켜 다음 페이지를 요청할 수 있음
 */
 struct Meta: Codable {
-    let totalCount: Int
-    let pageableCount: Int
-    let isEnd: Bool
+    let totalCount: Int?
+    let pageableCount: Int?
+    let isEnd: Bool?
     
     enum CodingKeys: String, CodingKey {
         case totalCount = "total_count"
