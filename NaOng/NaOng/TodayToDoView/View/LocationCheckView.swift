@@ -11,10 +11,14 @@ struct LocationCheckView: View {
     @ObservedObject private var locationCheckViewModel: LocationCheckViewModel
     
     @Binding var path: [LocationViewStack]
+    @Binding var location: String
+    @Binding var coordinates: Coordinates
     
-    init(locationCheckViewModel: LocationCheckViewModel, path: Binding<[LocationViewStack]>) {
+    init(locationCheckViewModel: LocationCheckViewModel, path: Binding<[LocationViewStack]>, location: Binding<String>, coordinates: Binding<Coordinates>) {
         self.locationCheckViewModel = locationCheckViewModel
         _path = path
+        _location = location
+        _coordinates = coordinates
     }
 
     var body: some View {
@@ -32,6 +36,8 @@ struct LocationCheckView: View {
 
                 Button {
                     path.removeAll()
+                    location = locationCheckViewModel.currentLocation
+                    coordinates = locationCheckViewModel.currentCoordinate
                 } label: {
                     Text("이 위치로 설정")
                         .font(.custom("Binggrae", size: 15))

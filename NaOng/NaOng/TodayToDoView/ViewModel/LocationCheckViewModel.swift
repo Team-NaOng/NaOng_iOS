@@ -6,17 +6,39 @@
 //
 
 import Foundation
+import KakaoMapsSDK
 
 @MainActor
 class LocationCheckViewModel: NSObject, ObservableObject {
     @Published var draw: Bool = true
     @Published var currentLocation: String = ""
+    @Published var currentCoordinate: Coordinates = Coordinates(lat: 0.0, lon: 0.0)
 
     override init() {
         super.init()
         
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(handleMapPoint(_:)),
+            name: Notification.Name("MapPointNotification"),
+            object: nil)
+
+        setCurrentLocation(coordinate: LocationService.shared.getLocation())
+    }
+    
+    @objc func handleMapPoint(_ notification: Notification) {
+        if let position = notification.object as? MapPoint {
+            let coordinate = Coordinates(
+                lat: position.wgsCoord.latitude,
+                lon: position.wgsCoord.longitude)
+            
+            setCurrentLocation(coordinate: coordinate)
+        }
+    }
+    
+    private func setCurrentLocation(coordinate: Coordinates) {
         Task {
-            guard let urlRequest = getKakaoLocalGeoURLRequest(),
+            guard let urlRequest = getKakaoLocalGeoURLRequest(coordinate: coordinate),
                   let documents = await performKakaoLocalRequest(urlRequest),
                   let address = documents.first?.roadAddress.addressName else {
                 currentLocation = "위치 불러오기 실패"
@@ -24,11 +46,11 @@ class LocationCheckViewModel: NSObject, ObservableObject {
             }
             
             currentLocation = address
+            currentCoordinate = coordinate
         }
     }
     
-    private func getKakaoLocalGeoURLRequest() -> URLRequest? {
-        let coordinate = LocationService.shared.getLocation()
+    private func getKakaoLocalGeoURLRequest(coordinate: Coordinates) -> URLRequest? {
         return URLRequestBuilder()
             .setHost("dapi.kakao.com")
             .setPath("/v2/local/geo/coord2address.json")

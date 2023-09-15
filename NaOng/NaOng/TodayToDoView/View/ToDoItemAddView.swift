@@ -125,7 +125,9 @@ struct ToDoItemAddView: View {
                     let locationCheckViewModel = LocationCheckViewModel()
                     LocationCheckView(
                         locationCheckViewModel: locationCheckViewModel,
-                        path: $toDoItemAddViewModel.path)
+                        path: $toDoItemAddViewModel.path,
+                        location: $toDoItemAddViewModel.location,
+                        coordinates: $toDoItemAddViewModel.coordinates)
                 }
             }
         }

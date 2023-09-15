@@ -7,6 +7,7 @@
 
 import SwiftUI
 import KakaoMapsSDK
+import Combine
 
 struct KakaoMapView: UIViewRepresentable {
     @Binding var draw: Bool
@@ -99,7 +100,9 @@ struct KakaoMapView: UIViewRepresentable {
             
             let position = mapView.getPosition(param.point)
             
-            print("❗️: \( position.wgsCoord.latitude), \(position.wgsCoord.latitude)")
+            NotificationCenter.default.post(
+                name: Notification.Name("MapPointNotification"),
+                object: position)
         }
     }
 }
