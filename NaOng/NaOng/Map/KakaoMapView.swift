@@ -77,7 +77,7 @@ struct KakaoMapView: UIViewRepresentable {
                 }
             }
         }
-        
+
         func containerDidResized(_ size: CGSize) {
             guard let mapView: KakaoMap = controller?.getView("mapview") as? KakaoMap else {
                 return
@@ -87,10 +87,13 @@ struct KakaoMapView: UIViewRepresentable {
             
             if first {
                 let currentCoordinates = LocationService.shared.getLocation()
-                let cameraUpdate: CameraUpdate = CameraUpdate.make(target: MapPoint(longitude: currentCoordinates.lon, latitude: currentCoordinates.lat), zoomLevel: 18, rotation: 1.7, tilt: 0.0, mapView: mapView)
+                let cameraUpdate: CameraUpdate = CameraUpdate.make(target: MapPoint(longitude: currentCoordinates.lon, latitude: currentCoordinates.lat), zoomLevel: 18, rotation: 0.0, tilt: 0.0, mapView: mapView)
                 mapView.moveCamera(cameraUpdate)
                 first = false
             }
+            
+            let manager = mapView.getLabelManager()
+            createLabelLayer(manager)
         }
         
         func mapDidTapped(_ param: ViewInteractionEventParam) {
@@ -105,8 +108,7 @@ struct KakaoMapView: UIViewRepresentable {
                 object: position)
             
             let manager = mapView.getLabelManager()
-            removeAllPois(manager)
-            createLabelLayer(manager)
+            hideAllPois(manager)
             createPoiStyle(manager)
             createPois(manager, position)
         }
@@ -125,7 +127,7 @@ struct KakaoMapView: UIViewRepresentable {
             let pinImage = UIImage(named: "pin")
             let resizedImage = pinImage?.resize(targetSize: CGSize(width: 50.0, height: 50.0))
             
-            let iconStyle = PoiIconStyle(symbol: resizedImage, anchorPoint: CGPoint(x: 0.3, y: 0.3))
+            let iconStyle = PoiIconStyle(symbol: resizedImage, anchorPoint: CGPoint(x: 0.5, y: 1.0))
             let perLevelStyle = PerLevelPoiStyle(iconStyle: iconStyle, level: 0)
             let poiStyle = PoiStyle(styleID: "customStyle1", styles: [perLevelStyle])
             manager.addPoiStyle(poiStyle)
@@ -134,8 +136,7 @@ struct KakaoMapView: UIViewRepresentable {
         private func createPois(_ manager: LabelManager, _ mapPoint: MapPoint) {
             let layer = manager.getLabelLayer(layerID: "PoiLayer")
             let poiOption = PoiOptions(styleID: "customStyle1")
-            poiOption.rank = 0
-            poiOption.clickable = true
+            poiOption.transformType = .decal
             
             let poi = layer?.addPoi(
                 option: poiOption,
@@ -144,7 +145,7 @@ struct KakaoMapView: UIViewRepresentable {
             poi?.show()
         }
         
-        private func removeAllPois(_ manager: LabelManager) {
+        private func hideAllPois(_ manager: LabelManager) {
             let layer = manager.getLabelLayer(layerID: "PoiLayer")
             layer?.hideAllPois()
         }
