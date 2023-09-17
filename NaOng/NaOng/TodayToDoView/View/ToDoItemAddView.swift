@@ -96,6 +96,7 @@ struct ToDoItemAddView: View {
                     
                     Button {
                         toDoItemAddViewModel.addToDo()
+                        toDoItemAddViewModel.addLocation()
                         dismiss()
                     } label: {
                         ToDoViewFactory.makeToDoMoldView(
@@ -113,7 +114,9 @@ struct ToDoItemAddView: View {
                     let locationSelectionViewModel = LocationSelectionViewModel(viewContext: Location.viewContext)
                     LocationSelectionView(
                         locationSelectionViewModel: locationSelectionViewModel,
-                        path: $toDoItemAddViewModel.path)
+                        path: $toDoItemAddViewModel.path,
+                        location: $toDoItemAddViewModel.location,
+                        coordinates: $toDoItemAddViewModel.coordinates)
                 case .second:
                     let locationSearchViewModel = LocationSearchViewModel()
                     LocationSearchView(

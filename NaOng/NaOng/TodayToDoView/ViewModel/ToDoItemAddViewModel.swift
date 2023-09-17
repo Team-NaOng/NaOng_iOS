@@ -48,6 +48,25 @@ class ToDoItemAddViewModel: ObservableObject {
         }
     }
     
+    func addLocation() {
+        if alarmType != "위치" {
+            return
+        }
+
+        do {
+            let locationViewContext = Location.viewContext
+            let location = Location(context: locationViewContext)
+            location.id = UUID().uuidString
+            location.address = self.location
+            location.latitude = coordinates.lat
+            location.longitude = coordinates.lon
+
+            try location.save(viewContext: locationViewContext)
+        } catch {
+            print("error!")
+        }
+    }
+    
     private func scheduleNotification(for toDoItem: ToDo) {
         if toDoItem.alarmType == "위치" {
             LocalNotificationManager().setLocalNotification(toDo: toDoItem)

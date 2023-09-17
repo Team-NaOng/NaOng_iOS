@@ -9,11 +9,16 @@ import SwiftUI
 
 struct LocationSelectionView: View {
     @ObservedObject private var locationSelectionViewModel: LocationSelectionViewModel
+
     @Binding var path: [LocationViewStack]
+    @Binding var location: String
+    @Binding var coordinates: Coordinates
     
-    init(locationSelectionViewModel: LocationSelectionViewModel, path: Binding<[LocationViewStack]>) {
+    init(locationSelectionViewModel: LocationSelectionViewModel, path: Binding<[LocationViewStack]>, location: Binding<String>, coordinates: Binding<Coordinates>) {
         self.locationSelectionViewModel = locationSelectionViewModel
         _path = path
+        _location = location
+        _coordinates = coordinates
     }
     
     var body: some View {
@@ -59,11 +64,14 @@ struct LocationSelectionView: View {
                             .scaledToFit()
                             .frame(width: 20, height: 20)
                         Text(location.address ?? "")
-                        
-                        Spacer()
-                        
-                        Image(systemName: "checkmark")
+                            .frame(width: UIScreen.main.bounds.width - 60, alignment: .leading)
                     }
+                    .onTapGesture {
+                        self.location = location.address ?? "위치를 가져올 수 없습니다."
+                        coordinates = Coordinates(lat: location.latitude, lon: location.longitude)
+                        path.removeAll()
+                    }
+                    .frame(height: 50)
                 }
                 .onDelete { indexSet in
                     withAnimation {

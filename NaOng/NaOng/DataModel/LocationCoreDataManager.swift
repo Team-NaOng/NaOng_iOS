@@ -16,7 +16,7 @@ class LocationCoreDataManager: ObservableObject {
         persistentContainer = NSPersistentContainer(name: "LocationModel")
         persistentContainer.loadPersistentStores { description, error in
             if let error = error {
-                fatalError("fail To loadPersistentStores.")
+                print("❌ TODO: 에러 메세지 수정 / \(error)")
             }
         }
     }
