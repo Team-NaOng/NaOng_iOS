@@ -93,7 +93,13 @@ struct KakaoMapView: UIViewRepresentable {
             }
             
             let manager = mapView.getLabelManager()
+            let position = MapPoint(
+                longitude: LocationService.shared.getLocation().lon,
+                latitude: LocationService.shared.getLocation().lat)
+
             createLabelLayer(manager)
+            createPoiStyle(manager)
+            createPois(manager, position)
         }
         
         func mapDidTapped(_ param: ViewInteractionEventParam) {
