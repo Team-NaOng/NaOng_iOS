@@ -28,7 +28,7 @@ struct Document: Codable {
     let x: String?
     let y: String?
     let address: Address?
-    let roadAddress: RoadAddress
+    let roadAddress: RoadAddress?
 
     enum CodingKeys: String, CodingKey {
         case addressName = "address_name"
@@ -65,7 +65,7 @@ struct Address: Codable {
     let bCode: String?
     let mountainYn: String?
     let mainAddressNo: String?
-    let subAddressNo: String
+    let subAddressNo: String?
     let x: String?
     let y: String?
 

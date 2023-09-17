@@ -39,13 +39,16 @@ class LocationCheckViewModel: NSObject, ObservableObject {
     private func setCurrentLocation(coordinate: Coordinates) {
         Task {
             guard let urlRequest = getKakaoLocalGeoURLRequest(coordinate: coordinate),
-                  let documents = await performKakaoLocalRequest(urlRequest),
-                  let address = documents.first?.roadAddress.addressName else {
-                currentLocation = "위치 불러오기 실패"
-                      return
+                  let documents = await performKakaoLocalRequest(urlRequest) else {
+                return
             }
             
-            currentLocation = address
+            if let roadAddress = documents.first?.roadAddress?.addressName{
+                currentLocation = roadAddress
+            } else if let address = documents.first?.address?.addressName {
+                currentLocation = address
+            }
+            
             currentCoordinate = coordinate
         }
     }
