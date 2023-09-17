@@ -44,28 +44,56 @@ class ToDoItemAddViewModel: ObservableObject {
             try toDoItem.save(viewContext: viewContext)
             scheduleNotification(for: toDoItem)
         } catch {
-            print("error!")
+            print(error)
         }
     }
     
     func addLocation() {
-        if alarmType != "위치" {
-            return
-        }
+        guard alarmType == "위치" else { return }
 
-        do {
-            let locationViewContext = Location.viewContext
-            let location = Location(context: locationViewContext)
-            location.id = UUID().uuidString
-            location.address = self.location
-            location.latitude = coordinates.lat
-            location.longitude = coordinates.lon
-
-            try location.save(viewContext: locationViewContext)
-        } catch {
-            print("error!")
+        if isLocationContained(address: location) == false {
+            saveLocation()
         }
     }
+
+    private func isLocationContained(address: String) -> Bool {
+        guard let fetchedLocations = fetchLocations() else { return false }
+        return fetchedLocations.contains { $0.address == address }
+    }
+
+    private func saveLocation() {
+        let locationViewContext = Location.viewContext
+        let location = Location(context: locationViewContext)
+        location.id = UUID().uuidString
+        location.address = self.location
+        location.latitude = coordinates.lat
+        location.longitude = coordinates.lon
+        
+        do {
+            try location.save(viewContext: locationViewContext)
+        } catch {
+            print(error)
+        }
+    }
+
+    private func fetchLocations() -> [Location]? {
+        let fetchRequest = Location.all() ?? Location.fetchRequest()
+        let fetchedResultsController = NSFetchedResultsController(
+            fetchRequest: fetchRequest,
+            managedObjectContext: Location.viewContext,
+            sectionNameKeyPath: nil,
+            cacheName: nil
+        )
+
+        do {
+            try fetchedResultsController.performFetch()
+            return fetchedResultsController.fetchedObjects
+        } catch {
+            print(error)
+            return nil
+        }
+    }
+
     
     private func scheduleNotification(for toDoItem: ToDo) {
         if toDoItem.alarmType == "위치" {
