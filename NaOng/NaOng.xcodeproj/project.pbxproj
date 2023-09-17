@@ -15,6 +15,7 @@
 		05173EA42A87728A00CDF988 /* NotificationListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05173EA32A87728A00CDF988 /* NotificationListView.swift */; };
 		05173EA62A8772B300CDF988 /* NotificationListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05173EA52A8772B300CDF988 /* NotificationListViewModel.swift */; };
 		05173EA82A880E6C00CDF988 /* NotificationListItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05173EA72A880E6C00CDF988 /* NotificationListItemView.swift */; };
+		051BFA1D2AB6E39E00BBC8C6 /* UIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051BFA1C2AB6E39E00BBC8C6 /* UIImage+Extensions.swift */; };
 		0534F99B2A8F9A2B00A90BF7 /* LocalNotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0534F99A2A8F9A2B00A90BF7 /* LocalNotificationManager.swift */; };
 		0534F99D2A8F9AC000A90BF7 /* CustomNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0534F99C2A8F9AC000A90BF7 /* CustomNavigationBar.swift */; };
 		0534F9A72A8FBBC000A90BF7 /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0534F9A62A8FBBC000A90BF7 /* SettingViewModel.swift */; };
@@ -86,6 +87,7 @@
 		05173EA32A87728A00CDF988 /* NotificationListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationListView.swift; sourceTree = "<group>"; };
 		05173EA52A8772B300CDF988 /* NotificationListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationListViewModel.swift; sourceTree = "<group>"; };
 		05173EA72A880E6C00CDF988 /* NotificationListItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationListItemView.swift; sourceTree = "<group>"; };
+		051BFA1C2AB6E39E00BBC8C6 /* UIImage+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extensions.swift"; sourceTree = "<group>"; };
 		0534F99A2A8F9A2B00A90BF7 /* LocalNotificationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalNotificationManager.swift; sourceTree = "<group>"; };
 		0534F99C2A8F9AC000A90BF7 /* CustomNavigationBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomNavigationBar.swift; sourceTree = "<group>"; };
 		0534F9A62A8FBBC000A90BF7 /* SettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewModel.swift; sourceTree = "<group>"; };
@@ -319,6 +321,7 @@
 				05EEE1052A856098007AD5F7 /* UITextView+Extensions.swift */,
 				05EEE1072A8578CE007AD5F7 /* Date+Extensions.swift */,
 				058A9E7C2A95E40D005A498A /* Bundle+Extensions.swift */,
+				051BFA1C2AB6E39E00BBC8C6 /* UIImage+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -503,6 +506,7 @@
 				05477D382A7C16A100C16F4A /* LocationModel.xcdatamodeld in Sources */,
 				05F233BB2A2AF3D10091D5B3 /* LocationService.swift in Sources */,
 				05EEE1042A8551C7007AD5F7 /* UITextViewWrapper.swift in Sources */,
+				051BFA1D2AB6E39E00BBC8C6 /* UIImage+Extensions.swift in Sources */,
 				0534F99B2A8F9A2B00A90BF7 /* LocalNotificationManager.swift in Sources */,
 				05477D082A7577BD00C16F4A /* View+Extensions.swift in Sources */,
 				055E58F12A97A8D5005B91DC /* LocationSearchViewModel.swift in Sources */,

@@ -103,6 +103,50 @@ struct KakaoMapView: UIViewRepresentable {
             NotificationCenter.default.post(
                 name: Notification.Name("MapPointNotification"),
                 object: position)
+            
+            let manager = mapView.getLabelManager()
+            removeAllPois(manager)
+            createLabelLayer(manager)
+            createPoiStyle(manager)
+            createPois(manager, position)
+        }
+        
+        private func createLabelLayer(_ manager: LabelManager) {
+            let layerOption = LabelLayerOptions(
+                layerID: "PoiLayer",
+                competitionType: .none,
+                competitionUnit: .poi,
+                orderType: .rank,
+                zOrder: 10001)
+            let _ = manager.addLabelLayer(option: layerOption)
+        }
+        
+        private func createPoiStyle(_ manager: LabelManager) {
+            let pinImage = UIImage(named: "pin")
+            let resizedImage = pinImage?.resize(targetSize: CGSize(width: 50.0, height: 50.0))
+            
+            let iconStyle = PoiIconStyle(symbol: resizedImage, anchorPoint: CGPoint(x: 0.3, y: 0.3))
+            let perLevelStyle = PerLevelPoiStyle(iconStyle: iconStyle, level: 0)
+            let poiStyle = PoiStyle(styleID: "customStyle1", styles: [perLevelStyle])
+            manager.addPoiStyle(poiStyle)
+        }
+        
+        private func createPois(_ manager: LabelManager, _ mapPoint: MapPoint) {
+            let layer = manager.getLabelLayer(layerID: "PoiLayer")
+            let poiOption = PoiOptions(styleID: "customStyle1")
+            poiOption.rank = 0
+            poiOption.clickable = true
+            
+            let poi = layer?.addPoi(
+                option: poiOption,
+                at: mapPoint
+            )
+            poi?.show()
+        }
+        
+        private func removeAllPois(_ manager: LabelManager) {
+            let layer = manager.getLabelLayer(layerID: "PoiLayer")
+            layer?.hideAllPois()
         }
     }
 }
