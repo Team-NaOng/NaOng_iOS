@@ -34,25 +34,30 @@ struct LocationSearchView: View {
             .onSubmit {
                 locationSearchViewModel.searchLocation()
             }
-            
-            List(0..<locationSearchViewModel.locationInformations.count, id: \.self) { index in
-                VStack(alignment: .leading) {
-                    Text(locationSearchViewModel.locationInformations[index].locationName)
-                        .bold()
-                    Text(locationSearchViewModel.locationInformations[index].locationAddress)
-                        .foregroundColor(.gray)
-                }
-                .padding()
-                .onAppear {
-                    if index == (locationSearchViewModel.locationInformations.count - 1) {
-                        locationSearchViewModel.scroll()
+
+            if locationSearchViewModel.locationInformations.count > 0 {
+                List(0..<locationSearchViewModel.locationInformations.count, id: \.self) { index in
+                    VStack(alignment: .leading) {
+                        Text(locationSearchViewModel.locationInformations[index].locationName)
+                            .bold()
+                        Text(locationSearchViewModel.locationInformations[index].locationAddress)
+                            .foregroundColor(.gray)
+                    }
+                    .padding()
+                    .onAppear {
+                        if index == (locationSearchViewModel.locationInformations.count - 1) {
+                            locationSearchViewModel.scroll()
+                        }
+                    }
+                    .onTapGesture {
+                        path.removeAll()
+                        location = locationSearchViewModel.locationInformations[index].locationName
+                        coordinates = locationSearchViewModel.locationInformations[index].locationCoordinates
                     }
                 }
-                .onTapGesture {
-                    path.removeAll()
-                    location = locationSearchViewModel.locationInformations[index].locationName
-                    coordinates = locationSearchViewModel.locationInformations[index].locationCoordinates
-                }
+            } else {
+                Text(locationSearchViewModel.announcement)
+                Spacer()
             }
         }
     }

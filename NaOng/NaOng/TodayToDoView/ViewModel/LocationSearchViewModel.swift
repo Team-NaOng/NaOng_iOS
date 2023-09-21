@@ -12,6 +12,7 @@ import Combine
 class LocationSearchViewModel: NSObject, ObservableObject {
     @Published var keyword: String = ""
     @Published var locationInformations: [LocationInformation] = []
+    @Published var announcement: String = ""
     private var meta: Meta?
     private var currentPage: Int = 1
 
@@ -82,15 +83,16 @@ class LocationSearchViewModel: NSObject, ObservableObject {
            count > 0 {
             meta = kakaoLocalKeyword.meta
             AddLocationInformationWithKakaoLocalKeyword(kakaoLocalKeyword.documents)
+        } else {
+            announcement = "검색 결과가 없습니다."
         }
     }
 
     private func AddLocationInformationWithKakaoLocalKeyword(_ documents: [KeywordDocument]) {
         documents.forEach { document in
-            var addressName = ""
-            if let roadAddressName = document.roadAddressName {
-                addressName = roadAddressName
-            } else {
+            var addressName = document.roadAddressName ?? ""
+            
+            if addressName == "" {
                 addressName = document.addressName ?? "위치"
             }
             
