@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		0500E94A2A482D7700A3F338 /* ToDoListItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0500E9492A482D7700A3F338 /* ToDoListItemView.swift */; };
+		050EE3BD2ABCA1B6004E206F /* KakaoLocalKeyword.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050EE3BC2ABCA1B6004E206F /* KakaoLocalKeyword.swift */; };
+		050EE3BF2ABCE1BA004E206F /* KakaoAPIResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050EE3BE2ABCE1BA004E206F /* KakaoAPIResult.swift */; };
+		050EE3C12ABCE1E8004E206F /* LocationInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050EE3C02ABCE1E8004E206F /* LocationInformation.swift */; };
 		050FCC1D2A1C91E100270F97 /* NaOngApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050FCC1C2A1C91E100270F97 /* NaOngApp.swift */; };
 		050FCC1F2A1C91E100270F97 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050FCC1E2A1C91E100270F97 /* ContentView.swift */; };
 		050FCC212A1C91E200270F97 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 050FCC202A1C91E200270F97 /* Assets.xcassets */; };
@@ -79,6 +82,9 @@
 
 /* Begin PBXFileReference section */
 		0500E9492A482D7700A3F338 /* ToDoListItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoListItemView.swift; sourceTree = "<group>"; };
+		050EE3BC2ABCA1B6004E206F /* KakaoLocalKeyword.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoLocalKeyword.swift; sourceTree = "<group>"; };
+		050EE3BE2ABCE1BA004E206F /* KakaoAPIResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoAPIResult.swift; sourceTree = "<group>"; };
+		050EE3C02ABCE1E8004E206F /* LocationInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationInformation.swift; sourceTree = "<group>"; };
 		050FCC192A1C91E100270F97 /* NaOng.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NaOng.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		050FCC1C2A1C91E100270F97 /* NaOngApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NaOngApp.swift; sourceTree = "<group>"; };
 		050FCC1E2A1C91E100270F97 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -254,6 +260,7 @@
 			isa = PBXGroup;
 			children = (
 				05477D432A7C228100C16F4A /* CoreDataBaseProtocol.swift */,
+				050EE3BE2ABCE1BA004E206F /* KakaoAPIResult.swift */,
 			);
 			path = Protocol;
 			sourceTree = "<group>";
@@ -308,6 +315,8 @@
 				056B2B512A5FC9D600D52CFF /* ToDoCoreDataManager.swift */,
 				05477D392A7C172600C16F4A /* LocationCoreDataManager.swift */,
 				05FD378C2A9FA045006FDAEC /* KakaoLocal.swift */,
+				050EE3BC2ABCA1B6004E206F /* KakaoLocalKeyword.swift */,
+				050EE3C02ABCE1E8004E206F /* LocationInformation.swift */,
 			);
 			path = DataModel;
 			sourceTree = "<group>";
@@ -519,6 +528,7 @@
 				055E58EB2A973600005B91DC /* NetworkManager.swift in Sources */,
 				05733A8A2A51A42E00DF3B78 /* ToDoListView.swift in Sources */,
 				0598717A2AB38C30009401D3 /* LocationCheckViewModel.swift in Sources */,
+				050EE3BD2ABCA1B6004E206F /* KakaoLocalKeyword.swift in Sources */,
 				05477D352A7A85BF00C16F4A /* LocationSelectionView.swift in Sources */,
 				05EEE1082A8578CE007AD5F7 /* Date+Extensions.swift in Sources */,
 				050FCC1F2A1C91E100270F97 /* ContentView.swift in Sources */,
@@ -529,12 +539,14 @@
 				055E58EF2A9738D1005B91DC /* URLRequestBuilder.swift in Sources */,
 				05477D3A2A7C172600C16F4A /* LocationCoreDataManager.swift in Sources */,
 				058A9E7D2A95E40D005A498A /* Bundle+Extensions.swift in Sources */,
+				050EE3BF2ABCE1BA004E206F /* KakaoAPIResult.swift in Sources */,
 				05173EA42A87728A00CDF988 /* NotificationListView.swift in Sources */,
 				05388A932A83798700C8A69A /* CalendarViewModel.swift in Sources */,
 				05FD378D2A9FA045006FDAEC /* KakaoLocal.swift in Sources */,
 				05477D3F2A7C1B7900C16F4A /* CoreDataError.swift in Sources */,
 				050FCC1D2A1C91E100270F97 /* NaOngApp.swift in Sources */,
 				0534F99D2A8F9AC000A90BF7 /* CustomNavigationBar.swift in Sources */,
+				050EE3C12ABCE1E8004E206F /* LocationInformation.swift in Sources */,
 				05477D312A77F47500C16F4A /* ToDoViewFactory.swift in Sources */,
 				05477D2D2A77ED7400C16F4A /* ToDoItemDetailView.swift in Sources */,
 				057B50FD2AAB0095002260EC /* KakaoMapView.swift in Sources */,

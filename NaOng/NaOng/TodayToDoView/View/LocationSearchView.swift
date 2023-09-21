@@ -35,22 +35,24 @@ struct LocationSearchView: View {
                 locationSearchViewModel.searchLocation()
             }
             
-            List(0..<locationSearchViewModel.documents.count, id: \.self) { index in
-                Text(locationSearchViewModel.documents[index].addressName ?? "위치")
-                    .padding()
-                    .onAppear {
-                        if index == (locationSearchViewModel.documents.count - 1) {
-                            locationSearchViewModel.scroll()
-                        }
+            List(0..<locationSearchViewModel.locationInformations.count, id: \.self) { index in
+                VStack(alignment: .leading) {
+                    Text(locationSearchViewModel.locationInformations[index].locationName)
+                        .bold()
+                    Text(locationSearchViewModel.locationInformations[index].locationAddress)
+                        .foregroundColor(.gray)
+                }
+                .padding()
+                .onAppear {
+                    if index == (locationSearchViewModel.locationInformations.count - 1) {
+                        locationSearchViewModel.scroll()
                     }
-                    .onTapGesture {
-                        path.removeAll()
-                        location = locationSearchViewModel.documents[index].addressName ?? "위치"
-                        let locationCoordinates = Coordinates(
-                            lat: Double(locationSearchViewModel.documents[index].y ?? "0.0") ?? 0.0,
-                            lon: Double(locationSearchViewModel.documents[index].x ?? "0.0") ?? 0.0)
-                        coordinates = locationCoordinates
-                    }
+                }
+                .onTapGesture {
+                    path.removeAll()
+                    location = locationSearchViewModel.locationInformations[index].locationName
+                    coordinates = locationSearchViewModel.locationInformations[index].locationCoordinates
+                }
             }
         }
     }

@@ -11,18 +11,18 @@ import Combine
 @MainActor
 class LocationSearchViewModel: NSObject, ObservableObject {
     @Published var keyword: String = ""
-    @Published var documents: [Document] = []
+    @Published var locationInformations: [LocationInformation] = []
     private var meta: Meta?
     private var currentPage: Int = 1
 
     func searchLocation() {
         clearAPIData()
 
-        guard let urlRequest = getKakaoLocalURLRequest() else {
-            return
+        Task {
+           if let kakaoLocalKeyword = await fetchKakaoData(using: getKakaoLocalKeywordURLRequest(), responseType: KakaoLocalKeyword.self) {
+                handleKakaoData(kakaoLocalKeyword)
+            }
         }
-        
-        performKakaoLocalRequest(urlRequest)
     }
     
     func scroll() {
@@ -30,42 +30,77 @@ class LocationSearchViewModel: NSObject, ObservableObject {
 
         guard let meta = self.meta,
               meta.isEnd == false,
-              let urlRequest = getKakaoLocalURLRequest(page: currentPage) else {
+              let urlRequest = getKakaoLocalKeywordURLRequest(page: currentPage) else {
             return
         }
-
-        performKakaoLocalRequest(urlRequest)
+        
+        Task {
+            if let kakaoLocalKeyword = await performKakaoRequest(urlRequest, responseType: KakaoLocalKeyword.self) {
+                handleKakaoData(kakaoLocalKeyword)
+            }
+        }
     }
     
     private func clearAPIData() {
-        documents = []
+        locationInformations = []
         meta = nil
         currentPage = 1
     }
     
-    private func getKakaoLocalURLRequest(page: Int = 1, size: Int = 30) -> URLRequest? {
+    private func fetchKakaoData(using request: URLRequest?, responseType: KakaoAPIResult.Type) async -> KakaoAPIResult? {
+        guard let urlRequest = request else {
+            return nil
+        }
+
+        return await performKakaoRequest(urlRequest, responseType: responseType)
+    }
+    
+    private func performKakaoRequest(_ request: URLRequest, responseType: KakaoAPIResult.Type) async -> KakaoAPIResult? {
+        do {
+            let response = try await NetworkManager.performRequest(urlRequest: request)
+            let data = try NetworkManager.performDecoding(response, responseType: responseType)
+            return data
+        } catch {
+            print("Error: \(error)")
+            return nil
+        }
+    }
+
+    private func getKakaoLocalKeywordURLRequest(page: Int = 1) -> URLRequest? {
         return URLRequestBuilder()
             .setHost("dapi.kakao.com")
-            .setPath("/v2/local/search/address.json")
+            .setPath("/v2/local/search/keyword")
             .addQueryItem(name: "query", value: keyword)
             .addQueryItem(name: "page", value: String(page))
-            .addQueryItem(name: "size", value: String(size))
             .addHeader(key: "Authorization", value: "KakaoAK 54412f054c336a5a856d29cc91bfffcc")
             .build()
     }
     
-    private func performKakaoLocalRequest(_ urlRequest: URLRequest) {
-        Task {
-            do {
-                let response: KakaoLocal = try await NetworkManager.performRequest(
-                    urlRequest: urlRequest,
-                    responseType: KakaoLocal.self)
-                
-                meta = response.meta
-                documents.append(contentsOf: response.documents)
-            } catch {
-                print("Error: \(error)")
+    private func handleKakaoData(_ data: KakaoAPIResult) {
+        if let kakaoLocalKeyword = data as? KakaoLocalKeyword,
+           let count = kakaoLocalKeyword.meta.totalCount,
+           count > 0 {
+            meta = kakaoLocalKeyword.meta
+            AddLocationInformationWithKakaoLocalKeyword(kakaoLocalKeyword.documents)
+        }
+    }
+
+    private func AddLocationInformationWithKakaoLocalKeyword(_ documents: [KeywordDocument]) {
+        documents.forEach { document in
+            var addressName = ""
+            if let roadAddressName = document.roadAddressName {
+                addressName = roadAddressName
+            } else {
+                addressName = document.addressName ?? "위치"
             }
+            
+            let longitude = Double(document.x ?? "0.0") ?? 0.0
+            let latitude = Double(document.y ?? "0.0") ?? 0.0
+            let locationInfo = LocationInformation(
+                locationName: document.placeName ?? addressName,
+                locationAddress: addressName,
+                locationCoordinates: Coordinates(lat: latitude, lon: longitude))
+            locationInformations.append(locationInfo)
         }
     }
 }

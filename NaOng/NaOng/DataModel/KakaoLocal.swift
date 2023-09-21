@@ -8,7 +8,7 @@
 import Foundation
 
 // MARK: - KakaoLocal
-struct KakaoLocal: Codable {
+struct KakaoLocal: Decodable {
     let documents: [Document]
     let meta: Meta
 }
@@ -22,7 +22,7 @@ struct KakaoLocal: Codable {
  - address: 지번주소 상세 정보
  - roadAddress: 도로명주소 상세 정보
 */
-struct Document: Codable {
+struct Document: Decodable {
     let addressName: String?
     let addressType: String?
     let x: String?
@@ -55,7 +55,7 @@ struct Document: Codable {
  - x: X 좌표값, 경위도인 경우 longitude (경도)
  - y: Y 좌표값, 경위도인 경우 latitude (위도)
 */
-struct Address: Codable {
+struct Address: Decodable {
     let addressName: String?
     let region1DepthName: String?
     let region2DepthName: String?
@@ -100,7 +100,7 @@ struct Address: Codable {
  - x: X 좌표값, 경위도인 경우 longitude (경도)
  - y: Y 좌표값, 경위도인 경우 latitude (위도)
 */
-struct RoadAddress: Codable {
+struct RoadAddress: Decodable {
     let addressName: String?
     let region1DepthName: String?
     let region2DepthName: String?
@@ -136,7 +136,7 @@ struct RoadAddress: Codable {
  - pageableCount: total_count 중 노출 가능 문서 수, 최대 45
  - isEnd: 현재 페이지가 마지막 페이지인지 여부, 값이 false면 page를 증가시켜 다음 페이지를 요청할 수 있음
 */
-struct Meta: Codable {
+struct Meta: Decodable {
     let totalCount: Int?
     let pageableCount: Int?
     let isEnd: Bool?

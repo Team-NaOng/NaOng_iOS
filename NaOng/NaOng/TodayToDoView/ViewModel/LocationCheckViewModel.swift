@@ -65,11 +65,11 @@ class LocationCheckViewModel: NSObject, ObservableObject {
     
     private func performKakaoLocalRequest(_ urlRequest: URLRequest) async -> [Document]? {
         do {
-            let response: KakaoLocal = try await NetworkManager.performRequest(
-                urlRequest: urlRequest,
-                responseType: KakaoLocal.self)
+            let response = try await NetworkManager.performRequest(
+                urlRequest: urlRequest)
+            let data = try NetworkManager.performDecoding(response, responseType: KakaoLocal.self)
             
-            return response.documents
+            return data.documents
         } catch {
             return nil
         }
