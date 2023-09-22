@@ -8,5 +8,6 @@
 struct LocationInformation {
     let locationName: String
     let locationAddress: String
+    let locationRoadAddress: String
     let locationCoordinates: Coordinates
 }

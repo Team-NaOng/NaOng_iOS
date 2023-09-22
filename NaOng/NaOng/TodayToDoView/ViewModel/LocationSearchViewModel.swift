@@ -90,17 +90,18 @@ class LocationSearchViewModel: NSObject, ObservableObject {
 
     private func AddLocationInformationWithKakaoLocalKeyword(_ documents: [KeywordDocument]) {
         documents.forEach { document in
-            var addressName = document.roadAddressName ?? ""
+            var roadAddressName = document.roadAddressName ?? ""
             
-            if addressName == "" {
-                addressName = document.addressName ?? "위치"
+            if roadAddressName == "" {
+                roadAddressName = document.addressName ?? "위치를 가져올 수 없습니다."
             }
             
             let longitude = Double(document.x ?? "0.0") ?? 0.0
             let latitude = Double(document.y ?? "0.0") ?? 0.0
             let locationInfo = LocationInformation(
-                locationName: document.placeName ?? addressName,
-                locationAddress: addressName,
+                locationName: document.placeName ?? roadAddressName,
+                locationAddress: document.addressName ??  roadAddressName,
+                locationRoadAddress: roadAddressName,
                 locationCoordinates: Coordinates(lat: latitude, lon: longitude))
             locationInformations.append(locationInfo)
         }

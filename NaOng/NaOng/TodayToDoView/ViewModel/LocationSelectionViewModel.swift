@@ -48,6 +48,15 @@ class LocationSelectionViewModel: NSObject, ObservableObject {
             print(error)
         }
     }
+    
+    func makeLocationInformation(with location: Location) -> LocationInformation {
+        let coordinates = Coordinates(lat: location.latitude, lon: location.longitude)
+        return LocationInformation(
+            locationName: location.addressName ?? "",
+            locationAddress: location.roadAddress ?? "",
+            locationRoadAddress: location.address ?? "",
+            locationCoordinates: coordinates)
+    }
 }
 
 extension LocationSelectionViewModel: NSFetchedResultsControllerDelegate {

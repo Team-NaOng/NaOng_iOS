@@ -11,8 +11,7 @@ import KakaoMapsSDK
 @MainActor
 class LocationCheckViewModel: NSObject, ObservableObject {
     @Published var draw: Bool = true
-    @Published var currentLocation: String = ""
-    @Published var currentCoordinate: Coordinates = Coordinates(lat: 0.0, lon: 0.0)
+    @Published var currentLocationInformation: LocationInformation = LocationInformation(locationName: "", locationAddress: "", locationRoadAddress: "", locationCoordinates: Coordinates(lat: 0.0, lon: 0.0))
 
     override init() {
         super.init()
@@ -23,7 +22,7 @@ class LocationCheckViewModel: NSObject, ObservableObject {
             name: Notification.Name("MapPointNotification"),
             object: nil)
 
-        setCurrentLocation(coordinate: LocationService.shared.getLocation())
+        setCurrentLocationInformation(coordinate: LocationService.shared.getLocation())
     }
     
     @objc func handleMapPoint(_ notification: Notification) {
@@ -32,24 +31,29 @@ class LocationCheckViewModel: NSObject, ObservableObject {
                 lat: position.wgsCoord.latitude,
                 lon: position.wgsCoord.longitude)
             
-            setCurrentLocation(coordinate: coordinate)
+            setCurrentLocationInformation(coordinate: coordinate)
         }
     }
     
-    private func setCurrentLocation(coordinate: Coordinates) {
+    private func setCurrentLocationInformation(coordinate: Coordinates) {
         Task {
             guard let urlRequest = getKakaoLocalGeoURLRequest(coordinate: coordinate),
                   let documents = await performKakaoLocalRequest(urlRequest) else {
                 return
             }
             
-            if let roadAddress = documents.first?.roadAddress?.addressName{
-                currentLocation = roadAddress
-            } else if let address = documents.first?.address?.addressName {
-                currentLocation = address
-            }
+            var roadAddress = documents.first?.roadAddress?.addressName ?? ""
             
-            currentCoordinate = coordinate
+            if roadAddress == "" {
+                roadAddress = documents.first?.address?.addressName ?? "위치를 가져올 수 없습니다."
+            }
+
+            let locationInfo = LocationInformation(
+                locationName: documents.first?.roadAddress?.buildingName ?? roadAddress,
+                locationAddress: documents.first?.address?.addressName ?? roadAddress,
+                locationRoadAddress: roadAddress,
+                locationCoordinates: coordinate)
+            currentLocationInformation = locationInfo
         }
     }
     

@@ -13,8 +13,7 @@ class ToDoItemAddViewModel: ObservableObject {
     @Published var alarmTime: Date = Date()
     @Published var isRepeat: Bool = false
     @Published var alarmType: String = "위치"
-    @Published var location: String = "위치를 선택해 주세요"
-    @Published var coordinates: Coordinates = Coordinates(lat: 0.0, lon: 0.0)
+    @Published var locationInformation: LocationInformation = LocationInformation(locationName: "위치를 선택해 주세요", locationAddress: "", locationRoadAddress: "", locationCoordinates: Coordinates(lat: 0.0, lon: 0.0))
     @Published var path: [LocationViewStack] = [LocationViewStack]()
 
     private let viewContext: NSManagedObjectContext
@@ -37,8 +36,8 @@ class ToDoItemAddViewModel: ObservableObject {
             toDoItem.alarmType = alarmType
             toDoItem.alarmTime = alarmTime
             toDoItem.isRepeat = isRepeat
-            toDoItem.alarmLocationLatitude = coordinates.lat
-            toDoItem.alarmLocationLongitude = coordinates.lon
+            toDoItem.alarmLocationLatitude = locationInformation.locationCoordinates.lat
+            toDoItem.alarmLocationLongitude = locationInformation.locationCoordinates.lon
             toDoItem.alarmDate = alarmTime.getFormatDate()
 
             try toDoItem.save(viewContext: viewContext)
@@ -51,7 +50,7 @@ class ToDoItemAddViewModel: ObservableObject {
     func addLocation() {
         guard alarmType == "위치" else { return }
 
-        if isLocationContained(address: location) == false {
+        if isLocationContained(address: locationInformation.locationAddress) == false {
             saveLocation()
         }
     }
@@ -65,10 +64,12 @@ class ToDoItemAddViewModel: ObservableObject {
         let locationViewContext = Location.viewContext
         let location = Location(context: locationViewContext)
         location.id = UUID().uuidString
-        location.address = self.location
-        location.latitude = coordinates.lat
-        location.longitude = coordinates.lon
-        
+        location.address = locationInformation.locationAddress
+        location.addressName = locationInformation.locationName
+        location.roadAddress = locationInformation.locationRoadAddress
+        location.latitude = locationInformation.locationCoordinates.lat
+        location.longitude = locationInformation.locationCoordinates.lon
+
         do {
             try location.save(viewContext: locationViewContext)
         } catch {

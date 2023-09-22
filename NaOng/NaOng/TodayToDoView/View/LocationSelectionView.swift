@@ -11,14 +11,12 @@ struct LocationSelectionView: View {
     @ObservedObject private var locationSelectionViewModel: LocationSelectionViewModel
 
     @Binding var path: [LocationViewStack]
-    @Binding var location: String
-    @Binding var coordinates: Coordinates
+    @Binding var locationInformation: LocationInformation
     
-    init(locationSelectionViewModel: LocationSelectionViewModel, path: Binding<[LocationViewStack]>, location: Binding<String>, coordinates: Binding<Coordinates>) {
+    init(locationSelectionViewModel: LocationSelectionViewModel, path: Binding<[LocationViewStack]>, locationInformation: Binding<LocationInformation>) {
         self.locationSelectionViewModel = locationSelectionViewModel
         _path = path
-        _location = location
-        _coordinates = coordinates
+        _locationInformation = locationInformation
     }
     
     var body: some View {
@@ -63,12 +61,17 @@ struct LocationSelectionView: View {
                             .resizable()
                             .scaledToFit()
                             .frame(width: 20, height: 20)
-                        Text(location.address ?? "")
-                            .frame(width: UIScreen.main.bounds.width - 60, alignment: .leading)
+                        VStack(alignment: .leading) {
+                            Text(location.addressName ?? "")
+                                .font(.custom("Binggrae", size: 15))
+                            Text(location.roadAddress ?? "")
+                                .font(.custom("Binggrae", size: 15))
+                                .foregroundColor(.gray)
+                        }
                     }
+                    .padding(5)
                     .onTapGesture {
-                        self.location = location.address ?? "위치를 가져올 수 없습니다."
-                        coordinates = Coordinates(lat: location.latitude, lon: location.longitude)
+                        self.locationInformation = locationSelectionViewModel.makeLocationInformation(with: location)
                         path.removeAll()
                     }
                     .frame(height: 50)

@@ -79,7 +79,7 @@ struct ToDoItemAddView: View {
                             } label: {
                                 ToDoViewFactory.makeAlarmLocationView(
                                     title: "알람 위치",
-                                    selectedLocation: toDoItemAddViewModel.location
+                                    selectedLocation: toDoItemAddViewModel.locationInformation.locationName
                                 )
                             }
                         )
@@ -115,22 +115,19 @@ struct ToDoItemAddView: View {
                     LocationSelectionView(
                         locationSelectionViewModel: locationSelectionViewModel,
                         path: $toDoItemAddViewModel.path,
-                        location: $toDoItemAddViewModel.location,
-                        coordinates: $toDoItemAddViewModel.coordinates)
+                        locationInformation: $toDoItemAddViewModel.locationInformation)
                 case .second:
                     let locationSearchViewModel = LocationSearchViewModel()
                     LocationSearchView(
                         locationSearchViewModel: locationSearchViewModel,
                         path: $toDoItemAddViewModel.path,
-                        location: $toDoItemAddViewModel.location,
-                        coordinates: $toDoItemAddViewModel.coordinates)
+                        locationInformation: $toDoItemAddViewModel.locationInformation)
                 case .third:
                     let locationCheckViewModel = LocationCheckViewModel()
                     LocationCheckView(
                         locationCheckViewModel: locationCheckViewModel,
                         path: $toDoItemAddViewModel.path,
-                        location: $toDoItemAddViewModel.location,
-                        coordinates: $toDoItemAddViewModel.coordinates)
+                        locationInformation: $toDoItemAddViewModel.locationInformation)
                 }
             }
         }
