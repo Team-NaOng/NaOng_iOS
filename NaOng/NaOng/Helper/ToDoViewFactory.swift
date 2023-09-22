@@ -10,13 +10,14 @@ import SwiftUI
 class ToDoViewFactory {
     static func makeToDoMoldView<Content: View>(
         content: Content,
+        RectangleCornerRadius: CGFloat = 10,
         lineWidth: CGFloat = 5,
         width: CGFloat = UIScreen.main.bounds.width - 60,
         height: CGFloat = 50,
         background: Color = Color("secondary")
     ) -> some View {
         return ZStack() {
-            RoundedRectangle(cornerRadius: 10)
+            RoundedRectangle(cornerRadius: RectangleCornerRadius)
                 .stroke(Color.black, lineWidth: lineWidth)
                 .frame(width: width, height: height)
                 .background(background)

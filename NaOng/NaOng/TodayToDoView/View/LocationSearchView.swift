@@ -25,6 +25,7 @@ struct LocationSearchView: View {
                 content: ToDoViewFactory.makeToDoTextField(
                     title: "지번, 도로명, 건물명으로 검색",
                     text: $locationSearchViewModel.keyword),
+                RectangleCornerRadius: 5,
                 lineWidth: 2,
                 width: UIScreen.main.bounds.width - 20,
                 height: 40
@@ -32,6 +33,7 @@ struct LocationSearchView: View {
             .onSubmit {
                 locationSearchViewModel.searchLocation()
             }
+            .background(Color.white)
 
             if locationSearchViewModel.locationInformations.count > 0 {
                 List(0..<locationSearchViewModel.locationInformations.count, id: \.self) { index in
@@ -53,9 +55,17 @@ struct LocationSearchView: View {
                     }
                 }
             } else {
-                Text(locationSearchViewModel.announcement)
+                ScrollView {
+                    Image(locationSearchViewModel.announcementImageName)
+                       .resizable()
+                       .scaledToFit()
+                }
+                .frame(maxHeight: UIScreen.main.bounds.height)
+                .disabled(true)
+                 
                 Spacer()
             }
         }
+        .background(Color("secondary"))
     }
 }

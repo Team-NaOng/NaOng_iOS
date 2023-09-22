@@ -12,7 +12,7 @@ import Combine
 class LocationSearchViewModel: NSObject, ObservableObject {
     @Published var keyword: String = ""
     @Published var locationInformations: [LocationInformation] = []
-    @Published var announcement: String = ""
+    @Published var announcementImageName: String = "defaultSearch"
     private var meta: Meta?
     private var currentPage: Int = 1
 
@@ -84,7 +84,7 @@ class LocationSearchViewModel: NSObject, ObservableObject {
             meta = kakaoLocalKeyword.meta
             AddLocationInformationWithKakaoLocalKeyword(kakaoLocalKeyword.documents)
         } else {
-            announcement = "검색 결과가 없습니다."
+            announcementImageName = "failureSearch"
         }
     }
 
