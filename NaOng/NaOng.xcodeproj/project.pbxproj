@@ -684,7 +684,6 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = NaOng/Info.plist;
-				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "항상 허용해야 돼";
 				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "현재 위치를 알기 위해 이 권한이 필요합니다.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "지도에서 내 위치를 확인하여 장소 설정, 알림 기능을 이용하기 위해 권한이 필요합니다.(필수권한)";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -719,7 +718,6 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = NaOng/Info.plist;
-				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "항상 허용해야 돼";
 				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "현재 위치를 알기 위해 이 권한이 필요합니다.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "지도에서 내 위치를 확인하여 장소 설정, 알림 기능을 이용하기 위해 권한이 필요합니다.(필수권한)";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;

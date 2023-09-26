@@ -18,11 +18,10 @@ class LocationService: NSObject {
         super.init()
         locationManager = CLLocationManager()
         locationManager?.delegate = self
-        locationManager?.desiredAccuracy = kCLLocationAccuracyBest
     }
     
     func loadLocation() {
-        locationManager?.requestAlwaysAuthorization()
+        locationManager?.requestWhenInUseAuthorization()
     }
     
     func getLocation() -> Coordinates {
@@ -34,7 +33,7 @@ class LocationService: NSObject {
     func getCircularRegion(
         latitude: Double,
         longitude: Double,
-        radius: Double = 50.0,
+        radius: Double = 30.0,
         identifier: String
     ) -> CLCircularRegion {
         let center = CLLocationCoordinate2D(
@@ -52,7 +51,7 @@ class LocationService: NSObject {
 
 extension LocationService: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        if (status == .authorizedWhenInUse) || (status == .authorizedAlways)  {
+        if (status == .authorizedWhenInUse) {
             locationManager?.startUpdatingLocation()
         }
     }
@@ -75,7 +74,7 @@ extension LocationService: CLLocationManagerDelegate {
     
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         switch manager.authorizationStatus {
-        case .authorizedWhenInUse, .authorizedAlways:
+        case .authorizedWhenInUse:
             manager.startUpdatingLocation()
         default:
             manager.stopUpdatingLocation()
