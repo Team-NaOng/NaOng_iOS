@@ -42,7 +42,7 @@ struct NotificationListView: View {
                 }
             }
             .onAppear {
-                notificationListViewModel.fetchGroupedToDoItems()
+                notificationListViewModel.bind()
             }
             .navigationBarBackButtonHidden(true)
             .toolbar {
@@ -57,14 +57,5 @@ struct NotificationListView: View {
                 }
             }
         }
-    }
-}
-
-struct NotificationListView_Previews: PreviewProvider {
-    static var previews: some View {
-        let viewContext = ToDoCoreDataManager.shared.persistentContainer.viewContext
-        let localNotificationManager = LocalNotificationManager()
-        let vm = NotificationListViewModel(viewContext: viewContext, localNotificationManager: localNotificationManager)
-        NotificationListView(notificationListViewModel: vm)
     }
 }

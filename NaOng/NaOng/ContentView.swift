@@ -45,7 +45,7 @@ struct ContentView: View {
             let notificationListViewModel = NotificationListViewModel(viewContext: viewContext, localNotificationManager: localNotificationManager)
             NotificationListView(notificationListViewModel: notificationListViewModel)
                 .tabItem {
-                    Image(systemName: toDoListViewModel.notificationButtonName)
+                    Image(systemName: "bell")
                     Text("알림 목록")
                         .font(.custom("Binggrae", size: 10))
                         .foregroundColor(.black)

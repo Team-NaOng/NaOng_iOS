@@ -31,7 +31,7 @@ class ToDoItemAddViewModel: ObservableObject {
             let toDoItem = ToDo(context: viewContext)
             toDoItem.id = UUID().uuidString
             toDoItem.isDone = false
-            toDoItem.isNotificationVisible = true
+            toDoItem.isNotificationVisible = false
             toDoItem.content = content
             toDoItem.alarmType = alarmType
             toDoItem.alarmTime = alarmTime

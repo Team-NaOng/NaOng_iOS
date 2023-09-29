@@ -8,12 +8,14 @@
 import Foundation
 import UserNotifications
 import CoreData
+import Combine
 
 @MainActor
 class NotificationListViewModel: NSObject, ObservableObject, NSFetchedResultsControllerDelegate {
-    private(set) var groupedToDoItems: [String : [ToDo]] = [:]
+    @Published var groupedToDoItems: [String : [ToDo]] = [:]
 
     private var fetchedResultsController: NSFetchedResultsController<ToDo> = NSFetchedResultsController()
+    private var cancellables: Set<AnyCancellable> = []
     private let viewContext: NSManagedObjectContext
     private let localNotificationManager: LocalNotificationManager
     
@@ -24,24 +26,51 @@ class NotificationListViewModel: NSObject, ObservableObject, NSFetchedResultsCon
         super.init()
         fetchedResultsController.delegate = self
 
-        self.fetchGroupedToDoItems()
+        let toDoItems = fetchTodoItems()
+        addGroupedToDoItems(toDoItems: toDoItems)
+    }
+    
+    func bind() {
+        localNotificationManager.deliveredNotificationsPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] notifications in
+                notifications.forEach { [weak self] notification in
+                    Task {
+                        let id = notification.request.identifier
+                        await self?.modifyToDoForDisplayOnNotificationView(id: id)
+                        let toDoItems = self?.fetchTodoItems()
+                        self?.addGroupedToDoItems(toDoItems: toDoItems)
+                    }
+                }
+            }
+            .store(in: &cancellables)
     }
     
     func clearDeliveredNotification() {
         localNotificationManager.removeAllDeliveredNotification()
         localNotificationManager.postRemovedEvent()
     }
-    
-    func fetchGroupedToDoItems() {
-        let toDoItems = fetchTodoItems()
-        groupedToDoItems = Dictionary(grouping: toDoItems, by: {$0.alarmDate ?? Date().getFormatDate()})
+
+    private func modifyToDoForDisplayOnNotificationView(id: String) async {
+        let fetchRequest: NSFetchRequest<ToDo> = ToDo.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "id == %@", argumentArray: [id])
+        
+        do {
+            let toDoItems = try viewContext.fetch(fetchRequest)
+            if let toDoItem = toDoItems.first {
+                toDoItem.isNotificationVisible = true
+                try toDoItem.save(viewContext: viewContext)
+            }
+        } catch {
+            print("Error: \(error)")
+        }
     }
-    
+
     private func fetchTodoItems() -> [ToDo] {
         let fetchRequest: NSFetchRequest<ToDo> = ToDo.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "alarmTime <= %@ AND isNotificationVisible == %@", argumentArray: [Date(), false])
+        fetchRequest.predicate = NSPredicate(format: "isNotificationVisible == %@", argumentArray: [true])
         
-        let sortDescriptor = NSSortDescriptor(keyPath: \ToDo.alarmTime, ascending: true)
+        let sortDescriptor = NSSortDescriptor(keyPath: \ToDo.alarmDate, ascending: true)
         fetchRequest.sortDescriptors = [sortDescriptor]
         
         fetchedResultsController = NSFetchedResultsController(
@@ -64,5 +93,10 @@ class NotificationListViewModel: NSObject, ObservableObject, NSFetchedResultsCon
         }
         
         return toDoItems
+    }
+    
+    private func addGroupedToDoItems(toDoItems: [ToDo]?) {
+        guard let toDoItems = toDoItems else { return }
+        groupedToDoItems = Dictionary(grouping: toDoItems, by: {$0.alarmDate ?? Date().getFormatDate()})
     }
 }
