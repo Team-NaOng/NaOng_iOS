@@ -24,7 +24,7 @@ class SettingViewModel: ObservableObject {
 
     func getNotificationStatus() {
         localNotificationManager.authorizationStatusPublisher
-            .receive(on: DispatchQueue.main)
+            .receive(on: RunLoop.main)
             .sink { [weak self] status in
                 switch status {
                 case .authorized:

@@ -68,7 +68,6 @@ struct CalendarView: View {
             }
             .overlay {
                 Button {
-                    print($calendarViewModel.date)
                     calendarViewModel.showingToDoItemAddView = true
                 } label: {
                     ZStack {

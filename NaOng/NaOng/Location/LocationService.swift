@@ -63,9 +63,8 @@ extension LocationService: CLLocationManagerDelegate {
 
         latitude = location.coordinate.latitude
         longitude = location.coordinate.longitude
-        print(latitude, longitude)
 
-        //locationManager?.stopUpdatingLocation()
+        locationManager?.stopUpdatingLocation()
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
