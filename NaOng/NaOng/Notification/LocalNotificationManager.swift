@@ -10,6 +10,7 @@ import UIKit
 import Combine
 
 class LocalNotificationManager: NSObject, ObservableObject {
+    var deliveredNotifications = [UNNotification]()
     var deliveredNotificationsPublisher: AnyPublisher<[UNNotification], Never> {
         deliveredNotificationsSubject.eraseToAnyPublisher()
     }
@@ -38,7 +39,8 @@ class LocalNotificationManager: NSObject, ObservableObject {
     
     func sendDeliveredEvent() {
         UNUserNotificationCenter.current().getDeliveredNotifications { [weak self] notifications in
-            DispatchQueue.main.async {
+            if self?.deliveredNotifications != notifications {
+                self?.deliveredNotifications = notifications
                 self?.deliveredNotificationsSubject.send(notifications)
             }
         }
@@ -58,7 +60,7 @@ class LocalNotificationManager: NSObject, ObservableObject {
     func setCalendarNotification(toDo:ToDo, badge: NSNumber? = nil) {
         let content = getNotificationContent(
             subtitle: toDo.content,
-            categoryIdentifier: toDo.alarmTime?.getFormatDate("yyyy-MM-dd HH:mm:ss") ?? "")
+            categoryIdentifier: toDo.alarmTime?.description ?? "")
         
         guard let date = toDo.alarmTime else {
             return
@@ -81,7 +83,7 @@ class LocalNotificationManager: NSObject, ObservableObject {
     func setLocalNotification(toDo:ToDo) {
         let content = getNotificationContent(
             subtitle: toDo.content,
-            categoryIdentifier: toDo.alarmTime?.getFormatDate("yyyy-MM-dd HH:mm:ss") ?? "")
+            categoryIdentifier: toDo.alarmTime?.description ?? "")
         let region = LocationService.shared.getCircularRegion(
             latitude: toDo.alarmLocationLatitude,
             longitude: toDo.alarmLocationLongitude,

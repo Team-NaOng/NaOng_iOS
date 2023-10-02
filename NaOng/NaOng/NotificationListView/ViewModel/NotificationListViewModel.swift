@@ -25,22 +25,23 @@ class NotificationListViewModel: NSObject, ObservableObject, NSFetchedResultsCon
         
         super.init()
         fetchedResultsController.delegate = self
-
-        let toDoItems = fetchTodoItems()
-        addGroupedToDoItems(toDoItems: toDoItems)
+        
+        if let fetchedToDoItems = fetchTodoItems(with: "isNotificationVisible == %@", argumentArray: [true]) {
+            replaceGroupedToDoItems(with: fetchedToDoItems)
+        }
     }
-    
+
     func bind() {
         localNotificationManager.deliveredNotificationsPublisher
-            .receive(on: DispatchQueue.main)
+            .receive(on: RunLoop.main)
             .sink { [weak self] notifications in
                 notifications.forEach { [weak self] notification in
-                    Task {
-                        let id = notification.request.identifier
-                        await self?.modifyToDoForDisplayOnNotificationView(id: id)
-                        let toDoItems = self?.fetchTodoItems()
-                        self?.addGroupedToDoItems(toDoItems: toDoItems)
-                    }
+                    let id = notification.request.identifier
+                    self?.modifyToDoForDisplayOnNotificationView(id: id)
+                }
+                
+                if let fetchedToDoItems = self?.fetchTodoItems(with: "isNotificationVisible == %@", argumentArray: [true]) {
+                    self?.replaceGroupedToDoItems(with: fetchedToDoItems)
                 }
             }
             .store(in: &cancellables)
@@ -51,13 +52,14 @@ class NotificationListViewModel: NSObject, ObservableObject, NSFetchedResultsCon
         localNotificationManager.postRemovedEvent()
     }
 
-    private func modifyToDoForDisplayOnNotificationView(id: String) async {
+    private func modifyToDoForDisplayOnNotificationView(id: String) {
         let fetchRequest: NSFetchRequest<ToDo> = ToDo.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "id == %@", argumentArray: [id])
         
         do {
             let toDoItems = try viewContext.fetch(fetchRequest)
-            if let toDoItem = toDoItems.first {
+            if let toDoItem = toDoItems.first,
+                toDoItem.isNotificationVisible == false {
                 toDoItem.isNotificationVisible = true
                 try toDoItem.save(viewContext: viewContext)
             }
@@ -66,9 +68,9 @@ class NotificationListViewModel: NSObject, ObservableObject, NSFetchedResultsCon
         }
     }
 
-    private func fetchTodoItems() -> [ToDo] {
+    private func fetchTodoItems(with format: String, argumentArray: [Any]?) -> [ToDo]? {
         let fetchRequest: NSFetchRequest<ToDo> = ToDo.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "isNotificationVisible == %@", argumentArray: [true])
+        fetchRequest.predicate = NSPredicate(format: format, argumentArray: argumentArray)
         
         let sortDescriptor = NSSortDescriptor(keyPath: \ToDo.alarmDate, ascending: true)
         fetchRequest.sortDescriptors = [sortDescriptor]
@@ -79,24 +81,26 @@ class NotificationListViewModel: NSObject, ObservableObject, NSFetchedResultsCon
             sectionNameKeyPath: nil,
             cacheName: nil
         )
-        
-        var toDoItems: [ToDo] = []
+
         do {
             try fetchedResultsController.performFetch()
             guard let fetchedItems = fetchedResultsController.fetchedObjects else {
-                return []
+                return nil
             }
+
+            return fetchedItems
             
-            toDoItems = fetchedItems
         } catch {
             print(error)
         }
         
-        return toDoItems
+        return nil
     }
     
-    private func addGroupedToDoItems(toDoItems: [ToDo]?) {
+    private func replaceGroupedToDoItems(with toDoItems: [ToDo]?) {
         guard let toDoItems = toDoItems else { return }
+        if toDoItems.isEmpty { return }
+        
         groupedToDoItems = Dictionary(grouping: toDoItems, by: {$0.alarmDate ?? Date().getFormatDate()})
     }
 }
