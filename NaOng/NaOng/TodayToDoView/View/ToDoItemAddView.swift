@@ -52,14 +52,7 @@ struct ToDoItemAddView: View {
                             text: $toDoItemAddViewModel.content),
                         height: 200
                     )
-                    
-                    //                ToDoViewFactory.makeToDoMoldView(
-                    //                    content: ToDoViewFactory.makeToDoDatePicker(
-                    //                        selection: $toDoItemAddViewModel.alarmTime,
-                    //                        title: "진행 날짜",
-                    //                        displayedComponent: .date)
-                    //                )
-                    //
+
                     ToDoViewFactory.makeToDoMoldView(
                         content: ToDoViewFactory.makeToDoToggle(
                             isOn: $toDoItemAddViewModel.isRepeat,
@@ -70,6 +63,13 @@ struct ToDoItemAddView: View {
                         content: ToDoViewFactory.makeToDoPicker(
                             title: "알림 타입",
                             selection: $toDoItemAddViewModel.alarmType)
+                    )
+                    
+                    ToDoViewFactory.makeToDoMoldView(
+                        content: ToDoViewFactory.makeToDoDatePicker(
+                            selection: $toDoItemAddViewModel.alarmTime,
+                            title: "알림 날짜",
+                            displayedComponent: .date)
                     )
                     
                     if toDoItemAddViewModel.alarmType == "위치" {
@@ -88,7 +88,7 @@ struct ToDoItemAddView: View {
                             content: ToDoViewFactory.makeAlarmTimeView(
                                 selection: $toDoItemAddViewModel.alarmTime,
                                 title: "알림 시간",
-                                displayedComponent: [.hourAndMinute, .date])
+                                displayedComponent: .hourAndMinute)
                         )
                     }
                     
