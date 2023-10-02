@@ -17,13 +17,13 @@ class LocalNotificationManager: NSObject, ObservableObject {
     var authorizationStatusPublisher: AnyPublisher<UNAuthorizationStatus, Never> {
         authorizationStatusSubject.eraseToAnyPublisher()
     }
-    
-    private var authorizationStatusSubject = PassthroughSubject<UNAuthorizationStatus, Never>()
-    private var deliveredNotificationsSubject = PassthroughSubject<[UNNotification], Never>()
-
-    func postRemovedEvent() {
-        NotificationCenter.default.post(name: Notification.Name("removeAllDeliveredNotifications"), object: nil)
+    var removalNotificationsPublisher: AnyPublisher<Bool, Never> {
+        removalNotificationsSubject.eraseToAnyPublisher()
     }
+    
+    private var deliveredNotificationsSubject = PassthroughSubject<[UNNotification], Never>()
+    private var authorizationStatusSubject = PassthroughSubject<UNAuthorizationStatus, Never>()
+    private var removalNotificationsSubject = PassthroughSubject<Bool, Never>()
     
     func sendAuthorizationStatusEvent() {
         UNUserNotificationCenter.current().getNotificationSettings { [weak self] settings in
@@ -34,9 +34,9 @@ class LocalNotificationManager: NSObject, ObservableObject {
     }
     
     func sendRemovedEvent() {
-        deliveredNotificationsSubject.send([])
+        removalNotificationsSubject.send(true)
     }
-    
+
     func sendDeliveredEvent() {
         UNUserNotificationCenter.current().getDeliveredNotifications { [weak self] notifications in
             if self?.deliveredNotifications != notifications {

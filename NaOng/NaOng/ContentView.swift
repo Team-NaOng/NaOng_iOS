@@ -32,7 +32,7 @@ struct ContentView: View {
                         .foregroundColor(.black)
                 }
             
-            let calendarViewModel = CalendarViewModel(viewContext: viewContext)
+            let calendarViewModel = CalendarViewModel(viewContext: viewContext, localNotificationManager: localNotificationManager)
             CalendarView(calendarViewModel: calendarViewModel)
                 .tabItem {
                     Image(systemName: "calendar")
@@ -67,20 +67,6 @@ struct ContentView: View {
                 object: nil,
                 queue: nil) { _ in
                     localNotificationManager.sendAuthorizationStatusEvent()
-                }
-            NotificationCenter.default.addObserver(
-                forName: UIApplication.didBecomeActiveNotification,
-                object: nil,
-                queue: nil) { _ in
-                    localNotificationManager.sendDeliveredEvent()
-                }
-            
-            let name = Notification.Name("removeAllDeliveredNotifications")
-            NotificationCenter.default.addObserver(
-                forName: name,
-                object: nil,
-                queue: nil) { _ in
-                    localNotificationManager.sendRemovedEvent()
                 }
         }
     }

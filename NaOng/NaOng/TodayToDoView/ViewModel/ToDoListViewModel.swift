@@ -74,6 +74,7 @@ class ToDoListViewModel: NSObject, ObservableObject {
             }
             
             localNotificationManager.removePendingNotification(id: id)
+            localNotificationManager.sendRemovedEvent()
         }
     }
 }

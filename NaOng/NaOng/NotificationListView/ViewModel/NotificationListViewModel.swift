@@ -32,6 +32,8 @@ class NotificationListViewModel: NSObject, ObservableObject, NSFetchedResultsCon
     }
 
     func bind() {
+        localNotificationManager.sendDeliveredEvent()
+
         localNotificationManager.deliveredNotificationsPublisher
             .receive(on: RunLoop.main)
             .sink { [weak self] notifications in
@@ -45,11 +47,19 @@ class NotificationListViewModel: NSObject, ObservableObject, NSFetchedResultsCon
                 }
             }
             .store(in: &cancellables)
+        
+        localNotificationManager.removalNotificationsPublisher
+            .receive(on: RunLoop.main)
+            .sink { [weak self] isRemove in
+                if let fetchedToDoItems = self?.fetchTodoItems(with: "isNotificationVisible == %@", argumentArray: [true]) {
+                    self?.replaceGroupedToDoItems(with: fetchedToDoItems, isRemove)
+                }
+            }
+            .store(in: &cancellables)
     }
     
     func clearDeliveredNotification() {
         localNotificationManager.removeAllDeliveredNotification()
-        localNotificationManager.postRemovedEvent()
     }
 
     private func modifyToDoForDisplayOnNotificationView(id: String) {
@@ -97,9 +107,9 @@ class NotificationListViewModel: NSObject, ObservableObject, NSFetchedResultsCon
         return nil
     }
     
-    private func replaceGroupedToDoItems(with toDoItems: [ToDo]?) {
+    private func replaceGroupedToDoItems(with toDoItems: [ToDo]?, _ isRemove: Bool = false) {
         guard let toDoItems = toDoItems else { return }
-        if toDoItems.isEmpty { return }
+        if (toDoItems.isEmpty) && (isRemove == false)  { return }
         
         groupedToDoItems = Dictionary(grouping: toDoItems, by: {$0.alarmDate ?? Date().getFormatDate()})
     }
