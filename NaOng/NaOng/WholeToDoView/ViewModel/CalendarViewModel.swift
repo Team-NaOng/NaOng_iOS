@@ -13,6 +13,7 @@ class CalendarViewModel: NSObject, ObservableObject {
     @Published var date: Date = Date()
     @Published var showingToDoItemAddView: Bool = false
     @Published var toDoItems: [ToDo] = [ToDo]()
+    @Published var selectedViewOption = "전체"
 
     private var fetchedResultsController: NSFetchedResultsController<ToDo> = NSFetchedResultsController()
     private let viewContext: NSManagedObjectContext
@@ -23,7 +24,9 @@ class CalendarViewModel: NSObject, ObservableObject {
         self.localNotificationManager = localNotificationManager
         
         super.init()
-        self.fetchTodoItems()
+        fetchToDoItems(
+            format: "alarmDate == %@",
+            argumentArray: [Date().getFormatDate()])
     }
     
     func deleteItems(offsets: IndexSet) {
@@ -43,9 +46,10 @@ class CalendarViewModel: NSObject, ObservableObject {
         }
     }
 
-    func fetchTodoItems() {
+    private func fetchToDoItems(format: String, argumentArray: [Any]?) {
         let fetchRequest: NSFetchRequest<ToDo> = ToDo.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "alarmDate == %@", argumentArray: [date.getFormatDate()])
+        fetchRequest.predicate = NSPredicate(format: format, argumentArray: argumentArray)
+        
         let sortDescriptor = NSSortDescriptor(keyPath: \ToDo.alarmDate, ascending: true)
         fetchRequest.sortDescriptors = [sortDescriptor]
 
@@ -67,6 +71,30 @@ class CalendarViewModel: NSObject, ObservableObject {
             self.toDoItems = toDoItems
         } catch {
             print(error)
+        }
+    }
+    
+    func setFetchedResultsPredicate()  {
+        switch selectedViewOption {
+        case "위치":
+            fetchToDoItems(
+                format: "alarmDate == %@ AND alarmType == %@",
+                argumentArray: [Date().getFormatDate(), "위치"])
+            break
+        case "시간":
+            fetchToDoItems(
+                format: "alarmDate == %@ AND alarmType == %@",
+                argumentArray: [Date().getFormatDate(), "시간"])
+            break
+        case "반복":
+            fetchToDoItems(
+                format: "alarmDate == %@ AND isRepeat == %@",
+                argumentArray: [Date().getFormatDate(), true])
+            break
+        default:
+            fetchToDoItems(
+                format: "alarmDate == %@",
+                argumentArray: [Date().getFormatDate()])
         }
     }
 }

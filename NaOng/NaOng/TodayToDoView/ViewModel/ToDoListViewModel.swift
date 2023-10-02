@@ -13,8 +13,9 @@ import Combine
 class ToDoListViewModel: NSObject, ObservableObject {
     @Published var showingToDoItemAddView: Bool = false
     @Published var toDoItems: [ToDo] = [ToDo]()
+    @Published var selectedViewOption = "전체"
     
-    private let fetchedResultsController: NSFetchedResultsController<ToDo>
+    private var fetchedResultsController: NSFetchedResultsController<ToDo> = NSFetchedResultsController()
     private let viewContext: NSManagedObjectContext
     private let localNotificationManager: LocalNotificationManager
     
@@ -22,31 +23,10 @@ class ToDoListViewModel: NSObject, ObservableObject {
         self.viewContext = viewContext
         self.localNotificationManager = localNotificationManager
 
-        let fetchRequest: NSFetchRequest<ToDo> = ToDo.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "alarmDate == %@", argumentArray: [Date().getFormatDate()])
-        let sortDescriptor = NSSortDescriptor(keyPath: \ToDo.alarmDate, ascending: true)
-        fetchRequest.sortDescriptors = [sortDescriptor]
-
-        fetchedResultsController = NSFetchedResultsController(
-            fetchRequest: fetchRequest,
-            managedObjectContext: viewContext,
-            sectionNameKeyPath: nil,
-            cacheName: nil
-        )
-        
         super.init()
-        fetchedResultsController.delegate = self
-        
-        do {
-            try fetchedResultsController.performFetch()
-            guard let toDoItems = fetchedResultsController.fetchedObjects else {
-                return
-            }
-            
-            self.toDoItems = toDoItems
-        } catch {
-            print(error)
-        }
+        fetchToDoItems(
+            format: "alarmDate == %@",
+            argumentArray: [Date().getFormatDate()])
     }
 
     func getMarkerName(isDone: Bool, alertType: String) -> String {
@@ -75,6 +55,58 @@ class ToDoListViewModel: NSObject, ObservableObject {
             
             localNotificationManager.removePendingNotification(id: id)
             localNotificationManager.sendRemovedEvent()
+        }
+    }
+    
+    private func fetchToDoItems(format: String, argumentArray: [Any]?) {
+        let fetchRequest: NSFetchRequest<ToDo> = ToDo.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: format, argumentArray: argumentArray)
+        
+        let sortDescriptor = NSSortDescriptor(keyPath: \ToDo.alarmDate, ascending: true)
+        fetchRequest.sortDescriptors = [sortDescriptor]
+
+        fetchedResultsController = NSFetchedResultsController(
+            fetchRequest: fetchRequest,
+            managedObjectContext: viewContext,
+            sectionNameKeyPath: nil,
+            cacheName: nil
+        )
+        
+        fetchedResultsController.delegate = self
+        
+        do {
+            try fetchedResultsController.performFetch()
+            guard let toDoItems = fetchedResultsController.fetchedObjects else {
+                return
+            }
+            
+            self.toDoItems = toDoItems
+        } catch {
+            print(error)
+        }
+    }
+    
+    func setFetchedResultsPredicate()  {
+        switch selectedViewOption {
+        case "위치":
+            fetchToDoItems(
+                format: "alarmDate == %@ AND alarmType == %@",
+                argumentArray: [Date().getFormatDate(), "위치"])
+            break
+        case "시간":
+            fetchToDoItems(
+                format: "alarmDate == %@ AND alarmType == %@",
+                argumentArray: [Date().getFormatDate(), "시간"])
+            break
+        case "반복":
+            fetchToDoItems(
+                format: "alarmDate == %@ AND isRepeat == %@",
+                argumentArray: [Date().getFormatDate(), true])
+            break
+        default:
+            fetchToDoItems(
+                format: "alarmDate == %@",
+                argumentArray: [Date().getFormatDate()])
         }
     }
 }

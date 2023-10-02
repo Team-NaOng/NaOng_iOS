@@ -26,10 +26,29 @@ struct CalendarView: View {
                     )
                     .datePickerStyle(.graphical)
                     .tint(.gray)
-                    .onChange(of: $calendarViewModel.date.wrappedValue) { newValue in
-                        calendarViewModel.fetchTodoItems()
-                    }
                     .padding()
+                
+                Picker("보기 옵션", selection: $calendarViewModel.selectedViewOption) {
+                    Text("전체")
+                        .tag("전체")
+                        .font(.custom("Binggrae", size: 15))
+                    Text("위치")
+                        .tag("위치")
+                        .font(.custom("Binggrae", size: 15))
+                    Text("시간")
+                        .tag("시간")
+                        .font(.custom("Binggrae", size: 15))
+                    Text("반복")
+                        .tag("반복")
+                        .font(.custom("Binggrae", size: 15))
+                }
+                .pickerStyle(.navigationLink)
+                .font(.custom("Binggrae", size: 15))
+                .frame(width: UIScreen.main.bounds.width - 30)
+                .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20))
+                .onChange(of: calendarViewModel.selectedViewOption) { newValue in
+                    calendarViewModel.setFetchedResultsPredicate()
+                }
                 
                 List {
                     ForEach($calendarViewModel.toDoItems) { item in

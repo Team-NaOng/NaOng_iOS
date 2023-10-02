@@ -23,6 +23,26 @@ struct ToDoListView: View {
                     .font(.custom("Binggrae-Bold", size: 30))
                     .padding()
                 
+                Picker("보기 옵션", selection: $toDoListViewModel.selectedViewOption) {
+                    Text("전체")
+                        .tag("전체")
+                        .font(.custom("Binggrae", size: 15))
+                    Text("위치")
+                        .tag("위치")
+                        .font(.custom("Binggrae", size: 15))
+                    Text("시간")
+                        .tag("시간")
+                        .font(.custom("Binggrae", size: 15))
+                    Text("반복")
+                        .tag("반복")
+                        .font(.custom("Binggrae", size: 15))
+                }
+                .pickerStyle(SegmentedPickerStyle())
+                .frame(width: UIScreen.main.bounds.width - 30)
+                .onChange(of: toDoListViewModel.selectedViewOption) { newValue in
+                    toDoListViewModel.setFetchedResultsPredicate()
+                }
+                
                 ZStack {
                     RoundedRectangle(cornerRadius: 10)
                         .frame(width: UIScreen.main.bounds.width - 30, height: 316)
