@@ -71,10 +71,42 @@ class NotificationListViewModel: NSObject, ObservableObject, NSFetchedResultsCon
             if let toDoItem = toDoItems.first,
                 toDoItem.isNotificationVisible == false {
                 toDoItem.isNotificationVisible = true
+
                 try toDoItem.save(viewContext: viewContext)
+                try addNextDayToDo(toDoItem: toDoItem)
             }
         } catch {
             print("Error: \(error)")
+        }
+    }
+    
+    private func addNextDayToDo(toDoItem: ToDo) throws {
+        if toDoItem.isRepeat == false { return }
+
+        var nextDate = Date()
+        if let currentDate = toDoItem.alarmTime {
+            let oneDay: TimeInterval = 24 * 60 * 60
+            nextDate = currentDate.addingTimeInterval(oneDay)
+        }
+
+        let newToDoItem = ToDo(context: viewContext)
+        newToDoItem.id = UUID().uuidString
+        newToDoItem.isDone = false
+        newToDoItem.isNotificationVisible = false
+        newToDoItem.content = toDoItem.content
+        newToDoItem.alarmType = toDoItem.alarmType
+        newToDoItem.alarmTime = nextDate
+        newToDoItem.isRepeat = toDoItem.isRepeat
+        newToDoItem.alarmLocationLatitude = toDoItem.alarmLocationLatitude
+        newToDoItem.alarmLocationLongitude = toDoItem.alarmLocationLongitude
+        newToDoItem.alarmDate = newToDoItem.alarmTime?.getFormatDate()
+
+        try newToDoItem.save(viewContext: viewContext)
+        
+        if toDoItem.alarmType == "위치" {
+            LocalNotificationManager().setLocalNotification(toDo: toDoItem)
+        } else {
+            LocalNotificationManager().setCalendarNotification(toDo: toDoItem)
         }
     }
 
