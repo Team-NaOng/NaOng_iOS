@@ -26,6 +26,9 @@ struct CalendarView: View {
                     )
                     .datePickerStyle(.graphical)
                     .tint(.gray)
+                    .onChange(of: $calendarViewModel.date.wrappedValue) { newValue in
+                        calendarViewModel.setFetchedResultsPredicate()
+                    }
                     .padding()
                 
                 Picker("보기 옵션", selection: $calendarViewModel.selectedViewOption) {

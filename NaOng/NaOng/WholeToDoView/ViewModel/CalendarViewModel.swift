@@ -79,22 +79,22 @@ class CalendarViewModel: NSObject, ObservableObject {
         case "위치":
             fetchToDoItems(
                 format: "alarmDate == %@ AND alarmType == %@",
-                argumentArray: [Date().getFormatDate(), "위치"])
+                argumentArray: [date.getFormatDate(), "위치"])
             break
         case "시간":
             fetchToDoItems(
                 format: "alarmDate == %@ AND alarmType == %@",
-                argumentArray: [Date().getFormatDate(), "시간"])
+                argumentArray: [date.getFormatDate(), "시간"])
             break
         case "반복":
             fetchToDoItems(
                 format: "alarmDate == %@ AND isRepeat == %@",
-                argumentArray: [Date().getFormatDate(), true])
+                argumentArray: [date.getFormatDate(), true])
             break
         default:
             fetchToDoItems(
                 format: "alarmDate == %@",
-                argumentArray: [Date().getFormatDate()])
+                argumentArray: [date.getFormatDate()])
         }
     }
 }
