@@ -39,7 +39,7 @@ class LocalNotificationManager: NSObject, ObservableObject {
 
     func sendDeliveredEvent() {
         UNUserNotificationCenter.current().getPendingNotificationRequests { [weak self] notifications in
-            var difference = self?.previousPendingNotifications.filter { notifications.contains($0) == false }
+            let difference = self?.previousPendingNotifications.filter { notifications.contains($0) == false }
             if let identifiers = difference?.map({ $0.identifier }) {
                 self?.deliveredNotificationsSubject.send(identifiers)
             }

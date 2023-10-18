@@ -67,11 +67,7 @@ class CalendarViewModel: NSObject, ObservableObject {
             guard let toDoItems = fetchedResultsController.fetchedObjects else {
                 return
             }
-            
-            for i in toDoItems {
-                print(i.content ,i.isNotificationVisible, i.alarmLocationLatitude, i.alarmLocationLongitude)
-            }
-            
+
             self.toDoItems = toDoItems
         } catch {
             print(error)
