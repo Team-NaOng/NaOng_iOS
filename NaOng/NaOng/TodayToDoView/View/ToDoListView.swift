@@ -55,14 +55,13 @@ struct ToDoListView: View {
                     } else {
                         List {
                             ForEach($toDoListViewModel.toDoItems) { item in
-                                let localNotificationManager = LocalNotificationManager()
-                                let viewModel = ToDoListItemViewModel(toDoItem: item.wrappedValue, viewContext: viewContext, localNotificationManager: localNotificationManager)
+                                let viewModel = ToDoListItemViewModel(toDoItem: item.wrappedValue, viewContext: viewContext, localNotificationManager: toDoListViewModel.localNotificationManager)
                                 ToDoListItemView(toDoListItemViewModel: viewModel)
                                     .listRowSeparator(.hidden)
                                     .listRowInsets(.init(top: 0, leading: 0, bottom: 0, trailing: 0))
                                     .overlay {
                                         NavigationLink {
-                                            let toDoItemDetailViewModel = ToDoItemDetailViewModel(viewContext: viewContext, toDoItem: item.wrappedValue, localNotificationManager: LocalNotificationManager())
+                                            let toDoItemDetailViewModel = ToDoItemDetailViewModel(viewContext: viewContext, toDoItem: item.wrappedValue, localNotificationManager: toDoListViewModel.localNotificationManager)
                                             ToDoItemDetailView(toDoItemDetailViewModel: toDoItemDetailViewModel)
                                         } label: {
                                             EmptyView()
@@ -93,7 +92,7 @@ struct ToDoListView: View {
                         .padding(EdgeInsets(top: 5, leading: 10, bottom: 5, trailing: 10))
                 }
                 .fullScreenCover(isPresented: $toDoListViewModel.showingToDoItemAddView) {
-                    let viewModel = ToDoItemAddViewModel(viewContext: viewContext)
+                    let viewModel = ToDoItemAddViewModel(viewContext: viewContext, localNotificationManager: toDoListViewModel.localNotificationManager)
                     ToDoItemAddView(toDoItemAddViewModel: viewModel)
                 }
             }

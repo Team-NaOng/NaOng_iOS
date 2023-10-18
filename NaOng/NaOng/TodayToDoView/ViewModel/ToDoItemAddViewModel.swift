@@ -17,9 +17,11 @@ class ToDoItemAddViewModel: ObservableObject {
     @Published var path: [LocationViewStack] = [LocationViewStack]()
 
     private let viewContext: NSManagedObjectContext
+    private let localNotificationManager: LocalNotificationManager
     
-    init(viewContext: NSManagedObjectContext) {
+    init(viewContext: NSManagedObjectContext, localNotificationManager: LocalNotificationManager) {
         self.viewContext = viewContext
+        self.localNotificationManager = localNotificationManager
     }
     
     func addPath(_ addedView: LocationViewStack) {
@@ -42,6 +44,7 @@ class ToDoItemAddViewModel: ObservableObject {
 
             try toDoItem.save(viewContext: viewContext)
             scheduleNotification(for: toDoItem)
+            localNotificationManager.setPreviousPendingNotifications()
         } catch {
             print(error)
         }

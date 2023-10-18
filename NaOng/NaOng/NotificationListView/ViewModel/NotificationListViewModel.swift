@@ -37,8 +37,8 @@ class NotificationListViewModel: NSObject, ObservableObject, NSFetchedResultsCon
         localNotificationManager.deliveredNotificationsPublisher
             .receive(on: RunLoop.main)
             .sink { [weak self] notifications in
-                notifications.forEach { [weak self] notification in
-                    let id = notification.request.identifier
+                notifications.forEach { [weak self] identifier in
+                    let id = identifier
                     self?.modifyToDoForDisplayOnNotificationView(id: id)
                 }
                 

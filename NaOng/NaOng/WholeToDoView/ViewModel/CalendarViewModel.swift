@@ -16,8 +16,8 @@ class CalendarViewModel: NSObject, ObservableObject {
     @Published var selectedViewOption = "전체"
 
     private var fetchedResultsController: NSFetchedResultsController<ToDo> = NSFetchedResultsController()
+    private(set) var localNotificationManager: LocalNotificationManager
     private let viewContext: NSManagedObjectContext
-    private let localNotificationManager: LocalNotificationManager
     
     init(viewContext: NSManagedObjectContext, localNotificationManager: LocalNotificationManager) {
         self.viewContext = viewContext
@@ -66,6 +66,10 @@ class CalendarViewModel: NSObject, ObservableObject {
             try fetchedResultsController.performFetch()
             guard let toDoItems = fetchedResultsController.fetchedObjects else {
                 return
+            }
+            
+            for i in toDoItems {
+                print(i.content ,i.isNotificationVisible, i.alarmLocationLatitude, i.alarmLocationLongitude)
             }
             
             self.toDoItems = toDoItems

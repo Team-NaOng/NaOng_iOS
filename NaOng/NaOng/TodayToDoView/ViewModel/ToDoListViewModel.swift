@@ -16,8 +16,8 @@ class ToDoListViewModel: NSObject, ObservableObject {
     @Published var selectedViewOption = "전체"
     
     private var fetchedResultsController: NSFetchedResultsController<ToDo> = NSFetchedResultsController()
+    private(set) var localNotificationManager: LocalNotificationManager
     private let viewContext: NSManagedObjectContext
-    private let localNotificationManager: LocalNotificationManager
     
     init(viewContext: NSManagedObjectContext, localNotificationManager: LocalNotificationManager) {
         self.viewContext = viewContext

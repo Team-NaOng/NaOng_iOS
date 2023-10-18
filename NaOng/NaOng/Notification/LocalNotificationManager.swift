@@ -10,8 +10,8 @@ import UIKit
 import Combine
 
 class LocalNotificationManager: NSObject, ObservableObject {
-    var deliveredNotifications = [UNNotification]()
-    var deliveredNotificationsPublisher: AnyPublisher<[UNNotification], Never> {
+    var previousPendingNotifications = [UNNotificationRequest]()
+    var deliveredNotificationsPublisher: AnyPublisher<[String], Never> {
         deliveredNotificationsSubject.eraseToAnyPublisher()
     }
     var authorizationStatusPublisher: AnyPublisher<UNAuthorizationStatus, Never> {
@@ -21,7 +21,7 @@ class LocalNotificationManager: NSObject, ObservableObject {
         removalNotificationsSubject.eraseToAnyPublisher()
     }
     
-    private var deliveredNotificationsSubject = PassthroughSubject<[UNNotification], Never>()
+    private var deliveredNotificationsSubject = PassthroughSubject<[String], Never>()
     private var authorizationStatusSubject = PassthroughSubject<UNAuthorizationStatus, Never>()
     private var removalNotificationsSubject = PassthroughSubject<Bool, Never>()
     
@@ -38,11 +38,19 @@ class LocalNotificationManager: NSObject, ObservableObject {
     }
 
     func sendDeliveredEvent() {
-        UNUserNotificationCenter.current().getDeliveredNotifications { [weak self] notifications in
-            if self?.deliveredNotifications != notifications {
-                self?.deliveredNotifications = notifications
-                self?.deliveredNotificationsSubject.send(notifications)
+        UNUserNotificationCenter.current().getPendingNotificationRequests { [weak self] notifications in
+            var difference = self?.previousPendingNotifications.filter { notifications.contains($0) == false }
+            if let identifiers = difference?.map({ $0.identifier }) {
+                self?.deliveredNotificationsSubject.send(identifiers)
             }
+
+            self?.previousPendingNotifications = notifications
+        }
+    }
+    
+    func setPreviousPendingNotifications() {
+        UNUserNotificationCenter.current().getPendingNotificationRequests { [weak self] notifications in
+            self?.previousPendingNotifications = notifications
         }
     }
 
@@ -174,7 +182,7 @@ class LocalNotificationManager: NSObject, ObservableObject {
 extension LocalNotificationManager: UNUserNotificationCenterDelegate {
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         let notification = response.notification
-        deliveredNotificationsSubject.send([notification])
+        deliveredNotificationsSubject.send([notification.request.identifier])
 
         let badgeNumber = UIApplication.shared.applicationIconBadgeNumber
         if badgeNumber > 0 {
@@ -185,7 +193,7 @@ extension LocalNotificationManager: UNUserNotificationCenterDelegate {
     }
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-        deliveredNotificationsSubject.send([notification])
+        deliveredNotificationsSubject.send([notification.request.identifier])
 
         let options: UNNotificationPresentationOptions = [.banner, .badge, .sound]
         completionHandler(options)
