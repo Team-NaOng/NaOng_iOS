@@ -53,14 +53,14 @@ class ToDoItemAddViewModel: ObservableObject {
     func addLocation() {
         guard alarmType == "위치" else { return }
 
-        if isLocationContained(address: locationInformation.locationAddress) == false {
+        if isLocationContained(locationInformation: locationInformation) == false {
             saveLocation()
         }
     }
 
-    private func isLocationContained(address: String) -> Bool {
+    private func isLocationContained(locationInformation: LocationInformation) -> Bool {
         guard let fetchedLocations = fetchLocations() else { return false }
-        return fetchedLocations.contains { $0.address == address }
+        return fetchedLocations.contains { ($0.roadAddress == locationInformation.locationRoadAddress) || ($0.address == locationInformation.locationAddress) }
     }
 
     private func saveLocation() {

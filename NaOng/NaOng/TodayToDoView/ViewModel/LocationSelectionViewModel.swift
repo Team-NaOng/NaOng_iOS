@@ -53,8 +53,8 @@ class LocationSelectionViewModel: NSObject, ObservableObject {
         let coordinates = Coordinates(lat: location.latitude, lon: location.longitude)
         return LocationInformation(
             locationName: location.addressName ?? "",
-            locationAddress: location.roadAddress ?? "",
-            locationRoadAddress: location.address ?? "",
+            locationAddress: location.address ?? "",
+            locationRoadAddress: location.roadAddress ?? "",
             locationCoordinates: coordinates)
     }
 }
