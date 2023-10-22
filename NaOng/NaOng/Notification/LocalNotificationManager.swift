@@ -8,9 +8,9 @@
 import UserNotifications
 import UIKit
 import Combine
+import Foundation
 
 class LocalNotificationManager: NSObject, ObservableObject {
-    var previousPendingNotifications = [UNNotificationRequest]()
     var deliveredNotificationsPublisher: AnyPublisher<[String], Never> {
         deliveredNotificationsSubject.eraseToAnyPublisher()
     }
@@ -24,6 +24,15 @@ class LocalNotificationManager: NSObject, ObservableObject {
     private var deliveredNotificationsSubject = PassthroughSubject<[String], Never>()
     private var authorizationStatusSubject = PassthroughSubject<UNAuthorizationStatus, Never>()
     private var removalNotificationsSubject = PassthroughSubject<Bool, Never>()
+    
+    private var previousPendingNotificationsID: [String] {
+        get {
+            return UserDefaults.standard.array(forKey: "previousPendingNotificationsID") as? [String] ?? [ ]
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: "previousPendingNotificationsID")
+        }
+    }
     
     func sendAuthorizationStatusEvent() {
         UNUserNotificationCenter.current().getNotificationSettings { [weak self] settings in
@@ -39,18 +48,20 @@ class LocalNotificationManager: NSObject, ObservableObject {
 
     func sendDeliveredEvent() {
         UNUserNotificationCenter.current().getPendingNotificationRequests { [weak self] notifications in
-            let difference = self?.previousPendingNotifications.filter { notifications.contains($0) == false }
-            if let identifiers = difference?.map({ $0.identifier }) {
-                self?.deliveredNotificationsSubject.send(identifiers)
+            let notificationsID = notifications.map { $0.identifier }
+
+            if let sendID = self?.previousPendingNotificationsID.filter({ notificationsID.contains($0) == false }) {
+                self?.deliveredNotificationsSubject.send(sendID)
             }
 
-            self?.previousPendingNotifications = notifications
+            self?.previousPendingNotificationsID = notificationsID
         }
     }
     
     func setPreviousPendingNotifications() {
         UNUserNotificationCenter.current().getPendingNotificationRequests { [weak self] notifications in
-            self?.previousPendingNotifications = notifications
+            let notificationsID = notifications.map { $0.identifier }
+            self?.previousPendingNotificationsID = notificationsID
         }
     }
 
