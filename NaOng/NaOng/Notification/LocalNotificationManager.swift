@@ -80,7 +80,7 @@ class LocalNotificationManager: NSObject, ObservableObject {
             from: date)
         let trigger = UNCalendarNotificationTrigger(
             dateMatching: components,
-            repeats: toDo.isRepeat)
+            repeats: false)
         addNotificationCenter(
             id: toDo.id ?? UUID().uuidString,
             content: content,
@@ -99,7 +99,7 @@ class LocalNotificationManager: NSObject, ObservableObject {
         
         let trigger = UNLocationNotificationTrigger(
             region: region,
-            repeats: toDo.isRepeat)
+            repeats: false)
         addNotificationCenter(
             id: toDo.id ?? UUID().uuidString,
             content: content,
