@@ -58,6 +58,7 @@ struct CalendarView: View {
                         let localNotificationManager = LocalNotificationManager()
                         let viewModel = ToDoListItemViewModel(toDoItem: item.wrappedValue, viewContext: viewContext, localNotificationManager: localNotificationManager)
                         ToDoListItemView(toDoListItemViewModel: viewModel)
+                            .frame(width: UIScreen.main.bounds.width)
                             .listRowSeparator(.hidden)
                             .listRowInsets(.init(top: 0, leading: 0, bottom: 0, trailing: 0))
                             .overlay {

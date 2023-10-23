@@ -49,16 +49,5 @@ struct ToDoListItemView: View {
             toDoListItemViewModel.setMarkerName()
             toDoListItemViewModel.setBackgroundColor()
         }
-        .frame(width: UIScreen.main.bounds.width, alignment: .center)
-    }
-}
-
-struct ToDoListItemView_Previews: PreviewProvider {
-    static var previews: some View {
-        let viewContext = ToDoCoreDataManager.shared.persistentContainer.viewContext
-        let localNotificationManager = LocalNotificationManager()
-        let toDo = ToDo(context: viewContext)
-        let toDoListItemViewModel = ToDoListItemViewModel(toDoItem: toDo, viewContext: viewContext, localNotificationManager: localNotificationManager)
-        ToDoListItemView(toDoListItemViewModel: toDoListItemViewModel)
     }
 }
