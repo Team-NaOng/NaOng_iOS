@@ -9,6 +9,7 @@ import SwiftUI
 
 @main
 struct NaOngApp: App {
+    @Environment(\.scenePhase) private var phase
     var body: some Scene {
         WindowGroup {
             let viewContext = ToDoCoreDataManager.shared.persistentContainer.viewContext

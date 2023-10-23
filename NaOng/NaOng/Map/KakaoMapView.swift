@@ -10,27 +10,19 @@ import KakaoMapsSDK
 import Combine
 
 struct KakaoMapView: UIViewRepresentable {
-    @Binding var draw: Bool
-
     func makeUIView(context: Self.Context) -> KMViewContainer {
         let view: KMViewContainer = KMViewContainer()
         view.sizeToFit()
         context.coordinator.createController(view)
         context.coordinator.controller?.initEngine()
-        
+
         return view
     }
     
     func updateUIView(_ uiView: KMViewContainer, context: Self.Context) {
-        if draw {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                context.coordinator.controller?.startEngine()
-                context.coordinator.controller?.startRendering()
-            }
-        }
-        else {
-            context.coordinator.controller?.stopRendering()
-            context.coordinator.controller?.stopEngine()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            context.coordinator.controller?.startEngine()
+            context.coordinator.controller?.startRendering()
         }
     }
     
@@ -39,7 +31,8 @@ struct KakaoMapView: UIViewRepresentable {
     }
     
     static func dismantleUIView(_ uiView: KMViewContainer, coordinator: KakaoMapCoordinator) {
-        
+        coordinator.controller?.stopRendering()
+        coordinator.controller?.stopEngine()
     }
     
     class KakaoMapCoordinator: NSObject, MapControllerDelegate {

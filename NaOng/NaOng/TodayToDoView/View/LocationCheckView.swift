@@ -21,11 +21,7 @@ struct LocationCheckView: View {
 
     var body: some View {
         VStack {
-            KakaoMapView(draw: $locationCheckViewModel.draw).onAppear(perform: {
-                locationCheckViewModel.draw = true
-            }).onDisappear(perform: {
-                locationCheckViewModel.draw = false
-            }).frame(maxWidth: .infinity, maxHeight: .infinity)
+            KakaoMapView()
             
             VStack(alignment: .leading) {
                 Text(locationCheckViewModel.currentLocationInformation.locationName)
