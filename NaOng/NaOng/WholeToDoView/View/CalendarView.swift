@@ -29,7 +29,7 @@ struct CalendarView: View {
                     .onChange(of: $calendarViewModel.date.wrappedValue) { newValue in
                         calendarViewModel.setFetchedResultsPredicate()
                     }
-                    .padding()
+                    .frame(width: UIScreen.main.bounds.width - 50)
                 
                 Picker("보기 옵션", selection: $calendarViewModel.selectedViewOption) {
                     Text("전체")
