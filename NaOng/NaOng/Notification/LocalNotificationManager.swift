@@ -57,13 +57,6 @@ class LocalNotificationManager: NSObject, ObservableObject {
             self?.previousPendingNotificationsID = notificationsID
         }
     }
-    
-    func setPreviousPendingNotifications() {
-        UNUserNotificationCenter.current().getPendingNotificationRequests { [weak self] notifications in
-            let notificationsID = notifications.map { $0.identifier }
-            self?.previousPendingNotificationsID = notificationsID
-        }
-    }
 
     func requestAuthorization() {
         let options: UNAuthorizationOptions = [.alert, .sound, .badge]
@@ -75,8 +68,56 @@ class LocalNotificationManager: NSObject, ObservableObject {
             }
         }
     }
-    
-    func setCalendarNotification(toDo:ToDo, badge: NSNumber? = nil) {
+
+    func scheduleNotification(for toDoItem: ToDo) {
+        if toDoItem.alarmType == "위치" {
+            LocalNotificationManager().setLocationNotification(toDo: toDoItem)
+        } else {
+            LocalNotificationManager().setCalendarNotification(toDo: toDoItem)
+        }
+
+        setPreviousPendingNotifications()
+    }
+
+    func editLocalNotification(toDo:ToDo) {
+        guard let id = toDo.id else {
+            return
+        }
+        
+        UNUserNotificationCenter.current().getPendingNotificationRequests {
+            [weak self] notificationRequests in
+            let requests = notificationRequests.filter {
+                $0.identifier == id
+            }
+            
+            self?.removePendingNotification(id: id)
+            
+            if let request = requests.first {
+                let badge = request.content.badge ?? 0
+                self?.setCalendarNotification(toDo:toDo, badge: badge)
+            }
+        }
+    }
+
+    func removeAllDeliveredNotification() {
+        UNUserNotificationCenter.current().removeAllDeliveredNotifications()
+        changeBadgeNumberInPendingNotificationRequest()
+        UIApplication.shared.applicationIconBadgeNumber = 0
+    }
+
+    func removePendingNotification(id: String) {
+        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [id])
+        changeBadgeNumberInPendingNotificationRequest()
+    }
+
+    private func setPreviousPendingNotifications() {
+        UNUserNotificationCenter.current().getPendingNotificationRequests { [weak self] notifications in
+            let notificationsID = notifications.map { $0.identifier }
+            self?.previousPendingNotificationsID = notificationsID
+        }
+    }
+
+    private func setCalendarNotification(toDo:ToDo, badge: NSNumber? = nil) {
         let content = getNotificationContent(
             subtitle: toDo.content,
             categoryIdentifier: toDo.alarmTime?.description ?? "")
@@ -99,7 +140,7 @@ class LocalNotificationManager: NSObject, ObservableObject {
         changeBadgeNumberInPendingNotificationRequest()
     }
 
-    func setLocalNotification(toDo:ToDo) {
+    private func setLocationNotification(toDo:ToDo) {
         let content = getNotificationContent(
             subtitle: toDo.content,
             categoryIdentifier: toDo.alarmTime?.description ?? "")
@@ -117,27 +158,7 @@ class LocalNotificationManager: NSObject, ObservableObject {
             trigger: trigger)
     }
     
-    func editLocalNotification(toDo:ToDo) {
-        guard let id = toDo.id else {
-            return
-        }
-        
-        UNUserNotificationCenter.current().getPendingNotificationRequests {
-            [weak self] notificationRequests in
-            let requests = notificationRequests.filter {
-                $0.identifier == id
-            }
-            
-            self?.removePendingNotification(id: id)
-            
-            if let request = requests.first {
-                let badge = request.content.badge ?? 0
-                self?.setCalendarNotification(toDo:toDo, badge: badge)
-            }
-        }
-    }
-    
-    func changeBadgeNumberInPendingNotificationRequest() {
+    private func changeBadgeNumberInPendingNotificationRequest() {
         UNUserNotificationCenter.current().getPendingNotificationRequests { notificationRequests in
             if notificationRequests.count < 2 {
                 return
@@ -156,17 +177,6 @@ class LocalNotificationManager: NSObject, ObservableObject {
                 }
             }
         }
-    }
-    
-    func removeAllDeliveredNotification() {
-        UNUserNotificationCenter.current().removeAllDeliveredNotifications()
-        changeBadgeNumberInPendingNotificationRequest()
-        UIApplication.shared.applicationIconBadgeNumber = 0
-    }
-    
-    func removePendingNotification(id: String) {
-        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [id])
-        changeBadgeNumberInPendingNotificationRequest()
     }
 
     private func getNotificationContent(subtitle: String?, categoryIdentifier: String, badge: NSNumber = 1) -> UNMutableNotificationContent {

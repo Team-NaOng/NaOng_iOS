@@ -103,11 +103,7 @@ class NotificationListViewModel: NSObject, ObservableObject, NSFetchedResultsCon
 
         try newToDoItem.save(viewContext: viewContext)
         
-        if toDoItem.alarmType == "위치" {
-            LocalNotificationManager().setLocalNotification(toDo: toDoItem)
-        } else {
-            LocalNotificationManager().setCalendarNotification(toDo: toDoItem)
-        }
+        localNotificationManager.scheduleNotification(for: newToDoItem)
     }
 
     private func fetchTodoItems(with format: String, argumentArray: [Any]?) -> [ToDo]? {

@@ -43,8 +43,7 @@ class ToDoItemAddViewModel: ObservableObject {
             toDoItem.alarmDate = alarmTime.getFormatDate()
 
             try toDoItem.save(viewContext: viewContext)
-            scheduleNotification(for: toDoItem)
-            localNotificationManager.setPreviousPendingNotifications()
+            localNotificationManager.scheduleNotification(for: toDoItem)
         } catch {
             print(error)
         }
@@ -95,15 +94,6 @@ class ToDoItemAddViewModel: ObservableObject {
         } catch {
             print(error)
             return nil
-        }
-    }
-
-    
-    private func scheduleNotification(for toDoItem: ToDo) {
-        if toDoItem.alarmType == "위치" {
-            LocalNotificationManager().setLocalNotification(toDo: toDoItem)
-        } else {
-            LocalNotificationManager().setCalendarNotification(toDo: toDoItem)
         }
     }
 }

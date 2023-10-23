@@ -42,7 +42,7 @@ class ToDoListItemViewModel: ObservableObject {
         if toDoItem.isDone {
             localNotificationManager.removePendingNotification(id: id)
         } else {
-            localNotificationManager.setCalendarNotification(toDo: toDoItem)
+            localNotificationManager.scheduleNotification(for: toDoItem)
         }
     }
 
