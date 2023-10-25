@@ -4,6 +4,7 @@
         <attribute name="alarmDate" optional="YES" attributeType="String"/>
         <attribute name="alarmLocationLatitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="alarmLocationLongitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="alarmLocationName" optional="YES" attributeType="String"/>
         <attribute name="alarmTime" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="alarmType" optional="YES" attributeType="String"/>
         <attribute name="content" optional="YES" attributeType="String"/>
