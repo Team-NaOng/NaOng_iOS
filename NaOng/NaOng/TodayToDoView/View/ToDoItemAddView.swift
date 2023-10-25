@@ -106,6 +106,13 @@ struct ToDoItemAddView: View {
                         )
                     }
                     .padding()
+                    .alert(isPresented: $toDoItemAddViewModel.showErrorAlert) {
+                        Alert(
+                            title: Text(toDoItemAddViewModel.errorTitle),
+                            message: Text(toDoItemAddViewModel.errorMessage),
+                            dismissButton: .default(Text("확인"))
+                        )
+                    }
                 }
             }
             .navigationDestination(for: LocationViewStack.self) { myStack in

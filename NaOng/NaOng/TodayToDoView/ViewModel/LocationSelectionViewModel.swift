@@ -12,6 +12,9 @@ import CoreData
 
 class LocationSelectionViewModel: NSObject, ObservableObject {
     @Published var locations: [Location] = [Location]()
+    @Published var showErrorAlert = false
+    var errorTitle: String = ""
+    var errorMessage: String = ""
     
     private let fetchedResultsController: NSFetchedResultsController<Location>
     private let viewContext: NSManagedObjectContext
@@ -36,7 +39,9 @@ class LocationSelectionViewModel: NSObject, ObservableObject {
             
             self.locations = locations
         } catch {
-            print(error)
+            errorTitle = "위치 목록 불러오기 실패🥲"
+            errorMessage = error.localizedDescription
+            showErrorAlert.toggle()
         }
     }
     
@@ -45,7 +50,9 @@ class LocationSelectionViewModel: NSObject, ObservableObject {
         do {
             try viewContext.save()
         } catch {
-            print(error)
+            errorTitle = "위치 목록 삭제 실패🥲"
+            errorMessage = error.localizedDescription
+            showErrorAlert.toggle()
         }
     }
     

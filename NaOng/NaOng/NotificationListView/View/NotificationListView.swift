@@ -56,6 +56,13 @@ struct NotificationListView: View {
                     }
                 }
             }
+            .alert(isPresented: $notificationListViewModel.showErrorAlert) {
+                Alert(
+                    title: Text(notificationListViewModel.errorTitle),
+                    message: Text(notificationListViewModel.errorMessage),
+                    dismissButton: .default(Text("확인"))
+                )
+            }
         }
     }
 }

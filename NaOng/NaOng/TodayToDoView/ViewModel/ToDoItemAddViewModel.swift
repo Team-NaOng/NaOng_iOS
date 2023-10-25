@@ -15,6 +15,9 @@ class ToDoItemAddViewModel: ObservableObject {
     @Published var alarmType: String = "위치"
     @Published var locationInformation: LocationInformation = LocationInformation(locationName: "위치를 선택해 주세요", locationAddress: "", locationRoadAddress: "", locationCoordinates: Coordinates(lat: 0.0, lon: 0.0))
     @Published var path: [LocationViewStack] = [LocationViewStack]()
+    @Published var showErrorAlert = false
+    var errorTitle: String = ""
+    var errorMessage: String = ""
 
     private let viewContext: NSManagedObjectContext
     private let localNotificationManager: LocalNotificationManager
@@ -72,7 +75,9 @@ class ToDoItemAddViewModel: ObservableObject {
         do {
             try location.save(viewContext: locationViewContext)
         } catch {
-            print(error)
+            errorTitle = "위치 목록 저장 실패🥲"
+            errorMessage = error.localizedDescription
+            showErrorAlert.toggle()
         }
     }
 
@@ -89,7 +94,9 @@ class ToDoItemAddViewModel: ObservableObject {
             try fetchedResultsController.performFetch()
             return fetchedResultsController.fetchedObjects
         } catch {
-            print(error)
+            errorTitle = "위치 목록 불러오기 실패🥲"
+            errorMessage = error.localizedDescription
+            showErrorAlert.toggle()
             return nil
         }
     }
@@ -128,7 +135,9 @@ class ToDoItemAddViewModel: ObservableObject {
             
             try toDoItem.save(viewContext: viewContext)
         } catch {
-            print(error)
+            errorTitle = "할 일 저장 실패🥲"
+            errorMessage = error.localizedDescription
+            showErrorAlert.toggle()
         }
     }
 }

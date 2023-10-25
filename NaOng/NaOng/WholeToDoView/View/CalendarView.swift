@@ -109,6 +109,13 @@ struct CalendarView: View {
                     ToDoItemAddView(toDoItemAddViewModel: viewModel)
                 }
             }
+            .alert(isPresented: $calendarViewModel.showErrorAlert) {
+                Alert(
+                    title: Text(calendarViewModel.errorTitle),
+                    message: Text(calendarViewModel.errorMessage),
+                    dismissButton: .default(Text("확인"))
+                )
+            }
         }
     }
 }

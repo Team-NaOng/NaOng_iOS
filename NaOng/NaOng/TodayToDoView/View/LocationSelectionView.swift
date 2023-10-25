@@ -87,5 +87,12 @@ struct LocationSelectionView: View {
         .navigationTitle("주소 설정")
         .navigationBarItems(trailing: EditButton())
         .foregroundColor(.black)
+        .alert(isPresented: $locationSelectionViewModel.showErrorAlert) {
+            Alert(
+                title: Text(locationSelectionViewModel.errorTitle),
+                message: Text(locationSelectionViewModel.errorMessage),
+                dismissButton: .default(Text("확인"))
+            )
+        }
     }
 }

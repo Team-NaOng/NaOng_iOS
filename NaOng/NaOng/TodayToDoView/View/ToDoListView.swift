@@ -99,6 +99,13 @@ struct ToDoListView: View {
             .background(
                 Image("backgroundPinkImage")
             )
+            .alert(isPresented: $toDoListViewModel.showErrorAlert) {
+                Alert(
+                    title: Text(toDoListViewModel.errorTitle),
+                    message: Text(toDoListViewModel.errorMessage),
+                    dismissButton: .default(Text("확인"))
+                )
+            }
         }
     }
 }

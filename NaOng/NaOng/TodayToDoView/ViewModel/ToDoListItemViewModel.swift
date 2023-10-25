@@ -11,6 +11,9 @@ import CoreData
 class ToDoListItemViewModel: ObservableObject {
     @Published var markerName: String = "doneMarker"
     @Published var backgroundColor: String = "white"
+    @Published var showErrorAlert = false
+    var errorTitle: String = ""
+    var errorMessage: String = ""
     
     private(set) var toDoItem: ToDo
     private let viewContext: NSManagedObjectContext
@@ -32,7 +35,9 @@ class ToDoListItemViewModel: ObservableObject {
             
             try toDoItem.save(viewContext: viewContext)
         } catch {
-            print("error!")
+            errorTitle = "할 일 완료 실패🥲"
+            errorMessage = error.localizedDescription
+            showErrorAlert.toggle()
         }
 
         guard let id = toDoItem.id else {

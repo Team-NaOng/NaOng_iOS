@@ -13,6 +13,10 @@ class LocationSearchViewModel: NSObject, ObservableObject {
     @Published var keyword: String = ""
     @Published var locationInformations: [LocationInformation] = []
     @Published var announcementImageName: String = "defaultSearch"
+    @Published var showErrorAlert = false
+    var errorTitle: String = ""
+    var errorMessage: String = ""
+    
     private var meta: Meta?
     private var currentPage: Int = 1
 
@@ -62,7 +66,9 @@ class LocationSearchViewModel: NSObject, ObservableObject {
             let data = try NetworkManager.performDecoding(response, responseType: responseType)
             return data
         } catch {
-            print("Error: \(error)")
+            errorTitle = "네트워크 에러🥲"
+            errorMessage = error.localizedDescription
+            showErrorAlert.toggle()
             return nil
         }
     }

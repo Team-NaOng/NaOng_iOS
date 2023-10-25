@@ -67,5 +67,12 @@ struct LocationSearchView: View {
             }
         }
         .background(Color("secondary"))
+        .alert(isPresented: $locationSearchViewModel.showErrorAlert) {
+            Alert(
+                title: Text(locationSearchViewModel.errorTitle),
+                message: Text(locationSearchViewModel.errorMessage),
+                dismissButton: .default(Text("확인"))
+            )
+        }
     }
 }

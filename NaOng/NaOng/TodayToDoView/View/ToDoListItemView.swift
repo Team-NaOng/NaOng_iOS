@@ -24,6 +24,13 @@ struct ToDoListItemView: View {
                     .frame(width: 30, height: 30, alignment: .center)
             }
             .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
+            .alert(isPresented: $toDoListItemViewModel.showErrorAlert) {
+                Alert(
+                    title: Text(toDoListItemViewModel.errorTitle),
+                    message: Text(toDoListItemViewModel.errorMessage),
+                    dismissButton: .default(Text("확인"))
+                )
+            }
             
             Text(toDoListItemViewModel.toDoItem.content ?? "")
                 .font(.custom("Binggrae", size: 15))

@@ -14,6 +14,9 @@ class CalendarViewModel: NSObject, ObservableObject {
     @Published var showingToDoItemAddView: Bool = false
     @Published var toDoItems: [ToDo] = [ToDo]()
     @Published var selectedViewOption = "전체"
+    @Published var showErrorAlert = false
+    var errorTitle: String = ""
+    var errorMessage: String = ""
 
     private var fetchedResultsController: NSFetchedResultsController<ToDo> = NSFetchedResultsController()
     private(set) var localNotificationManager: LocalNotificationManager
@@ -38,7 +41,9 @@ class CalendarViewModel: NSObject, ObservableObject {
             do {
                 try todo.delete(viewContext: viewContext)
             } catch {
-                print(error)
+                errorTitle = "할 일 삭제 실패🥲"
+                errorMessage = error.localizedDescription
+                showErrorAlert.toggle()
             }
             
             localNotificationManager.removePendingNotification(id: id)
@@ -70,7 +75,9 @@ class CalendarViewModel: NSObject, ObservableObject {
 
             self.toDoItems = toDoItems
         } catch {
-            print(error)
+            errorTitle = "할 일 가져오기 실패🥲"
+            errorMessage = error.localizedDescription
+            showErrorAlert.toggle()
         }
     }
     

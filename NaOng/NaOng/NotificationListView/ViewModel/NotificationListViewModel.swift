@@ -13,6 +13,9 @@ import Combine
 @MainActor
 class NotificationListViewModel: NSObject, ObservableObject, NSFetchedResultsControllerDelegate {
     @Published var groupedToDoItems: [String : [ToDo]] = [:]
+    @Published var showErrorAlert = false
+    var errorTitle: String = ""
+    var errorMessage: String = ""
 
     private var fetchedResultsController: NSFetchedResultsController<ToDo> = NSFetchedResultsController()
     private var cancellables: Set<AnyCancellable> = []
@@ -76,7 +79,9 @@ class NotificationListViewModel: NSObject, ObservableObject, NSFetchedResultsCon
                 try addNextDayToDo(toDoItem: toDoItem)
             }
         } catch {
-            print("Error: \(error)")
+            errorTitle = "알림 목록 에러🥲"
+            errorMessage = error.localizedDescription
+            showErrorAlert.toggle()
         }
     }
     
@@ -130,7 +135,9 @@ class NotificationListViewModel: NSObject, ObservableObject, NSFetchedResultsCon
             return fetchedItems
             
         } catch {
-            print(error)
+            errorTitle = "알림 목록 불러오기 실패🥲"
+            errorMessage = error.localizedDescription
+            showErrorAlert.toggle()
         }
         
         return nil
