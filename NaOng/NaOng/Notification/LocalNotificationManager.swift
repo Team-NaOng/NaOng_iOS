@@ -79,35 +79,26 @@ class LocalNotificationManager: NSObject, ObservableObject {
         setPreviousPendingNotifications()
     }
 
-    func editLocalNotification(toDo:ToDo) {
-        guard let id = toDo.id else {
+    func editLocalNotification(toDoItem:ToDo) {
+        guard let id = toDoItem.id else {
             return
         }
-        
-        UNUserNotificationCenter.current().getPendingNotificationRequests {
-            [weak self] notificationRequests in
-            let requests = notificationRequests.filter {
-                $0.identifier == id
-            }
-            
-            self?.removePendingNotification(id: id)
-            
-            if let request = requests.first {
-                let badge = request.content.badge ?? 0
-                self?.setCalendarNotification(toDo:toDo, badge: badge)
-            }
-        }
+
+        removePendingNotification(id: id)
+        scheduleNotification(for: toDoItem)
     }
 
     func removeAllDeliveredNotification() {
         UNUserNotificationCenter.current().removeAllDeliveredNotifications()
         changeBadgeNumberInPendingNotificationRequest()
         UIApplication.shared.applicationIconBadgeNumber = 0
+        sendRemovedEvent()
     }
 
     func removePendingNotification(id: String) {
         UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [id])
         changeBadgeNumberInPendingNotificationRequest()
+        sendRemovedEvent()
     }
 
     private func setPreviousPendingNotifications() {

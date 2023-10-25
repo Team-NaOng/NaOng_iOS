@@ -18,37 +18,34 @@ class ToDoItemAddViewModel: ObservableObject {
 
     private let viewContext: NSManagedObjectContext
     private let localNotificationManager: LocalNotificationManager
+    private let toDoItem: ToDo?
     
-    init(viewContext: NSManagedObjectContext, localNotificationManager: LocalNotificationManager) {
+    init(viewContext: NSManagedObjectContext, localNotificationManager: LocalNotificationManager, toDoItem: ToDo? = nil) {
         self.viewContext = viewContext
         self.localNotificationManager = localNotificationManager
+        self.toDoItem = toDoItem
+        
+        setUpToDoFormData()
     }
     
     func addPath(_ addedView: LocationViewStack) {
         path.append(addedView)
     }
     
-    func addToDo() {
-        do {
+    func addEditToDo() {
+        if let toDoItem = toDoItem {
+            saveToDo(toDoItem)
+
+            localNotificationManager.editLocalNotification(toDoItem: toDoItem)
+        } else {
             let toDoItem = ToDo(context: viewContext)
             toDoItem.id = UUID().uuidString
-            toDoItem.isDone = false
-            toDoItem.isNotificationVisible = false
-            toDoItem.content = content
-            toDoItem.alarmType = alarmType
-            toDoItem.alarmTime = alarmTime
-            toDoItem.isRepeat = isRepeat
-            toDoItem.alarmLocationLatitude = locationInformation.locationCoordinates.lat
-            toDoItem.alarmLocationLongitude = locationInformation.locationCoordinates.lon
-            toDoItem.alarmDate = alarmTime.getFormatDate()
+            saveToDo(toDoItem)
 
-            try toDoItem.save(viewContext: viewContext)
             localNotificationManager.scheduleNotification(for: toDoItem)
-        } catch {
-            print(error)
         }
     }
-    
+
     func addLocation() {
         guard alarmType == "위치" else { return }
 
@@ -94,6 +91,44 @@ class ToDoItemAddViewModel: ObservableObject {
         } catch {
             print(error)
             return nil
+        }
+    }
+    
+    private func setUpToDoFormData() {
+        guard let toDoItem = toDoItem else { return }
+        
+        self.content = toDoItem.content ?? ""
+        self.alarmTime = toDoItem.alarmTime ?? Date()
+        self.isRepeat = toDoItem.isRepeat
+        self.alarmType = toDoItem.alarmType ?? "위치"
+        
+        let locationInformation = LocationInformation(
+            locationName: toDoItem.alarmLocationName ?? "위치를 선택해 주세요",
+            locationAddress: "",
+            locationRoadAddress: "",
+            locationCoordinates: Coordinates(
+                lat: toDoItem.alarmLocationLatitude,
+                lon: toDoItem.alarmLocationLongitude)
+        )
+        self.locationInformation = locationInformation
+    }
+    
+    private func saveToDo(_ toDoItem: ToDo) {
+        do {
+            toDoItem.content = content
+            toDoItem.alarmType = alarmType
+            toDoItem.alarmTime = alarmTime
+            toDoItem.isRepeat = isRepeat
+            toDoItem.alarmLocationLatitude = locationInformation.locationCoordinates.lat
+            toDoItem.alarmLocationLongitude = locationInformation.locationCoordinates.lon
+            toDoItem.alarmLocationName = locationInformation.locationName
+            toDoItem.alarmDate = alarmTime.getFormatDate()
+            toDoItem.isDone = false
+            toDoItem.isNotificationVisible = false
+            
+            try toDoItem.save(viewContext: viewContext)
+        } catch {
+            print(error)
         }
     }
 }

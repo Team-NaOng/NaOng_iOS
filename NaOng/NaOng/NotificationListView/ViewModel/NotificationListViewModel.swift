@@ -99,6 +99,7 @@ class NotificationListViewModel: NSObject, ObservableObject, NSFetchedResultsCon
         newToDoItem.isRepeat = toDoItem.isRepeat
         newToDoItem.alarmLocationLatitude = toDoItem.alarmLocationLatitude
         newToDoItem.alarmLocationLongitude = toDoItem.alarmLocationLongitude
+        newToDoItem.alarmLocationName = toDoItem.alarmLocationName
         newToDoItem.alarmDate = newToDoItem.alarmTime?.getFormatDate()
 
         try newToDoItem.save(viewContext: viewContext)

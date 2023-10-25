@@ -95,7 +95,7 @@ struct ToDoItemAddView: View {
                     Spacer()
                     
                     Button {
-                        toDoItemAddViewModel.addToDo()
+                        toDoItemAddViewModel.addEditToDo()
                         toDoItemAddViewModel.addLocation()
                         dismiss()
                     } label: {

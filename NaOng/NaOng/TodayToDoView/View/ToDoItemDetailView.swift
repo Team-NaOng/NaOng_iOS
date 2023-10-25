@@ -52,8 +52,7 @@ struct ToDoItemDetailView: View {
                         VStack() {
                             Text("알림 위치 \n")
                                 .frame(maxWidth: .infinity, alignment: .topLeading)
-                            // TODO: 수정
-                            Text("알람 위치 들어갈 자리")
+                            Text(toDoItemDetailViewModel.toDoItem.alarmLocationName ?? "")
                                 .lineLimit(2)
                                 .frame(maxWidth: .infinity, alignment: .topLeading)
                         }
@@ -83,7 +82,8 @@ struct ToDoItemDetailView: View {
                 })
                 .frame(width: 50, height: 50)
                 .fullScreenCover(isPresented: $toDoItemDetailViewModel.showingToDoItemAddView) {
-                    let viewModel = ToDoItemAddViewModel(viewContext: viewContext, localNotificationManager: toDoItemDetailViewModel.localNotificationManager)
+                    let viewModel = ToDoItemAddViewModel(viewContext: viewContext, localNotificationManager: toDoItemDetailViewModel.localNotificationManager,
+                        toDoItem: toDoItemDetailViewModel.toDoItem)
                     ToDoItemAddView(toDoItemAddViewModel: viewModel)
                 }
         )
