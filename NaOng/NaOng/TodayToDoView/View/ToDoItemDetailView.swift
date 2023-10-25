@@ -24,6 +24,7 @@ struct ToDoItemDetailView: View {
                     text: .constant(toDoItemDetailViewModel.toDoItem.content ?? "")),
                 height: 200
             )
+            .disabled(true)
             
             ToDoViewFactory.makeToDoMoldView(
                 content: ToDoViewFactory.makeToDoToggle(
@@ -42,6 +43,7 @@ struct ToDoItemDetailView: View {
                     selection: .constant(toDoItemDetailViewModel.toDoItem.alarmTime ?? Date()),
                     title: "알림 날짜",
                     displayedComponent: .date)
+                .disabled(true)
             )
             
             if toDoItemDetailViewModel.toDoItem.alarmType == "위치" {
@@ -66,6 +68,7 @@ struct ToDoItemDetailView: View {
                         title: "알림 시간",
                         displayedComponent: .hourAndMinute)
                 )
+                .disabled(true)
             }
             
             Spacer()
