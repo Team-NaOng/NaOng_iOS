@@ -20,6 +20,7 @@ struct NotificationListItemView: View {
             Text(toDo.content ?? "")
                 .font(.custom("Binggrae", size: 15))
                 .foregroundColor(.black)
+                .frame(width: (UIScreen.main.bounds.width - 60) * 0.6 , height: 25, alignment: .topLeading)
             
             Spacer()
         }

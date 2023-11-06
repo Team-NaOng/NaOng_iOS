@@ -17,15 +17,25 @@ struct ToDoItemDetailView: View {
     }
     
     var body: some View {
-        VStack {
+        VStack(spacing: 10) {
             ToDoViewFactory.makeToDoMoldView(
-                content: ToDoViewFactory.makeToDoTextEditor(
-                    title: "할 일 내용",
-                    text: .constant(toDoItemDetailViewModel.toDoItem.content ?? "")),
+                content:
+                    VStack(alignment: .leading) {
+                        ToDoViewFactory.makeToDoTitle(title: "할 일 내용")
+                        
+                        ScrollView {
+                            Text(toDoItemDetailViewModel.toDoItem.content ?? "")
+                                .font(.custom("Binggrae", size: 15))
+                                .frame(width: UIScreen.main.bounds.width - 100, alignment: .leading)
+                                .padding(10)
+                        }
+                        .frame(height: 140)
+                        .background(Color.white)
+                        .cornerRadius(10)
+                    },
                 height: 200
             )
-            .disabled(true)
-            
+
             ToDoViewFactory.makeToDoMoldView(
                 content: ToDoViewFactory.makeToDoToggle(
                     isOn: .constant(toDoItemDetailViewModel.toDoItem.isRepeat),
