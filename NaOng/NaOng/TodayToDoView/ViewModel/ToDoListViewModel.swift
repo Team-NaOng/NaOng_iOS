@@ -62,34 +62,6 @@ class ToDoListViewModel: NSObject, ObservableObject {
         }
     }
     
-    private func fetchToDoItems(format: String, argumentArray: [Any]?) {
-        let fetchRequest: NSFetchRequest<ToDo> = ToDo.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: format, argumentArray: argumentArray)
-        
-        let sortDescriptor = NSSortDescriptor(keyPath: \ToDo.alarmDate, ascending: true)
-        fetchRequest.sortDescriptors = [sortDescriptor]
-
-        fetchedResultsController = NSFetchedResultsController(
-            fetchRequest: fetchRequest,
-            managedObjectContext: viewContext,
-            sectionNameKeyPath: nil,
-            cacheName: nil
-        )
-        
-        fetchedResultsController.delegate = self
-        
-        do {
-            try fetchedResultsController.performFetch()
-            guard let toDoItems = fetchedResultsController.fetchedObjects else {
-                return
-            }
-            
-            self.toDoItems = toDoItems
-        } catch {
-            showErrorAlert.toggle()
-        }
-    }
-    
     func setFetchedResultsPredicate()  {
         switch selectedViewOption {
         case "위치":
@@ -113,6 +85,35 @@ class ToDoListViewModel: NSObject, ObservableObject {
                 argumentArray: [Date().getFormatDate()])
         }
     }
+
+    private func fetchToDoItems(format: String, argumentArray: [Any]?) {
+        let fetchRequest: NSFetchRequest<ToDo> = ToDo.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: format, argumentArray: argumentArray)
+        
+        let sortDescriptor = NSSortDescriptor(keyPath: \ToDo.alarmDate, ascending: true)
+        fetchRequest.sortDescriptors = [sortDescriptor]
+
+        fetchedResultsController = NSFetchedResultsController(
+            fetchRequest: fetchRequest,
+            managedObjectContext: viewContext,
+            sectionNameKeyPath: nil,
+            cacheName: nil
+        )
+        
+        fetchedResultsController.delegate = self
+        
+        do {
+            try fetchedResultsController.performFetch()
+            guard let toDoItems = fetchedResultsController.fetchedObjects else {
+                return
+            }
+            
+            self.toDoItems = toDoItems
+            self.toDoItems.sort { !$0.isDone && $1.isDone }
+        } catch {
+            showErrorAlert.toggle()
+        }
+    }
 }
 
 extension ToDoListViewModel: NSFetchedResultsControllerDelegate {
@@ -122,6 +123,7 @@ extension ToDoListViewModel: NSFetchedResultsControllerDelegate {
         }
         
         self.toDoItems = toDoItems
+        self.toDoItems.sort { !$0.isDone && $1.isDone }
     }
 }
 

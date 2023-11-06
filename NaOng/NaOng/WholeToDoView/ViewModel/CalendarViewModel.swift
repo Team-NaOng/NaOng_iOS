@@ -73,6 +73,7 @@ class CalendarViewModel: NSObject, ObservableObject {
             }
 
             self.toDoItems = toDoItems
+            self.toDoItems.sort { !$0.isDone && $1.isDone }
         } catch {
             errorTitle = "할 일 가져오기 실패🥲"
             errorMessage = error.localizedDescription
@@ -112,5 +113,6 @@ extension CalendarViewModel: NSFetchedResultsControllerDelegate {
         }
         
         self.toDoItems = toDoItems
+        self.toDoItems.sort { !$0.isDone && $1.isDone }
     }
 }
