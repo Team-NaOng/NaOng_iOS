@@ -36,82 +36,82 @@ struct ToDoItemAddView: View {
                         .foregroundColor(Color("primary"))
                 }
                 .frame(width: UIScreen.main.bounds.width, alignment: .trailing)
-                .padding(EdgeInsets(top: 20, leading: 0, bottom: 0, trailing: 25))
+                .padding(EdgeInsets(top: 20, leading: 0, bottom: 0, trailing: 60))
                 
                 ToDoViewFactory.makeToDoTitle(
                     title: "할 일 추가하기",
                     fontName: "Binggrae-Bold",
                     fontSize: 30
                 )
-                .frame(width: UIScreen.main.bounds.width - 80,alignment: .leading)
+                .frame(width: UIScreen.main.bounds.width - 60,alignment: .leading)
                 
                 ScrollView {
-                    ToDoViewFactory.makeToDoMoldView(
-                        content: ToDoViewFactory.makeToDoTextEditor(
-                            title: "할 일 내용",
-                            text: $toDoItemAddViewModel.content),
-                        height: 200
-                    )
+                    VStack(spacing: 10) {
+                        ToDoViewFactory.makeToDoMoldView(
+                            content: ToDoViewFactory.makeToDoTextEditor(
+                                title: "할 일 내용",
+                                text: $toDoItemAddViewModel.content),
+                            height: 200
+                        )
 
-                    ToDoViewFactory.makeToDoMoldView(
-                        content: ToDoViewFactory.makeToDoToggle(
-                            isOn: $toDoItemAddViewModel.isRepeat,
-                            title: "반복 여부")
-                    )
-                    
-                    ToDoViewFactory.makeToDoMoldView(
-                        content: ToDoViewFactory.makeToDoPicker(
-                            title: "알림 타입",
-                            selection: $toDoItemAddViewModel.alarmType)
-                    )
-                    
-                    ToDoViewFactory.makeToDoMoldView(
-                        content: ToDoViewFactory.makeToDoDatePicker(
-                            selection: $toDoItemAddViewModel.alarmTime,
-                            title: "알림 날짜",
-                            displayedComponent: .date)
-                    )
-                    
-                    if toDoItemAddViewModel.alarmType == "위치" {
                         ToDoViewFactory.makeToDoMoldView(
-                            content: Button {
-                                toDoItemAddViewModel.addPath(.first)
-                            } label: {
-                                ToDoViewFactory.makeAlarmLocationView(
-                                    title: "알람 위치",
-                                    selectedLocation: toDoItemAddViewModel.locationInformation.locationName
-                                )
-                            }
+                            content: ToDoViewFactory.makeToDoToggle(
+                                isOn: $toDoItemAddViewModel.isRepeat,
+                                title: "반복 여부")
                         )
-                    } else {
+                        
                         ToDoViewFactory.makeToDoMoldView(
-                            content: ToDoViewFactory.makeAlarmTimeView(
+                            content: ToDoViewFactory.makeToDoPicker(
+                                title: "알림 타입",
+                                selection: $toDoItemAddViewModel.alarmType)
+                        )
+                        
+                        ToDoViewFactory.makeToDoMoldView(
+                            content: ToDoViewFactory.makeToDoDatePicker(
                                 selection: $toDoItemAddViewModel.alarmTime,
-                                title: "알림 시간",
-                                displayedComponent: .hourAndMinute)
+                                title: "알림 날짜",
+                                displayedComponent: .date)
                         )
-                    }
-                    
-                    Spacer()
-                    
-                    Button {
-                        toDoItemAddViewModel.addEditToDo()
-                        toDoItemAddViewModel.addLocation()
-                        dismiss()
-                    } label: {
-                        ToDoViewFactory.makeToDoMoldView(
-                            content: ToDoViewFactory.makeToDoTitle(
-                                title: "완료")
-                            ,background: Color("primary")
-                        )
-                    }
-                    .padding()
-                    .alert(isPresented: $toDoItemAddViewModel.showErrorAlert) {
-                        Alert(
-                            title: Text(toDoItemAddViewModel.errorTitle),
-                            message: Text(toDoItemAddViewModel.errorMessage),
-                            dismissButton: .default(Text("확인"))
-                        )
+                        
+                        if toDoItemAddViewModel.alarmType == "위치" {
+                            ToDoViewFactory.makeToDoMoldView(
+                                content: Button {
+                                    toDoItemAddViewModel.addPath(.first)
+                                } label: {
+                                    ToDoViewFactory.makeAlarmLocationView(
+                                        title: "알람 위치",
+                                        selectedLocation: toDoItemAddViewModel.locationInformation.locationName
+                                    )
+                                }
+                            )
+                        } else {
+                            ToDoViewFactory.makeToDoMoldView(
+                                content: ToDoViewFactory.makeAlarmTimeView(
+                                    selection: $toDoItemAddViewModel.alarmTime,
+                                    title: "알림 시간",
+                                    displayedComponent: .hourAndMinute)
+                            )
+                        }
+
+                        Button {
+                            toDoItemAddViewModel.addEditToDo()
+                            toDoItemAddViewModel.addLocation()
+                            dismiss()
+                        } label: {
+                            ToDoViewFactory.makeToDoMoldView(
+                                content: ToDoViewFactory.makeToDoTitle(
+                                    title: "완료")
+                                ,background: Color("primary")
+                            )
+                        }
+                        .padding()
+                        .alert(isPresented: $toDoItemAddViewModel.showErrorAlert) {
+                            Alert(
+                                title: Text(toDoItemAddViewModel.errorTitle),
+                                message: Text(toDoItemAddViewModel.errorMessage),
+                                dismissButton: .default(Text("확인"))
+                            )
+                        }
                     }
                 }
             }

@@ -14,7 +14,7 @@ struct ToDoListView: View {
     init(toDoListViewModel: ToDoListViewModel) {
         self.toDoListViewModel = toDoListViewModel
         
-        UISegmentedControl.appearance().setTitleTextAttributes([.font : UIFont(name: "Binggrae", size: 15)], for: .normal)
+        UISegmentedControl.appearance().setTitleTextAttributes([.font : UIFont(name: "Binggrae", size: 15) as Any], for: .normal)
     }
     
     var body: some View {

@@ -30,6 +30,9 @@ struct SettingView: View {
             } label: {
                 HStack {
                     Image(systemName: "bell")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 15)
                     Text("알림 설정")
                         .font(.custom("Binggrae", size: 16))
                     
@@ -57,6 +60,9 @@ struct SettingView: View {
             } label: {
                 HStack {
                     Image(systemName: "envelope")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 15)
                     Text("문의 하기")
                         .font(.custom("Binggrae", size: 16))
                 }
@@ -70,15 +76,6 @@ struct SettingView: View {
             Spacer()
         }
         .padding()
-    }
-}
-
-
-struct SettingView_Previews: PreviewProvider {
-    static var previews: some View {
-        let localNotificationManager = LocalNotificationManager()
-        let settingViewModel = SettingViewModel(localNotificationManager: localNotificationManager)
-        SettingView(settingViewModel: settingViewModel)
     }
 }
 
