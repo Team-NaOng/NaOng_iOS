@@ -46,8 +46,7 @@ class CalendarViewModel: NSObject, ObservableObject {
                 showErrorAlert.toggle()
             }
             
-            localNotificationManager.removePendingNotification(id: id)
-            localNotificationManager.sendRemovedEvent()
+            localNotificationManager.removeNotification(id: id)
         }
     }
 

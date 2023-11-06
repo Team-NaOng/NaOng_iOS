@@ -75,8 +75,6 @@ class LocalNotificationManager: NSObject, ObservableObject {
         } else {
             LocalNotificationManager().setCalendarNotification(toDo: toDoItem)
         }
-
-        setPreviousPendingNotifications()
     }
 
     func editLocalNotification(toDoItem:ToDo) {
@@ -84,19 +82,26 @@ class LocalNotificationManager: NSObject, ObservableObject {
             return
         }
 
-        removePendingNotification(id: id)
+        removeNotification(id: id)
         scheduleNotification(for: toDoItem)
     }
 
     func removeAllDeliveredNotification() {
         UNUserNotificationCenter.current().removeAllDeliveredNotifications()
+        UNUserNotificationCenter.current().setBadgeCount(0)
         changeBadgeNumberInPendingNotificationRequest()
-        UIApplication.shared.applicationIconBadgeNumber = 0
         sendRemovedEvent()
     }
 
-    func removePendingNotification(id: String) {
+    func removeNotification(id: String) {
         UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [id])
+        UNUserNotificationCenter.current().removeDeliveredNotifications(withIdentifiers: [id])
+        
+        let currentBadgeNumber = UIApplication.shared.applicationIconBadgeNumber
+        if currentBadgeNumber > 0 {
+            UNUserNotificationCenter.current().setBadgeCount(currentBadgeNumber - 1)
+        }
+
         changeBadgeNumberInPendingNotificationRequest()
         sendRemovedEvent()
     }
@@ -108,7 +113,7 @@ class LocalNotificationManager: NSObject, ObservableObject {
         }
     }
 
-    private func setCalendarNotification(toDo:ToDo, badge: NSNumber? = nil) {
+    private func setCalendarNotification(toDo:ToDo) {
         let content = getNotificationContent(
             subtitle: toDo.content,
             categoryIdentifier: toDo.alarmTime?.description ?? "")
@@ -128,7 +133,6 @@ class LocalNotificationManager: NSObject, ObservableObject {
             id: toDo.id ?? UUID().uuidString,
             content: content,
             trigger: trigger)
-        changeBadgeNumberInPendingNotificationRequest()
     }
 
     private func setLocationNotification(toDo:ToDo) {
@@ -150,16 +154,21 @@ class LocalNotificationManager: NSObject, ObservableObject {
     }
     
     private func changeBadgeNumberInPendingNotificationRequest() {
+        var currentBadgeNumber = 0
+        DispatchQueue.main.async {
+            currentBadgeNumber = UIApplication.shared.applicationIconBadgeNumber
+        }
+
         UNUserNotificationCenter.current().getPendingNotificationRequests { notificationRequests in
-            if notificationRequests.count < 2 {
+            if notificationRequests.count < 1 {
                 return
             }
 
             let sortedNotification = notificationRequests.sorted { $0.content.categoryIdentifier < $1.content.categoryIdentifier
             }
-            
+
             sortedNotification.enumerated().forEach { [weak self] index, request in
-                let badgeNumber = (index + 1) as NSNumber
+                let badgeNumber = (index + 1 + currentBadgeNumber) as NSNumber
                 if let content = self?.getNotificationContent(
                     subtitle: request.content.subtitle,
                     categoryIdentifier: request.content.categoryIdentifier,
@@ -188,6 +197,8 @@ class LocalNotificationManager: NSObject, ObservableObject {
             trigger: trigger)
         
         UNUserNotificationCenter.current().add(request)
+        setPreviousPendingNotifications()
+        changeBadgeNumberInPendingNotificationRequest()
     }
 }
 
@@ -195,12 +206,7 @@ extension LocalNotificationManager: UNUserNotificationCenterDelegate {
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         let notification = response.notification
         deliveredNotificationsSubject.send([notification.request.identifier])
-
-        let badgeNumber = UIApplication.shared.applicationIconBadgeNumber
-        if badgeNumber > 0 {
-            UIApplication.shared.applicationIconBadgeNumber = badgeNumber - 1
-        }
-        
+ 
         completionHandler()
     }
     
