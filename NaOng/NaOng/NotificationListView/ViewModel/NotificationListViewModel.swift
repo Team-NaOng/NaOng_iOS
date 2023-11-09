@@ -60,10 +60,6 @@ class NotificationListViewModel: NSObject, ObservableObject, NSFetchedResultsCon
             }
             .store(in: &cancellables)
     }
-    
-    func clearDeliveredNotification() {
-        localNotificationManager.removeAllDeliveredNotification()
-    }
 
     private func modifyToDoForDisplayOnNotificationView(id: String) {
         let fetchRequest: NSFetchRequest<ToDo> = ToDo.fetchRequest()

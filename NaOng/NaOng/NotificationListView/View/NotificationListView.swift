@@ -44,18 +44,6 @@ struct NotificationListView: View {
             .onAppear {
                 notificationListViewModel.bind()
             }
-            .navigationBarBackButtonHidden(true)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button {
-                        notificationListViewModel.clearDeliveredNotification()
-                    } label: {
-                        Text("모두 읽음 표시")
-                            .font(.custom("Binggrae", size: 15))
-                            .foregroundColor(.black)
-                    }
-                }
-            }
             .alert(isPresented: $notificationListViewModel.showErrorAlert) {
                 Alert(
                     title: Text(notificationListViewModel.errorTitle),

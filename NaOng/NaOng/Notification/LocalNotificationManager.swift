@@ -86,42 +86,22 @@ class LocalNotificationManager: NSObject, ObservableObject {
         scheduleNotification(for: toDoItem)
     }
 
-    func removeAllDeliveredNotification() {
-        UNUserNotificationCenter.current().removeAllDeliveredNotifications()
-        UNUserNotificationCenter.current().setBadgeCount(0)
-        changeBadgeNumberInPendingNotificationRequest()
-        sendRemovedEvent()
-    }
-
     func removeNotification(id: String) {
         UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [id])
         UNUserNotificationCenter.current().removeDeliveredNotifications(withIdentifiers: [id])
-        
-        let currentBadgeNumber = UIApplication.shared.applicationIconBadgeNumber
-        if currentBadgeNumber > 0 {
-            UNUserNotificationCenter.current().setBadgeCount(currentBadgeNumber - 1)
-        }
 
-        changeBadgeNumberInPendingNotificationRequest()
         sendRemovedEvent()
     }
 
-    private func setPreviousPendingNotifications() {
-        UNUserNotificationCenter.current().getPendingNotificationRequests { [weak self] notifications in
-            let notificationsID = notifications.map { $0.identifier }
-            self?.previousPendingNotificationsID = notificationsID
-        }
-    }
-
     private func setCalendarNotification(toDo:ToDo) {
-        let content = getNotificationContent(
-            subtitle: toDo.content,
-            categoryIdentifier: toDo.alarmTime?.description ?? "")
-        
         guard let date = toDo.alarmTime else {
             return
         }
         
+        let content = getNotificationContent(
+            subtitle: toDo.content,
+            categoryIdentifier: toDo.alarmTime?.description ?? "",
+            badge: nil)
         let calendar = Calendar.current
         let components = calendar.dateComponents(
             [.year, .month, .day, .hour, .minute],
@@ -129,57 +109,37 @@ class LocalNotificationManager: NSObject, ObservableObject {
         let trigger = UNCalendarNotificationTrigger(
             dateMatching: components,
             repeats: false)
-        addNotificationCenter(
-            id: toDo.id ?? UUID().uuidString,
+        let request = UNNotificationRequest(
+            identifier: toDo.id ?? UUID().uuidString,
             content: content,
             trigger: trigger)
+
+        UNUserNotificationCenter.current().add(request)
+        previousPendingNotificationsID.append(request.identifier)
     }
 
     private func setLocationNotification(toDo:ToDo) {
         let content = getNotificationContent(
             subtitle: toDo.content,
-            categoryIdentifier: toDo.alarmTime?.description ?? "")
+            categoryIdentifier: toDo.alarmTime?.description ?? "",
+            badge: nil)
         let region = LocationService.shared.getCircularRegion(
             latitude: toDo.alarmLocationLatitude,
             longitude: toDo.alarmLocationLongitude,
             identifier: toDo.id ?? UUID().uuidString)
-        
         let trigger = UNLocationNotificationTrigger(
             region: region,
             repeats: false)
-        addNotificationCenter(
-            id: toDo.id ?? UUID().uuidString,
+        let request = UNNotificationRequest(
+            identifier: toDo.id ?? UUID().uuidString,
             content: content,
             trigger: trigger)
+
+        UNUserNotificationCenter.current().add(request)
+        previousPendingNotificationsID.append(request.identifier)
     }
     
-    private func changeBadgeNumberInPendingNotificationRequest() {
-        var currentBadgeNumber = 0
-        DispatchQueue.main.async {
-            currentBadgeNumber = UIApplication.shared.applicationIconBadgeNumber
-        }
-
-        UNUserNotificationCenter.current().getPendingNotificationRequests { notificationRequests in
-            if notificationRequests.count < 1 {
-                return
-            }
-
-            let sortedNotification = notificationRequests.sorted { $0.content.categoryIdentifier < $1.content.categoryIdentifier
-            }
-
-            sortedNotification.enumerated().forEach { [weak self] index, request in
-                let badgeNumber = (index + 1 + currentBadgeNumber) as NSNumber
-                if let content = self?.getNotificationContent(
-                    subtitle: request.content.subtitle,
-                    categoryIdentifier: request.content.categoryIdentifier,
-                    badge: badgeNumber) {
-                    self?.addNotificationCenter(id: request.identifier, content: content, trigger: request.trigger)
-                }
-            }
-        }
-    }
-
-    private func getNotificationContent(subtitle: String?, categoryIdentifier: String, badge: NSNumber = 1) -> UNMutableNotificationContent {
+    private func getNotificationContent(subtitle: String?, categoryIdentifier: String, badge: NSNumber? = nil) -> UNMutableNotificationContent {
         let content = UNMutableNotificationContent()
         content.title = "나옹"
         content.subtitle = subtitle ?? "할 일 했나옹?"
@@ -188,17 +148,6 @@ class LocalNotificationManager: NSObject, ObservableObject {
         content.categoryIdentifier = categoryIdentifier
         
         return content
-    }
-    
-    private func addNotificationCenter(id: String, content: UNNotificationContent, trigger: UNNotificationTrigger?) {
-        let request = UNNotificationRequest(
-            identifier: id,
-            content: content,
-            trigger: trigger)
-        
-        UNUserNotificationCenter.current().add(request)
-        setPreviousPendingNotifications()
-        changeBadgeNumberInPendingNotificationRequest()
     }
 }
 
