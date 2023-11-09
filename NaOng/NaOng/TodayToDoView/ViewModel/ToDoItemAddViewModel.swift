@@ -35,18 +35,21 @@ class ToDoItemAddViewModel: ObservableObject {
         path.append(addedView)
     }
     
-    func addEditToDo() {
+    func addEditToDo() -> Bool {
+        if checkValidLocation() == false { return false }
+        
         if let toDoItem = toDoItem {
             saveToDo(toDoItem)
-
             localNotificationManager.editLocalNotification(toDoItem: toDoItem)
         } else {
             let toDoItem = ToDo(context: viewContext)
             toDoItem.id = UUID().uuidString
+            
             saveToDo(toDoItem)
-
             localNotificationManager.scheduleNotification(for: toDoItem)
         }
+        
+        return true
     }
 
     func addLocation() {
@@ -121,23 +124,34 @@ class ToDoItemAddViewModel: ObservableObject {
     }
     
     private func saveToDo(_ toDoItem: ToDo) {
+        toDoItem.content = content
+        toDoItem.alarmType = alarmType
+        toDoItem.alarmTime = alarmTime
+        toDoItem.isRepeat = isRepeat
+        toDoItem.alarmLocationLatitude = locationInformation.locationCoordinates.lat
+        toDoItem.alarmLocationLongitude = locationInformation.locationCoordinates.lon
+        toDoItem.alarmLocationName = locationInformation.locationName
+        toDoItem.alarmDate = alarmTime.getFormatDate()
+        toDoItem.isDone = false
+        toDoItem.isNotificationVisible = false
+        
         do {
-            toDoItem.content = content
-            toDoItem.alarmType = alarmType
-            toDoItem.alarmTime = alarmTime
-            toDoItem.isRepeat = isRepeat
-            toDoItem.alarmLocationLatitude = locationInformation.locationCoordinates.lat
-            toDoItem.alarmLocationLongitude = locationInformation.locationCoordinates.lon
-            toDoItem.alarmLocationName = locationInformation.locationName
-            toDoItem.alarmDate = alarmTime.getFormatDate()
-            toDoItem.isDone = false
-            toDoItem.isNotificationVisible = false
-            
             try toDoItem.save(viewContext: viewContext)
         } catch {
             errorTitle = "할 일 저장 실패🥲"
             errorMessage = error.localizedDescription
             showErrorAlert.toggle()
         }
+    }
+    
+    private func checkValidLocation() -> Bool {
+        if alarmType == "위치" && (locationInformation.locationCoordinates.lat == 0.0 || locationInformation.locationCoordinates.lon == 0.0) {
+            errorTitle = "위치가 선택되지 않았습니다."
+            errorMessage = "위치를 다시 선택해 주세요."
+            showErrorAlert.toggle()
+            return false
+        }
+        
+        return true
     }
 }
