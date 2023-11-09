@@ -28,6 +28,14 @@ extension CoreDataBaseProtocol {
         try save(viewContext: viewContext)
     }
     
+    static func deleteAll(viewContext: NSManagedObjectContext) throws {
+        let fetchRequest = ManagedObject.fetchRequest()
+        let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+        
+        try viewContext.execute(deleteRequest)
+        try viewContext.save()
+    }
+    
     static func all() -> NSFetchRequest<ManagedObject>? {
         let request = fetchRequest(ManagedObject.self)
         request?.sortDescriptors = []
