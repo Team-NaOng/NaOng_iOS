@@ -10,11 +10,9 @@ import CoreData
 import Combine
 
 struct ContentView: View {
-    @Environment(\.managedObjectContext) var managedObjectContext
+    @Environment(\.managedObjectContext) var viewContext
     @EnvironmentObject var localNotificationManager: LocalNotificationManager
-    
-    private let viewContext = ToDoCoreDataManager.shared.persistentContainer.viewContext
-    
+
     init() {
         UITabBar.appearance().backgroundColor = UIColor.white
     }
