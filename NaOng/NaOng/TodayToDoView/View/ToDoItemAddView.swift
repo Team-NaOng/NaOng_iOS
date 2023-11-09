@@ -115,27 +115,27 @@ struct ToDoItemAddView: View {
                     }
                 }
             }
-        }
-        .navigationDestination(for: LocationViewStack.self) { myStack in
-            switch myStack {
-            case .first:
-                let locationSelectionViewModel = LocationSelectionViewModel(viewContext: Location.viewContext)
-                LocationSelectionView(
-                    locationSelectionViewModel: locationSelectionViewModel,
-                    path: $toDoItemAddViewModel.path,
-                    locationInformation: $toDoItemAddViewModel.locationInformation)
-            case .second:
-                let locationSearchViewModel = LocationSearchViewModel()
-                LocationSearchView(
-                    locationSearchViewModel: locationSearchViewModel,
-                    path: $toDoItemAddViewModel.path,
-                    locationInformation: $toDoItemAddViewModel.locationInformation)
-            case .third:
-                let locationCheckViewModel = LocationCheckViewModel()
-                LocationCheckView(
-                    locationCheckViewModel: locationCheckViewModel,
-                    path: $toDoItemAddViewModel.path,
-                    locationInformation: $toDoItemAddViewModel.locationInformation)
+            .navigationDestination(for: LocationViewStack.self) { myStack in
+                switch myStack {
+                case .first:
+                    let locationSelectionViewModel = LocationSelectionViewModel(viewContext: Location.viewContext)
+                    LocationSelectionView(
+                        locationSelectionViewModel: locationSelectionViewModel,
+                        path: $toDoItemAddViewModel.path,
+                        locationInformation: $toDoItemAddViewModel.locationInformation)
+                case .second:
+                    let locationSearchViewModel = LocationSearchViewModel()
+                    LocationSearchView(
+                        locationSearchViewModel: locationSearchViewModel,
+                        path: $toDoItemAddViewModel.path,
+                        locationInformation: $toDoItemAddViewModel.locationInformation)
+                case .third:
+                    let locationCheckViewModel = LocationCheckViewModel()
+                    LocationCheckView(
+                        locationCheckViewModel: locationCheckViewModel,
+                        path: $toDoItemAddViewModel.path,
+                        locationInformation: $toDoItemAddViewModel.locationInformation)
+                }
             }
         }
     }
