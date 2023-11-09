@@ -94,9 +94,10 @@ struct ToDoItemAddView: View {
                         }
 
                         Button {
-                            toDoItemAddViewModel.addEditToDo()
-                            toDoItemAddViewModel.addLocation()
-                            dismiss()
+                            if toDoItemAddViewModel.addEditToDo() {
+                                toDoItemAddViewModel.addLocation()
+                                dismiss()
+                            }
                         } label: {
                             ToDoViewFactory.makeToDoMoldView(
                                 content: ToDoViewFactory.makeToDoTitle(

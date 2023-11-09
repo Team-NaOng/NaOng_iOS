@@ -85,6 +85,7 @@ struct ToDoListView: View {
                 
                 Button {
                     toDoListViewModel.showingToDoItemAddView = true
+                    toDoListViewModel.addModel = ToDoItemAddViewModel(viewContext: viewContext, localNotificationManager: toDoListViewModel.localNotificationManager)
                 } label: {
                     Image("toDoListImage1")
                         .resizable()
@@ -92,8 +93,11 @@ struct ToDoListView: View {
                         .padding(EdgeInsets(top: 5, leading: 10, bottom: 5, trailing: 10))
                 }
                 .fullScreenCover(isPresented: $toDoListViewModel.showingToDoItemAddView) {
-                    let viewModel = ToDoItemAddViewModel(viewContext: viewContext, localNotificationManager: toDoListViewModel.localNotificationManager)
-                    ToDoItemAddView(toDoItemAddViewModel: viewModel)
+                    toDoListViewModel.addModel = nil
+                } content: {
+                    if let viewModel = toDoListViewModel.addModel {
+                        ToDoItemAddView(toDoItemAddViewModel: viewModel)
+                    }
                 }
             }
             .background(

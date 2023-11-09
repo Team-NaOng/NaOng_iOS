@@ -17,6 +17,7 @@ class ToDoListViewModel: NSObject, ObservableObject {
     @Published var showErrorAlert = false
     var errorTitle: String = ""
     var errorMessage: String = ""
+    var addModel: ToDoItemAddViewModel?
     
     private var fetchedResultsController: NSFetchedResultsController<ToDo> = NSFetchedResultsController()
     private(set) var localNotificationManager: LocalNotificationManager
