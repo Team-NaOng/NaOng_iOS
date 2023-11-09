@@ -46,13 +46,14 @@ class LocationSelectionViewModel: NSObject, ObservableObject {
     }
     
     func deleteItems(offsets: IndexSet) {
-        offsets.map { locations[$0] }.forEach(viewContext.delete)
-        do {
-            try viewContext.save()
-        } catch {
-            errorTitle = "위치 목록 삭제 실패🥲"
-            errorMessage = error.localizedDescription
-            showErrorAlert.toggle()
+        offsets.map { locations[$0] }.forEach { location in
+            do {
+                try location.delete(viewContext: viewContext)
+            } catch {
+                errorTitle = "위치 목록 삭제 실패🥲"
+                errorMessage = error.localizedDescription
+                showErrorAlert.toggle()
+            }
         }
     }
     

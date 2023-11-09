@@ -12,6 +12,7 @@ protocol CoreDataBaseProtocol {
     
     func save(viewContext: NSManagedObjectContext) throws
     func delete(viewContext: NSManagedObjectContext) throws
+    static func deleteAll(viewContext: NSManagedObjectContext) throws
     static func all() -> NSFetchRequest<ManagedObject>?
 }
 
@@ -28,13 +29,17 @@ extension CoreDataBaseProtocol {
         try save(viewContext: viewContext)
     }
     
-    static func all() -> NSFetchRequest<ManagedObject>? {
-        let request = fetchRequest(ManagedObject.self)
-        request?.sortDescriptors = []
-        return request
+    static func deleteAll(viewContext: NSManagedObjectContext) throws {
+        let fetchRequest = ManagedObject.fetchRequest()
+        let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+        
+        try viewContext.execute(deleteRequest)
+        try viewContext.save()
     }
     
-    private static func fetchRequest<T: NSManagedObject>(_ type: T.Type) -> NSFetchRequest<T>? {
-        return T.fetchRequest() as? NSFetchRequest<T>
+    static func all() -> NSFetchRequest<ManagedObject>? {
+        let request = ManagedObject.fetchRequest() as? NSFetchRequest<ManagedObject>
+        request?.sortDescriptors = []
+        return request
     }
 }

@@ -10,7 +10,6 @@ import UIKit
 
 struct SettingView: View {
     @Environment(\.presentationMode) var presentationMode
-    @Environment(\.openURL) var openURL
     
     @ObservedObject private var settingViewModel: SettingViewModel
     
@@ -26,7 +25,7 @@ struct SettingView: View {
                 .font(.custom("Binggrae-Bold", size: 30))
             
             Button {
-                settingViewModel.openSettings()
+                settingViewModel.showNotificationAlert()
             } label: {
                 HStack {
                     Image(systemName: "bell")
@@ -45,8 +44,7 @@ struct SettingView: View {
                 }
             }
             .foregroundColor(.black)
-            .alert("앱의 알림 설정으로 이동합니다.\n이동하는 화면에서 알림을 허용해 주세요.", isPresented: $settingViewModel.isShowingAlert) {
-
+            .alert("앱의 알림 설정으로 이동합니다.\n이동하는 화면에서 알림을 허용해 주세요.", isPresented: $settingViewModel.isShowingNotificationAlert) {
                 Button("취소", role: .cancel) { }
                 Button("확인", role: .destructive) {
                     if let settingsUrl = URL(string: UIApplication.openSettingsURLString) {
@@ -56,7 +54,35 @@ struct SettingView: View {
             }
             
             Button {
-                settingViewModel.openEditedEmail(openURL: openURL)
+                settingViewModel.showDeleteAlert()
+            } label: {
+                HStack {
+                    Image(systemName: "trash")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 15)
+                    Text("할일 삭제")
+                        .font(.custom("Binggrae", size: 16))
+                }
+            }
+            .foregroundColor(.black)
+            .alert("모든 할일을 삭제합니다.\n정말 삭제하시겠습니까?", isPresented: $settingViewModel.isShowingDeleteAlert) {
+
+                Button("취소", role: .cancel) { }
+                Button("확인", role: .destructive) {
+                    settingViewModel.deleteAllToDo()
+                }
+            }
+            .alert(isPresented: $settingViewModel.isShowingDeleteDoneAlert) {
+                Alert(
+                    title: Text(settingViewModel.alertTitle),
+                    message: Text(settingViewModel.alertMessage),
+                    dismissButton: .default(Text("확인"))
+                )
+            }
+            
+            Button {
+                settingViewModel.showEmailView()
             } label: {
                 HStack {
                     Image(systemName: "envelope")
@@ -69,7 +95,7 @@ struct SettingView: View {
                 .foregroundColor(.black)
             }
             .sheet(isPresented: $settingViewModel.isShowingEmail) {
-                MailView() 
+                MailView()
                 .tint(.accentColor)
             }
             
