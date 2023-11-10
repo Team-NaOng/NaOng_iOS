@@ -186,6 +186,7 @@
 				050FCC202A1C91E200270F97 /* Assets.xcassets */,
 				050FCC222A1C91E200270F97 /* Preview Content */,
 				0549F2CF2A386118002B1248 /* Location */,
+				054D4CE82AFE736E005CF34C /* ToDoAddView */,
 				05CCE8B12A51A66D0037FF74 /* TodayToDoView */,
 				058B7CAA2A55C8D2005C07BD /* WholeToDoView */,
 				0534F9A82A8FED2400A90BF7 /* NotificationListView */,
@@ -295,6 +296,37 @@
 			path = Location;
 			sourceTree = "<group>";
 		};
+		054D4CE82AFE736E005CF34C /* ToDoAddView */ = {
+			isa = PBXGroup;
+			children = (
+				054D4CE92AFE7385005CF34C /* View */,
+				054D4CEA2AFE738C005CF34C /* ViewModel */,
+			);
+			path = ToDoAddView;
+			sourceTree = "<group>";
+		};
+		054D4CE92AFE7385005CF34C /* View */ = {
+			isa = PBXGroup;
+			children = (
+				058B7CA82A55C495005C07BD /* ToDoItemAddView.swift */,
+				05477D342A7A85BF00C16F4A /* LocationSelectionView.swift */,
+				05477D452A7C3A7F00C16F4A /* LocationSearchView.swift */,
+				05477D472A7C3B4100C16F4A /* LocationCheckView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		054D4CEA2AFE738C005CF34C /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				05CD8E992A57631B00C1C187 /* ToDoItemAddViewModel.swift */,
+				05477D3B2A7C177000C16F4A /* LocationSelectionViewModel.swift */,
+				055E58F02A97A8D5005B91DC /* LocationSearchViewModel.swift */,
+				059871792AB38C30009401D3 /* LocationCheckViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		055E58E92A9735E0005B91DC /* Network */ = {
 			isa = PBXGroup;
 			children = (
@@ -373,11 +405,7 @@
 			children = (
 				05CCE8B22A51A6BE0037FF74 /* ToDoListViewModel.swift */,
 				056B2B722A640F9F00D52CFF /* ToDoListItemViewModel.swift */,
-				05CD8E992A57631B00C1C187 /* ToDoItemAddViewModel.swift */,
 				05477D2E2A77ED8000C16F4A /* ToDoItemDetailViewModel.swift */,
-				05477D3B2A7C177000C16F4A /* LocationSelectionViewModel.swift */,
-				055E58F02A97A8D5005B91DC /* LocationSearchViewModel.swift */,
-				059871792AB38C30009401D3 /* LocationCheckViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -387,11 +415,7 @@
 			children = (
 				05733A892A51A42E00DF3B78 /* ToDoListView.swift */,
 				0500E9492A482D7700A3F338 /* ToDoListItemView.swift */,
-				058B7CA82A55C495005C07BD /* ToDoItemAddView.swift */,
 				05477D2C2A77ED7400C16F4A /* ToDoItemDetailView.swift */,
-				05477D342A7A85BF00C16F4A /* LocationSelectionView.swift */,
-				05477D452A7C3A7F00C16F4A /* LocationSearchView.swift */,
-				05477D472A7C3B4100C16F4A /* LocationCheckView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
