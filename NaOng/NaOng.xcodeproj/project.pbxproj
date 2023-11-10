@@ -52,7 +52,6 @@
 		058A9E7D2A95E40D005A498A /* Bundle+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 058A9E7C2A95E40D005A498A /* Bundle+Extensions.swift */; };
 		058A9E7F2A95E70D005A498A /* MailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 058A9E7E2A95E70D005A498A /* MailView.swift */; };
 		058A9E822A95FDF4005A498A /* DeviceKit in Frameworks */ = {isa = PBXBuildFile; productRef = 058A9E812A95FDF4005A498A /* DeviceKit */; };
-		058B7CA32A558D12005C07BD /* BinggraeSamanco.otf in Resources */ = {isa = PBXBuildFile; fileRef = 058B7CA22A558D12005C07BD /* BinggraeSamanco.otf */; };
 		058B7CA62A558DEE005C07BD /* Binggrae.otf in Resources */ = {isa = PBXBuildFile; fileRef = 058B7CA42A558DEE005C07BD /* Binggrae.otf */; };
 		058B7CA72A558DEE005C07BD /* Binggrae-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 058B7CA52A558DEE005C07BD /* Binggrae-Bold.otf */; };
 		058B7CA92A55C495005C07BD /* ToDoItemAddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 058B7CA82A55C495005C07BD /* ToDoItemAddView.swift */; };
@@ -125,7 +124,6 @@
 		0587438A2AC31A8800075905 /* Coordinates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinates.swift; sourceTree = "<group>"; };
 		058A9E7C2A95E40D005A498A /* Bundle+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Extensions.swift"; sourceTree = "<group>"; };
 		058A9E7E2A95E70D005A498A /* MailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MailView.swift; sourceTree = "<group>"; };
-		058B7CA22A558D12005C07BD /* BinggraeSamanco.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = BinggraeSamanco.otf; sourceTree = "<group>"; };
 		058B7CA42A558DEE005C07BD /* Binggrae.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Binggrae.otf; sourceTree = "<group>"; };
 		058B7CA52A558DEE005C07BD /* Binggrae-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Binggrae-Bold.otf"; sourceTree = "<group>"; };
 		058B7CA82A55C495005C07BD /* ToDoItemAddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoItemAddView.swift; sourceTree = "<group>"; };
@@ -348,7 +346,6 @@
 			children = (
 				058B7CA52A558DEE005C07BD /* Binggrae-Bold.otf */,
 				058B7CA42A558DEE005C07BD /* Binggrae.otf */,
-				058B7CA22A558D12005C07BD /* BinggraeSamanco.otf */,
 			);
 			path = fonts;
 			sourceTree = "<group>";
@@ -489,7 +486,6 @@
 				050FCC212A1C91E200270F97 /* Assets.xcassets in Resources */,
 				058B7CA72A558DEE005C07BD /* Binggrae-Bold.otf in Resources */,
 				058B7CA62A558DEE005C07BD /* Binggrae.otf in Resources */,
-				058B7CA32A558D12005C07BD /* BinggraeSamanco.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
