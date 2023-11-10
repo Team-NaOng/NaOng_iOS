@@ -66,5 +66,6 @@ class SettingViewModel: ObservableObject {
         }
         
         isShowingDeleteDoneAlert.toggle()
+        localNotificationManager.sendAllRemoveEvent()
     }
 }

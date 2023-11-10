@@ -111,5 +111,8 @@ struct ToDoListView: View {
                 )
             }
         }
+        .onAppear(perform: {
+            toDoListViewModel.bind()
+        })
     }
 }

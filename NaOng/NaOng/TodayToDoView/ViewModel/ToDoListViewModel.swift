@@ -20,6 +20,7 @@ class ToDoListViewModel: NSObject, ObservableObject {
     var addModel: ToDoItemAddViewModel?
     
     private var fetchedResultsController: NSFetchedResultsController<ToDo> = NSFetchedResultsController()
+    private var cancellables: Set<AnyCancellable> = []
     private(set) var localNotificationManager: LocalNotificationManager
     private let viewContext: NSManagedObjectContext
     
@@ -85,6 +86,17 @@ class ToDoListViewModel: NSObject, ObservableObject {
                 format: "alarmDate == %@",
                 argumentArray: [Date().getFormatDate()])
         }
+    }
+    
+    func bind() {
+        localNotificationManager.removalAllNotificationsPublisher
+            .receive(on: RunLoop.main)
+            .sink { [weak self] _ in
+                self?.fetchToDoItems(
+                    format: "alarmDate == %@",
+                    argumentArray: [Date().getFormatDate()])
+            }
+            .store(in: &cancellables)
     }
 
     private func fetchToDoItems(format: String, argumentArray: [Any]?) {
