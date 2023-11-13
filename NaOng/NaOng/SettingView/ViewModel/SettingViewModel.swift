@@ -12,6 +12,7 @@ class SettingViewModel: ObservableObject {
     @Published var authorizationStatus: String = ""
     @Published var isShowingNotificationAlert: Bool = false
     @Published var isShowingEmail: Bool = false
+    @Published var isShowingEmailAlert: Bool = false
 
     private let localNotificationManager: LocalNotificationManager
     private var cancellables: Set<AnyCancellable> = []
@@ -43,4 +44,15 @@ class SettingViewModel: ObservableObject {
     func showEmailView() {
         isShowingEmail = true
     }
+    
+    func showEmailAlert() {
+        isShowingEmailAlert = true
+    }
+    
+    func openMailAppStorePage() {
+            if let mailAppStoreURL = URL(string: "https://apps.apple.com/us/app/mail/id1108187098"),
+               UIApplication.shared.canOpenURL(mailAppStoreURL) {
+                UIApplication.shared.open(mailAppStoreURL, options: [:], completionHandler: nil)
+            }
+        }
 }

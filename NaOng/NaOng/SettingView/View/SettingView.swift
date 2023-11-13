@@ -53,7 +53,11 @@ struct SettingView: View {
             }
             
             Button {
-                settingViewModel.showEmailView()
+                if MailView.canSendMail {
+                    settingViewModel.showEmailView()
+                } else {
+                    settingViewModel.showEmailAlert()
+                }
             } label: {
                 HStack {
                     Image(systemName: "envelope")
@@ -67,7 +71,22 @@ struct SettingView: View {
             }
             .sheet(isPresented: $settingViewModel.isShowingEmail) {
                 MailView()
-                .tint(.accentColor)
+                    .tint(.accentColor)
+            }
+            .alert("문의 메일", isPresented: $settingViewModel.isShowingNotificationAlert) {
+                Button("취소", role: .cancel) { }
+                Button("확인", role: .destructive) {
+                    if let settingsUrl = URL(string: UIApplication.openSettingsURLString) {
+                        UIApplication.shared.open(settingsUrl)
+                    }
+                }
+            }
+            .alert(isPresented: $settingViewModel.isShowingEmailAlert) {
+                Alert(
+                    title: Text("문의하려면 Mail 앱이 필요합니다."),
+                    message: Text("앱스토어에서 Mail 앱을 다운받으시거나 naongofficial@gmail.com으로 직접 문의해주시면 감사하겠습니다."),
+                    dismissButton: .default(Text("확인"))
+                )
             }
             
             Spacer()
