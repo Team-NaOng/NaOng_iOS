@@ -6,9 +6,8 @@
 //
 
 import UserNotifications
-import UIKit
 import Combine
-import Foundation
+import os.log
 
 class LocalNotificationManager: NSObject, ObservableObject {
     var deliveredNotificationsPublisher: AnyPublisher<[String], Never> {
@@ -62,9 +61,9 @@ class LocalNotificationManager: NSObject, ObservableObject {
         let options: UNAuthorizationOptions = [.alert, .sound, .badge]
         UNUserNotificationCenter.current().requestAuthorization(options: options) { success, error in
             if let error = error {
-                print("notification Error: \(error)")
-            } else {
-                print("success")
+                let osLog = OSLog(subsystem: "Seohyeon.NaOng", category: "Notification")
+                let log = Logger(osLog)
+                log.log(level: .error, "requestAuthorization Error: \(error.localizedDescription)")
             }
         }
     }

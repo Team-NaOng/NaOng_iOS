@@ -6,7 +6,7 @@
 //
 
 import CoreLocation
-import SwiftUI
+import os.log
  
 class LocationService: NSObject {
     static let shared = LocationService()
@@ -68,7 +68,9 @@ extension LocationService: CLLocationManagerDelegate {
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        print("위치 업데이트 에러: \(error.localizedDescription)")
+        let osLog = OSLog(subsystem: "Seohyeon.NaOng", category: "Location")
+        let log = Logger(osLog)
+        log.log(level: .error, "Location Update Error: \(error.localizedDescription)")
     }
     
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {

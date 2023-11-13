@@ -11,7 +11,7 @@ import SwiftUI
 struct NaOngApp: App {
     var body: some Scene {
         WindowGroup {
-            let viewContext = ToDoCoreDataManager.shared.persistentContainer.viewContext
+            let viewContext = ToDoCoreDataManager().persistentContainer.viewContext
             let localNotificationManager = LocalNotificationManager()
             
             ContentView()
