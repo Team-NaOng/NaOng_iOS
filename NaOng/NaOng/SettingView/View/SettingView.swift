@@ -73,14 +73,6 @@ struct SettingView: View {
                 MailView()
                     .tint(.accentColor)
             }
-            .alert("문의 메일", isPresented: $settingViewModel.isShowingNotificationAlert) {
-                Button("취소", role: .cancel) { }
-                Button("확인", role: .destructive) {
-                    if let settingsUrl = URL(string: UIApplication.openSettingsURLString) {
-                        UIApplication.shared.open(settingsUrl)
-                    }
-                }
-            }
             .alert(isPresented: $settingViewModel.isShowingEmailAlert) {
                 Alert(
                     title: Text("문의하려면 Mail 앱이 필요합니다."),
