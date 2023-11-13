@@ -9,11 +9,11 @@ import SwiftUI
 
 @main
 struct NaOngApp: App {
-    @Environment(\.scenePhase) private var phase
     var body: some Scene {
         WindowGroup {
             let viewContext = ToDoCoreDataManager.shared.persistentContainer.viewContext
             let localNotificationManager = LocalNotificationManager()
+            
             ContentView()
                 .environment(\.managedObjectContext, viewContext)
                 .environmentObject(localNotificationManager)
@@ -21,6 +21,13 @@ struct NaOngApp: App {
                     LocationService.shared.loadLocation()
                     localNotificationManager.requestAuthorization()
                     UNUserNotificationCenter.current().delegate = localNotificationManager
+                    
+                    NotificationCenter.default.addObserver(
+                        forName: UIApplication.didBecomeActiveNotification,
+                        object: nil,
+                        queue: nil) { _ in
+                            localNotificationManager.sendAuthorizationStatusEvent()
+                        }
                 }
         }
     }

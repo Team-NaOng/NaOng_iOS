@@ -18,8 +18,8 @@ struct ContentView: View {
     }
     
     var body: some View {
-        let toDoListViewModel = ToDoListViewModel(viewContext: viewContext, localNotificationManager: localNotificationManager)
         TabView {
+            let toDoListViewModel = ToDoListViewModel(viewContext: viewContext, localNotificationManager: localNotificationManager)
             ToDoListView(toDoListViewModel: toDoListViewModel)
                 .preferredColorScheme(.light)
                 .tabItem {
@@ -59,13 +59,5 @@ struct ContentView: View {
                 }
         }
         .tint(Color("primary"))
-        .onAppear {
-            NotificationCenter.default.addObserver(
-                forName: UIApplication.didBecomeActiveNotification,
-                object: nil,
-                queue: nil) { _ in
-                    localNotificationManager.sendAuthorizationStatusEvent()
-                }
-        }
     }
 }
