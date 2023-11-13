@@ -49,7 +49,7 @@ struct ContentView: View {
                         .foregroundColor(.black)
                 }
             
-            let settingViewModel = SettingViewModel(viewContext: viewContext, localNotificationManager: localNotificationManager)
+            let settingViewModel = SettingViewModel( localNotificationManager: localNotificationManager)
             SettingView(settingViewModel: settingViewModel)
                 .tabItem {
                     Image(systemName: "gearshape")

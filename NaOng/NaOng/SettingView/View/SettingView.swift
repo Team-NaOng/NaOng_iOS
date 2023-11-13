@@ -10,7 +10,6 @@ import UIKit
 
 struct SettingView: View {
     @Environment(\.presentationMode) var presentationMode
-    
     @ObservedObject private var settingViewModel: SettingViewModel
     
     init(settingViewModel: SettingViewModel) {
@@ -51,34 +50,6 @@ struct SettingView: View {
                         UIApplication.shared.open(settingsUrl)
                     }
                 }
-            }
-            
-            Button {
-                settingViewModel.showDeleteAlert()
-            } label: {
-                HStack {
-                    Image(systemName: "trash")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 15)
-                    Text("할일 삭제")
-                        .font(.custom("Binggrae", size: 16))
-                }
-            }
-            .foregroundColor(.black)
-            .alert("모든 할일을 삭제합니다.\n정말 삭제하시겠습니까?", isPresented: $settingViewModel.isShowingDeleteAlert) {
-
-                Button("취소", role: .cancel) { }
-                Button("확인", role: .destructive) {
-                    settingViewModel.deleteAllToDo()
-                }
-            }
-            .alert(isPresented: $settingViewModel.isShowingDeleteDoneAlert) {
-                Alert(
-                    title: Text(settingViewModel.alertTitle),
-                    message: Text(settingViewModel.alertMessage),
-                    dismissButton: .default(Text("확인"))
-                )
             }
             
             Button {

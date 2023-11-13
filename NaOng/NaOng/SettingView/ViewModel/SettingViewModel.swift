@@ -7,23 +7,16 @@
 
 import Combine
 import SwiftUI
-import CoreData
 
 class SettingViewModel: ObservableObject {
     @Published var authorizationStatus: String = ""
     @Published var isShowingNotificationAlert: Bool = false
-    @Published var isShowingDeleteAlert: Bool = false
     @Published var isShowingEmail: Bool = false
-    @Published var isShowingDeleteDoneAlert: Bool = false
-    var alertTitle: String = ""
-    var alertMessage: String = ""
 
-    private let viewContext: NSManagedObjectContext
     private let localNotificationManager: LocalNotificationManager
     private var cancellables: Set<AnyCancellable> = []
     
-    init(viewContext: NSManagedObjectContext,localNotificationManager: LocalNotificationManager) {
-        self.viewContext = viewContext
+    init(localNotificationManager: LocalNotificationManager) {
         self.localNotificationManager = localNotificationManager
         localNotificationManager.sendAuthorizationStatusEvent()
         getNotificationStatus()
@@ -47,24 +40,7 @@ class SettingViewModel: ObservableObject {
         isShowingNotificationAlert = true
     }
     
-    func showDeleteAlert() {
-        isShowingDeleteAlert = true
-    }
-    
     func showEmailView() {
         isShowingEmail = true
-    }
-    
-    func deleteAllToDo() {
-        do {
-            try ToDo.deleteAll(viewContext: viewContext)
-            alertTitle = "할일 삭제 완료"
-            alertMessage = "모든 할 일이 삭제되었습니다."
-        } catch {
-            alertTitle = "할일 삭제 실패🥲"
-            alertMessage = error.localizedDescription
-        }
-        
-        isShowingDeleteDoneAlert.toggle()
     }
 }
