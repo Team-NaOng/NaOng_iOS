@@ -9,7 +9,6 @@ import Foundation
 import CoreData
 import Combine
 
-@MainActor
 class ToDoListViewModel: NSObject, ObservableObject {
     @Published var showingToDoItemAddView: Bool = false
     @Published var toDoItems: [ToDo] = [ToDo]()

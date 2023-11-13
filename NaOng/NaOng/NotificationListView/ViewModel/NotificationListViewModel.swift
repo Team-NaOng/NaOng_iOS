@@ -10,7 +10,6 @@ import UserNotifications
 import CoreData
 import Combine
 
-@MainActor
 class NotificationListViewModel: NSObject, ObservableObject, NSFetchedResultsControllerDelegate {
     @Published var groupedToDoItems: [String : [ToDo]] = [:]
     @Published var showErrorAlert = false
@@ -82,7 +81,7 @@ class NotificationListViewModel: NSObject, ObservableObject, NSFetchedResultsCon
     }
     
     private func addNextDayToDo(toDoItem: ToDo) throws {
-        if toDoItem.isRepeat == false { return }
+        if (toDoItem.isRepeat == false) || (toDoItem.alarmType == "위치") { return }
 
         var nextDate = Date()
         if let currentDate = toDoItem.alarmTime {

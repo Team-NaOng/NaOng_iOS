@@ -8,7 +8,6 @@
 import Foundation
 import CoreData
 
-@MainActor
 class CalendarViewModel: NSObject, ObservableObject {
     @Published var date: Date = Date()
     @Published var showingToDoItemAddView: Bool = false

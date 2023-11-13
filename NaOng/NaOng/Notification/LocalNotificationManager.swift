@@ -129,7 +129,7 @@ class LocalNotificationManager: NSObject, ObservableObject {
             identifier: toDo.id ?? UUID().uuidString)
         let trigger = UNLocationNotificationTrigger(
             region: region,
-            repeats: false)
+            repeats: toDo.isRepeat)
         let request = UNNotificationRequest(
             identifier: toDo.id ?? UUID().uuidString,
             content: content,
