@@ -45,7 +45,7 @@ struct LocationToDoListView: View {
                         .foregroundColor(Color("secondary"))
                     
                     if $locationToDoListViewModel.toDoItems.count == 0 {
-                        Text("오늘 할 일이 없어요. \n 아래 고양이를 눌러 \n 할 일을 추가해 보세요!")
+                        Text("할 일이 없어요. \n 아래 고양이를 눌러 \n 위치 할 일을 추가해 보세요!")
                             .foregroundColor(.black)
                             .font(.custom("Binggrae", size: 20))
                             .multilineTextAlignment(.center)

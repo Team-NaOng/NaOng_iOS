@@ -50,41 +50,54 @@ struct TimeToDoListView: View {
                     timeToDoListViewModel.setFetchedResultsPredicate()
                 }
                 
-                List {
-                    ForEach($timeToDoListViewModel.toDoItems) { item in
-                        let localNotificationManager = LocalNotificationManager()
-                        let viewModel = ToDoItemViewModel(toDoItem: item.wrappedValue, viewContext: viewContext, localNotificationManager: localNotificationManager)
-                        ToDoItemView(toDoItemViewModel: viewModel)
-                            .frame(width: UIScreen.main.bounds.width)
+                if $timeToDoListViewModel.toDoItems.count == 0 {
+                    ZStack {
+                        Text("할 일이 없어요. \n 오른쪽 하단의 버튼을 눌러 \n 시간 할 일을 추가해 보세요!")
+                            .foregroundColor(.black)
+                            .font(.custom("Binggrae", size: 20))
+                            .multilineTextAlignment(.center)
+                            .padding()
+                    }
+                    .frame(minWidth: UIScreen.main.bounds.width, maxHeight: .infinity)
+                    .background(Color("secondary"))
+                    .padding(0)
+                } else {
+                    List {
+                        ForEach($timeToDoListViewModel.toDoItems) { item in
+                            let localNotificationManager = LocalNotificationManager()
+                            let viewModel = ToDoItemViewModel(toDoItem: item.wrappedValue, viewContext: viewContext, localNotificationManager: localNotificationManager)
+                            ToDoItemView(toDoItemViewModel: viewModel)
+                                .frame(width: UIScreen.main.bounds.width)
+                                .listRowSeparator(.hidden)
+                                .listRowInsets(.init(top: 0, leading: 0, bottom: 0, trailing: 0))
+                                .overlay {
+                                    NavigationLink {
+                                        let toDoItemDetailViewModel = ToDoItemDetailViewModel(viewContext: viewContext, toDoItem: item.wrappedValue, localNotificationManager: localNotificationManager)
+                                        TimeToDoItemDetailView(toDoItemDetailViewModel: toDoItemDetailViewModel)
+                                    } label: {
+                                        EmptyView()
+                                    }
+                                    .opacity(0)
+                                }
+                                .background(Color("secondary"))
+                        }
+                        .onDelete { indexSet in
+                            withAnimation {
+                                timeToDoListViewModel.deleteItems(offsets: indexSet)
+                            }
+                        }
+                        
+                        Rectangle()
+                            .foregroundColor(Color("secondary"))
+                            .frame(width: UIScreen.main.bounds.width, height: 90)
                             .listRowSeparator(.hidden)
                             .listRowInsets(.init(top: 0, leading: 0, bottom: 0, trailing: 0))
-                            .overlay {
-                                NavigationLink {
-                                    let toDoItemDetailViewModel = ToDoItemDetailViewModel(viewContext: viewContext, toDoItem: item.wrappedValue, localNotificationManager: localNotificationManager)
-                                    TimeToDoItemDetailView(toDoItemDetailViewModel: toDoItemDetailViewModel)
-                                } label: {
-                                    EmptyView()
-                                }
-                                .opacity(0)
-                            }
-                            .background(Color("secondary"))
                     }
-                    .onDelete { indexSet in
-                        withAnimation {
-                            timeToDoListViewModel.deleteItems(offsets: indexSet)
-                        }
-                    }
-                    
-                    Rectangle()
-                        .foregroundColor(Color("secondary"))
-                        .frame(width: UIScreen.main.bounds.width, height: 90)
-                        .listRowSeparator(.hidden)
-                        .listRowInsets(.init(top: 0, leading: 0, bottom: 0, trailing: 0))
+                    .listStyle(.plain)
+                    .buttonStyle(.plain)
+                    .background(Color("secondary"))
+                    .frame(width: UIScreen.main.bounds.width)
                 }
-                .listStyle(.plain)
-                .buttonStyle(.plain)
-                .background(Color("secondary"))
-                .frame(width: UIScreen.main.bounds.width)
             }
             .overlay {
                 Button {
