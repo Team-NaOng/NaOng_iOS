@@ -39,12 +39,12 @@ struct ContentView: View {
                         .font(.custom("Binggrae", size: 10))
                         .foregroundColor(.black)
                 }
-            
-            let notificationListViewModel = NotificationListViewModel(viewContext: viewContext, localNotificationManager: localNotificationManager)
-            NotificationListView(notificationListViewModel: notificationListViewModel)
+
+            let weatherViewModel = WeatherViewModel(imageState: .loaded)
+            WeatherView(weatherViewModel: weatherViewModel)
                 .tabItem {
-                    Image(systemName: "bell")
-                    Text("알림 목록")
+                    Image(systemName: "thermometer.sun.fill")
+                    Text("오늘 날씨")
                         .font(.custom("Binggrae", size: 10))
                         .foregroundColor(.black)
                 }

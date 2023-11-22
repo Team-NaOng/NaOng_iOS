@@ -47,6 +47,10 @@
 		056B2B762A64158000D52CFF /* ToDo+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 056B2B752A64158000D52CFF /* ToDo+Extensions.swift */; };
 		056EDC322B0E291D004090F6 /* LocationToDoItemDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 056EDC312B0E291D004090F6 /* LocationToDoItemDetailView.swift */; };
 		056EDC392B0E397D004090F6 /* LocationToDoItemAddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 056EDC382B0E397D004090F6 /* LocationToDoItemAddView.swift */; };
+		056EDC3F2B0E4DEF004090F6 /* WeatherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 056EDC3E2B0E4DEF004090F6 /* WeatherView.swift */; };
+		056EDC412B0E7619004090F6 /* WeatherItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 056EDC402B0E7619004090F6 /* WeatherItemView.swift */; };
+		056EDC432B0E8C2D004090F6 /* WeatherViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 056EDC422B0E8C2D004090F6 /* WeatherViewModel.swift */; };
+		056EDC452B0E96DA004090F6 /* WeatherProfileImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 056EDC442B0E96DA004090F6 /* WeatherProfileImageView.swift */; };
 		05733A8A2A51A42E00DF3B78 /* LocationToDoListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05733A892A51A42E00DF3B78 /* LocationToDoListView.swift */; };
 		057B50FA2AAB002B002260EC /* KakaoMapsSDK_SPM in Frameworks */ = {isa = PBXBuildFile; productRef = 057B50F92AAB002B002260EC /* KakaoMapsSDK_SPM */; };
 		057B50FD2AAB0095002260EC /* KakaoMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 057B50FC2AAB0095002260EC /* KakaoMapView.swift */; };
@@ -122,6 +126,10 @@
 		056B2B752A64158000D52CFF /* ToDo+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ToDo+Extensions.swift"; sourceTree = "<group>"; };
 		056EDC312B0E291D004090F6 /* LocationToDoItemDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationToDoItemDetailView.swift; sourceTree = "<group>"; };
 		056EDC382B0E397D004090F6 /* LocationToDoItemAddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationToDoItemAddView.swift; sourceTree = "<group>"; };
+		056EDC3E2B0E4DEF004090F6 /* WeatherView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherView.swift; sourceTree = "<group>"; };
+		056EDC402B0E7619004090F6 /* WeatherItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherItemView.swift; sourceTree = "<group>"; };
+		056EDC422B0E8C2D004090F6 /* WeatherViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherViewModel.swift; sourceTree = "<group>"; };
+		056EDC442B0E96DA004090F6 /* WeatherProfileImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherProfileImageView.swift; sourceTree = "<group>"; };
 		05733A892A51A42E00DF3B78 /* LocationToDoListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationToDoListView.swift; sourceTree = "<group>"; };
 		057B50FC2AAB0095002260EC /* KakaoMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoMapView.swift; sourceTree = "<group>"; };
 		0587438A2AC31A8800075905 /* Coordinates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinates.swift; sourceTree = "<group>"; };
@@ -194,6 +202,7 @@
 				05CCE8B12A51A66D0037FF74 /* LocationToDoView */,
 				058B7CAA2A55C8D2005C07BD /* TimeToDoView */,
 				0534F9A82A8FED2400A90BF7 /* NotificationListView */,
+				056EDC3B2B0E4D72004090F6 /* WeatherView */,
 				05D69E412A696A520074C84A /* SettingView */,
 			);
 			path = NaOng;
@@ -420,6 +429,33 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
+		056EDC3B2B0E4D72004090F6 /* WeatherView */ = {
+			isa = PBXGroup;
+			children = (
+				056EDC3C2B0E4D98004090F6 /* View */,
+				056EDC3D2B0E4D9E004090F6 /* ViewModel */,
+			);
+			path = WeatherView;
+			sourceTree = "<group>";
+		};
+		056EDC3C2B0E4D98004090F6 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				056EDC3E2B0E4DEF004090F6 /* WeatherView.swift */,
+				056EDC402B0E7619004090F6 /* WeatherItemView.swift */,
+				056EDC442B0E96DA004090F6 /* WeatherProfileImageView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		056EDC3D2B0E4D9E004090F6 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				056EDC422B0E8C2D004090F6 /* WeatherViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		057B50FB2AAB0080002260EC /* Map */ = {
 			isa = PBXGroup;
 			children = (
@@ -581,6 +617,7 @@
 				05173EA62A8772B300CDF988 /* NotificationListViewModel.swift in Sources */,
 				056B2B762A64158000D52CFF /* ToDo+Extensions.swift in Sources */,
 				056EDC392B0E397D004090F6 /* LocationToDoItemAddView.swift in Sources */,
+				056EDC412B0E7619004090F6 /* WeatherItemView.swift in Sources */,
 				05D69E432A696AD30074C84A /* SettingView.swift in Sources */,
 				05477D4F2A8222AB00C16F4A /* TimeToDoListView.swift in Sources */,
 				056B2B522A5FC9D600D52CFF /* ToDoCoreDataManager.swift in Sources */,
@@ -595,6 +632,7 @@
 				05477D442A7C228100C16F4A /* CoreDataBaseProtocol.swift in Sources */,
 				0587438B2AC31A8800075905 /* Coordinates.swift in Sources */,
 				05173EA82A880E6C00CDF988 /* NotificationListItemView.swift in Sources */,
+				056EDC432B0E8C2D004090F6 /* WeatherViewModel.swift in Sources */,
 				05CCE8B32A51A6BE0037FF74 /* LocationToDoListViewModel.swift in Sources */,
 				056B2B732A640F9F00D52CFF /* ToDoItemViewModel.swift in Sources */,
 				055E58EB2A973600005B91DC /* NetworkManager.swift in Sources */,
@@ -602,6 +640,7 @@
 				0598717A2AB38C30009401D3 /* LocationCheckViewModel.swift in Sources */,
 				050EE3BD2ABCA1B6004E206F /* KakaoLocalKeyword.swift in Sources */,
 				05477D352A7A85BF00C16F4A /* LocationSelectionView.swift in Sources */,
+				056EDC3F2B0E4DEF004090F6 /* WeatherView.swift in Sources */,
 				05EEE1082A8578CE007AD5F7 /* Date+Extensions.swift in Sources */,
 				056EDC322B0E291D004090F6 /* LocationToDoItemDetailView.swift in Sources */,
 				050FCC1F2A1C91E100270F97 /* ContentView.swift in Sources */,
@@ -623,6 +662,7 @@
 				05477D2D2A77ED7400C16F4A /* TimeToDoItemDetailView.swift in Sources */,
 				057B50FD2AAB0095002260EC /* KakaoMapView.swift in Sources */,
 				058B7CA92A55C495005C07BD /* TimeToDoItemAddView.swift in Sources */,
+				056EDC452B0E96DA004090F6 /* WeatherProfileImageView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
