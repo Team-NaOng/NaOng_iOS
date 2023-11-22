@@ -60,7 +60,6 @@
 		05CD8E9A2A57631B00C1C187 /* ToDoItemAddViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CD8E992A57631B00C1C187 /* ToDoItemAddViewModel.swift */; };
 		05D69E432A696AD30074C84A /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05D69E422A696AD30074C84A /* SettingView.swift */; };
 		05EEE1042A8551C7007AD5F7 /* UITextViewWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05EEE1032A8551C7007AD5F7 /* UITextViewWrapper.swift */; };
-		05EEE1062A856098007AD5F7 /* UITextView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05EEE1052A856098007AD5F7 /* UITextView+Extensions.swift */; };
 		05EEE1082A8578CE007AD5F7 /* Date+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05EEE1072A8578CE007AD5F7 /* Date+Extensions.swift */; };
 		05F233BB2A2AF3D10091D5B3 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F233BA2A2AF3D10091D5B3 /* LocationService.swift */; };
 		05FD378D2A9FA045006FDAEC /* KakaoLocal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05FD378C2A9FA045006FDAEC /* KakaoLocal.swift */; };
@@ -132,7 +131,6 @@
 		05CD8E992A57631B00C1C187 /* ToDoItemAddViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoItemAddViewModel.swift; sourceTree = "<group>"; };
 		05D69E422A696AD30074C84A /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
 		05EEE1032A8551C7007AD5F7 /* UITextViewWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextViewWrapper.swift; sourceTree = "<group>"; };
-		05EEE1052A856098007AD5F7 /* UITextView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+Extensions.swift"; sourceTree = "<group>"; };
 		05EEE1072A8578CE007AD5F7 /* Date+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extensions.swift"; sourceTree = "<group>"; };
 		05F233B92A29C79B0091D5B3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		05F233BA2A2AF3D10091D5B3 /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
@@ -357,7 +355,6 @@
 				056B2B752A64158000D52CFF /* ToDo+Extensions.swift */,
 				05477D072A7577BD00C16F4A /* View+Extensions.swift */,
 				05477D402A7C220D00C16F4A /* Location+Extensions.swift */,
-				05EEE1052A856098007AD5F7 /* UITextView+Extensions.swift */,
 				05EEE1072A8578CE007AD5F7 /* Date+Extensions.swift */,
 				058A9E7C2A95E40D005A498A /* Bundle+Extensions.swift */,
 				051BFA1C2AB6E39E00BBC8C6 /* UIImage+Extensions.swift */,
@@ -554,7 +551,6 @@
 				050FCC1F2A1C91E100270F97 /* ContentView.swift in Sources */,
 				05477D462A7C3A7F00C16F4A /* LocationSearchView.swift in Sources */,
 				05CD8E9A2A57631B00C1C187 /* ToDoItemAddViewModel.swift in Sources */,
-				05EEE1062A856098007AD5F7 /* UITextView+Extensions.swift in Sources */,
 				055E58ED2A973702005B91DC /* NetworkError.swift in Sources */,
 				055E58EF2A9738D1005B91DC /* URLRequestBuilder.swift in Sources */,
 				05477D3A2A7C172600C16F4A /* LocationCoreDataManager.swift in Sources */,

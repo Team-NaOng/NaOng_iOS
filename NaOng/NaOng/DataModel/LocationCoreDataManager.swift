@@ -5,10 +5,10 @@
 //  Created by seohyeon park on 2023/08/04.
 //
 
-import Foundation
 import CoreData
+import os.log
 
-class LocationCoreDataManager: ObservableObject {
+class LocationCoreDataManager {
     let persistentContainer: NSPersistentContainer
     static let shared = LocationCoreDataManager()
     
@@ -16,7 +16,9 @@ class LocationCoreDataManager: ObservableObject {
         persistentContainer = NSPersistentContainer(name: "LocationModel")
         persistentContainer.loadPersistentStores { description, error in
             if let error = error {
-                print("❌ TODO: 에러 메세지 수정 / \(error)")
+                let osLog = OSLog(subsystem: "Seohyeon.NaOng", category: "CoreData")
+                let log = Logger(osLog)
+                log.log(level: .error, "LocationCoreData Error: \(error.localizedDescription)")
             }
         }
     }

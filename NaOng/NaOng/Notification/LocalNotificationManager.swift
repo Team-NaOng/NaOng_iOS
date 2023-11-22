@@ -6,9 +6,8 @@
 //
 
 import UserNotifications
-import UIKit
 import Combine
-import Foundation
+import os.log
 
 class LocalNotificationManager: NSObject, ObservableObject {
     var deliveredNotificationsPublisher: AnyPublisher<[String], Never> {
@@ -70,18 +69,18 @@ class LocalNotificationManager: NSObject, ObservableObject {
         let options: UNAuthorizationOptions = [.alert, .sound, .badge]
         UNUserNotificationCenter.current().requestAuthorization(options: options) { success, error in
             if let error = error {
-                print("notification Error: \(error)")
-            } else {
-                print("success")
+                let osLog = OSLog(subsystem: "Seohyeon.NaOng", category: "Notification")
+                let log = Logger(osLog)
+                log.log(level: .error, "requestAuthorization Error: \(error.localizedDescription)")
             }
         }
     }
 
     func scheduleNotification(for toDoItem: ToDo) {
         if toDoItem.alarmType == "위치" {
-            LocalNotificationManager().setLocationNotification(toDo: toDoItem)
+            setLocationNotification(toDo: toDoItem)
         } else {
-            LocalNotificationManager().setCalendarNotification(toDo: toDoItem)
+            setCalendarNotification(toDo: toDoItem)
         }
     }
 
@@ -116,7 +115,7 @@ class LocalNotificationManager: NSObject, ObservableObject {
             from: date)
         let trigger = UNCalendarNotificationTrigger(
             dateMatching: components,
-            repeats: false)
+            repeats: toDo.isRepeat)
         let request = UNNotificationRequest(
             identifier: toDo.id ?? UUID().uuidString,
             content: content,
@@ -137,7 +136,7 @@ class LocalNotificationManager: NSObject, ObservableObject {
             identifier: toDo.id ?? UUID().uuidString)
         let trigger = UNLocationNotificationTrigger(
             region: region,
-            repeats: false)
+            repeats: toDo.isRepeat)
         let request = UNNotificationRequest(
             identifier: toDo.id ?? UUID().uuidString,
             content: content,

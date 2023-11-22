@@ -105,7 +105,7 @@ struct CalendarView: View {
                 }
                 .frame(width: UIScreen.main.bounds.width - 30, height: UIScreen.main.bounds.height - 170, alignment: .bottomTrailing)
                 .fullScreenCover(isPresented: $calendarViewModel.showingToDoItemAddView) {
-                    let viewModel = ToDoItemAddViewModel(viewContext: viewContext, localNotificationManager: calendarViewModel.localNotificationManager)
+                    let viewModel = ToDoItemAddViewModel(viewContext: viewContext, localNotificationManager: calendarViewModel.localNotificationManager, alarmTime: calendarViewModel.date)
                     ToDoItemAddView(toDoItemAddViewModel: viewModel)
                 }
             }

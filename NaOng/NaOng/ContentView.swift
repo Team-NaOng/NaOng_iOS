@@ -18,8 +18,8 @@ struct ContentView: View {
     }
     
     var body: some View {
-        let toDoListViewModel = ToDoListViewModel(viewContext: viewContext, localNotificationManager: localNotificationManager)
         TabView {
+            let toDoListViewModel = ToDoListViewModel(viewContext: viewContext, localNotificationManager: localNotificationManager)
             ToDoListView(toDoListViewModel: toDoListViewModel)
                 .preferredColorScheme(.light)
                 .tabItem {
@@ -49,7 +49,7 @@ struct ContentView: View {
                         .foregroundColor(.black)
                 }
             
-            let settingViewModel = SettingViewModel(viewContext: viewContext, localNotificationManager: localNotificationManager)
+            let settingViewModel = SettingViewModel( localNotificationManager: localNotificationManager)
             SettingView(settingViewModel: settingViewModel)
                 .tabItem {
                     Image(systemName: "gearshape")
@@ -59,13 +59,5 @@ struct ContentView: View {
                 }
         }
         .tint(Color("primary"))
-        .onAppear {
-            NotificationCenter.default.addObserver(
-                forName: UIApplication.didBecomeActiveNotification,
-                object: nil,
-                queue: nil) { _ in
-                    localNotificationManager.sendAuthorizationStatusEvent()
-                }
-        }
     }
 }

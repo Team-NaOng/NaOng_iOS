@@ -10,7 +10,6 @@ import UserNotifications
 import CoreData
 import Combine
 
-@MainActor
 class NotificationListViewModel: NSObject, ObservableObject, NSFetchedResultsControllerDelegate {
     @Published var groupedToDoItems: [String : [ToDo]] = [:]
     @Published var showErrorAlert = false
@@ -81,40 +80,12 @@ class NotificationListViewModel: NSObject, ObservableObject, NSFetchedResultsCon
                 toDoItem.isNotificationVisible = true
 
                 try toDoItem.save(viewContext: viewContext)
-                try addNextDayToDo(toDoItem: toDoItem)
             }
         } catch {
             errorTitle = "알림 목록 에러🥲"
             errorMessage = error.localizedDescription
             showErrorAlert.toggle()
         }
-    }
-    
-    private func addNextDayToDo(toDoItem: ToDo) throws {
-        if toDoItem.isRepeat == false { return }
-
-        var nextDate = Date()
-        if let currentDate = toDoItem.alarmTime {
-            let oneDay: TimeInterval = 24 * 60 * 60
-            nextDate = currentDate.addingTimeInterval(oneDay)
-        }
-
-        let newToDoItem = ToDo(context: viewContext)
-        newToDoItem.id = UUID().uuidString
-        newToDoItem.isDone = false
-        newToDoItem.isNotificationVisible = false
-        newToDoItem.content = toDoItem.content
-        newToDoItem.alarmType = toDoItem.alarmType
-        newToDoItem.alarmTime = nextDate
-        newToDoItem.isRepeat = toDoItem.isRepeat
-        newToDoItem.alarmLocationLatitude = toDoItem.alarmLocationLatitude
-        newToDoItem.alarmLocationLongitude = toDoItem.alarmLocationLongitude
-        newToDoItem.alarmLocationName = toDoItem.alarmLocationName
-        newToDoItem.alarmDate = newToDoItem.alarmTime?.getFormatDate()
-
-        try newToDoItem.save(viewContext: viewContext)
-        
-        localNotificationManager.scheduleNotification(for: newToDoItem)
     }
 
     private func fetchTodoItems(with format: String, argumentArray: [Any]?) -> [ToDo]? {

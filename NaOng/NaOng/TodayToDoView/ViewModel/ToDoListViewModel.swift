@@ -9,7 +9,6 @@ import Foundation
 import CoreData
 import Combine
 
-@MainActor
 class ToDoListViewModel: NSObject, ObservableObject {
     @Published var showingToDoItemAddView: Bool = false
     @Published var toDoItems: [ToDo] = [ToDo]()
@@ -30,8 +29,8 @@ class ToDoListViewModel: NSObject, ObservableObject {
 
         super.init()
         fetchToDoItems(
-            format: "alarmDate == %@",
-            argumentArray: [Date().getFormatDate()])
+            format: "alarmDate == %@ OR (isRepeat == %@ AND alarmDate < %@)",
+            argumentArray: [Date().getFormatDate(), true, Date().getFormatDate()])
     }
 
     func getMarkerName(isDone: Bool, alertType: String) -> String {
@@ -78,13 +77,13 @@ class ToDoListViewModel: NSObject, ObservableObject {
             break
         case "반복":
             fetchToDoItems(
-                format: "alarmDate == %@ AND isRepeat == %@",
-                argumentArray: [Date().getFormatDate(), true])
+                format: "(alarmDate == %@ AND isRepeat == %@) OR (isRepeat == %@ AND alarmDate < %@)",
+                argumentArray: [Date().getFormatDate(), true, true ,Date().getFormatDate()])
             break
         default:
             fetchToDoItems(
-                format: "alarmDate == %@",
-                argumentArray: [Date().getFormatDate()])
+                format: "alarmDate == %@ OR (isRepeat == %@ AND alarmDate < %@)",
+                argumentArray: [Date().getFormatDate(), true, Date().getFormatDate()])
         }
     }
     

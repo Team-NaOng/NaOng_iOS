@@ -28,8 +28,8 @@ struct UITextViewWrapper: UIViewRepresentable {
         
         let doneButton = UIBarButtonItem(
             barButtonSystemItem: .done,
-            target: self,
-            action: #selector(textView.didTapDoneButton)
+            target: context.coordinator,
+            action: #selector(Coordinator.didTapDoneButton)
         )
         toolbar.items = [flexibleSpace, doneButton]
         textView.inputAccessoryView = toolbar
@@ -53,6 +53,10 @@ struct UITextViewWrapper: UIViewRepresentable {
 
         func textViewDidChange(_ textView: UITextView) {
             parent.text = textView.text
+        }
+        
+        @objc func didTapDoneButton() {
+            UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
         }
     }
 }

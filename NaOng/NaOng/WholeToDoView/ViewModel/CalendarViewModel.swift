@@ -9,7 +9,6 @@ import Foundation
 import CoreData
 import Combine
 
-@MainActor
 class CalendarViewModel: NSObject, ObservableObject {
     @Published var date: Date = Date()
     @Published var showingToDoItemAddView: Bool = false
@@ -30,8 +29,8 @@ class CalendarViewModel: NSObject, ObservableObject {
         
         super.init()
         fetchToDoItems(
-            format: "alarmDate == %@",
-            argumentArray: [Date().getFormatDate()])
+            format: "alarmDate == %@ OR (isRepeat == %@ AND alarmDate < %@)",
+            argumentArray: [date.getFormatDate(), true, date.getFormatDate()])
     }
     
     func deleteItems(offsets: IndexSet) {
@@ -108,13 +107,13 @@ class CalendarViewModel: NSObject, ObservableObject {
             break
         case "반복":
             fetchToDoItems(
-                format: "alarmDate == %@ AND isRepeat == %@",
-                argumentArray: [date.getFormatDate(), true])
+                format: "(alarmDate == %@ AND isRepeat == %@) OR (isRepeat == %@ AND alarmDate < %@)",
+                argumentArray: [date.getFormatDate(), true, true ,date.getFormatDate()])
             break
         default:
             fetchToDoItems(
-                format: "alarmDate == %@",
-                argumentArray: [date.getFormatDate()])
+                format: "alarmDate == %@ OR (isRepeat == %@ AND alarmDate < %@)",
+                argumentArray: [date.getFormatDate(), true, date.getFormatDate()])
         }
     }
 }

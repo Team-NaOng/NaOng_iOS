@@ -6,16 +6,18 @@
 //
 
 import CoreData
+import os.log
 
-class ToDoCoreDataManager: ObservableObject {
+class ToDoCoreDataManager {
     let persistentContainer: NSPersistentContainer
-    static let shared = ToDoCoreDataManager()
     
-    private init() {
+    init() {
         persistentContainer = NSPersistentContainer(name: "ToDoModel")
         persistentContainer.loadPersistentStores { description, error in
             if let error = error {
-                print("❌ TODO: 에러 메세지 수정 / \(error)")
+                let osLog = OSLog(subsystem: "Seohyeon.NaOng", category: "CoreData")
+                let log = Logger(osLog)
+                log.log(level: .error, "ToDoCoreData Error: \(error.localizedDescription)")
             }
         }
     }
