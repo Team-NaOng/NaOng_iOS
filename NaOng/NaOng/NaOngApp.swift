@@ -9,11 +9,11 @@ import SwiftUI
 
 @main
 struct NaOngApp: App {
+    let viewContext = ToDoCoreDataManager().persistentContainer.viewContext
+    let localNotificationManager = LocalNotificationManager()
+    
     var body: some Scene {
         WindowGroup {
-            let viewContext = ToDoCoreDataManager().persistentContainer.viewContext
-            let localNotificationManager = LocalNotificationManager()
-            
             ContentView()
                 .environment(\.managedObjectContext, viewContext)
                 .environmentObject(localNotificationManager)
