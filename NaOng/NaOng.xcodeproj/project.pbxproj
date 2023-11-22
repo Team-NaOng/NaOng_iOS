@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0500E94A2A482D7700A3F338 /* ToDoListItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0500E9492A482D7700A3F338 /* ToDoListItemView.swift */; };
+		0500E94A2A482D7700A3F338 /* ToDoItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0500E9492A482D7700A3F338 /* ToDoItemView.swift */; };
 		050EE3BD2ABCA1B6004E206F /* KakaoLocalKeyword.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050EE3BC2ABCA1B6004E206F /* KakaoLocalKeyword.swift */; };
 		050EE3BF2ABCE1BA004E206F /* KakaoAPIResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050EE3BE2ABCE1BA004E206F /* KakaoAPIResult.swift */; };
 		050EE3C12ABCE1E8004E206F /* LocationInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050EE3C02ABCE1E8004E206F /* LocationInformation.swift */; };
@@ -22,9 +22,9 @@
 		0534F99B2A8F9A2B00A90BF7 /* LocalNotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0534F99A2A8F9A2B00A90BF7 /* LocalNotificationManager.swift */; };
 		0534F99D2A8F9AC000A90BF7 /* CustomNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0534F99C2A8F9AC000A90BF7 /* CustomNavigationBar.swift */; };
 		0534F9A72A8FBBC000A90BF7 /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0534F9A62A8FBBC000A90BF7 /* SettingViewModel.swift */; };
-		05388A932A83798700C8A69A /* CalendarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05388A922A83798700C8A69A /* CalendarViewModel.swift */; };
+		05388A932A83798700C8A69A /* TimeToDoListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05388A922A83798700C8A69A /* TimeToDoListViewModel.swift */; };
 		05477D082A7577BD00C16F4A /* View+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05477D072A7577BD00C16F4A /* View+Extensions.swift */; };
-		05477D2D2A77ED7400C16F4A /* ToDoItemDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05477D2C2A77ED7400C16F4A /* ToDoItemDetailView.swift */; };
+		05477D2D2A77ED7400C16F4A /* TimeToDoItemDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05477D2C2A77ED7400C16F4A /* TimeToDoItemDetailView.swift */; };
 		05477D2F2A77ED8000C16F4A /* ToDoItemDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05477D2E2A77ED8000C16F4A /* ToDoItemDetailViewModel.swift */; };
 		05477D312A77F47500C16F4A /* ToDoViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05477D302A77F47500C16F4A /* ToDoViewFactory.swift */; };
 		05477D352A7A85BF00C16F4A /* LocationSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05477D342A7A85BF00C16F4A /* LocationSelectionView.swift */; };
@@ -36,16 +36,18 @@
 		05477D442A7C228100C16F4A /* CoreDataBaseProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05477D432A7C228100C16F4A /* CoreDataBaseProtocol.swift */; };
 		05477D462A7C3A7F00C16F4A /* LocationSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05477D452A7C3A7F00C16F4A /* LocationSearchView.swift */; };
 		05477D482A7C3B4100C16F4A /* LocationCheckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05477D472A7C3B4100C16F4A /* LocationCheckView.swift */; };
-		05477D4F2A8222AB00C16F4A /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05477D4E2A8222AB00C16F4A /* CalendarView.swift */; };
+		05477D4F2A8222AB00C16F4A /* TimeToDoListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05477D4E2A8222AB00C16F4A /* TimeToDoListView.swift */; };
 		055E58EB2A973600005B91DC /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 055E58EA2A973600005B91DC /* NetworkManager.swift */; };
 		055E58ED2A973702005B91DC /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 055E58EC2A973702005B91DC /* NetworkError.swift */; };
 		055E58EF2A9738D1005B91DC /* URLRequestBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 055E58EE2A9738D1005B91DC /* URLRequestBuilder.swift */; };
 		055E58F12A97A8D5005B91DC /* LocationSearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 055E58F02A97A8D5005B91DC /* LocationSearchViewModel.swift */; };
 		056B2B502A5FC8AC00D52CFF /* ToDoModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 056B2B4E2A5FC8AC00D52CFF /* ToDoModel.xcdatamodeld */; };
 		056B2B522A5FC9D600D52CFF /* ToDoCoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 056B2B512A5FC9D600D52CFF /* ToDoCoreDataManager.swift */; };
-		056B2B732A640F9F00D52CFF /* ToDoListItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 056B2B722A640F9F00D52CFF /* ToDoListItemViewModel.swift */; };
+		056B2B732A640F9F00D52CFF /* ToDoItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 056B2B722A640F9F00D52CFF /* ToDoItemViewModel.swift */; };
 		056B2B762A64158000D52CFF /* ToDo+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 056B2B752A64158000D52CFF /* ToDo+Extensions.swift */; };
-		05733A8A2A51A42E00DF3B78 /* ToDoListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05733A892A51A42E00DF3B78 /* ToDoListView.swift */; };
+		056EDC322B0E291D004090F6 /* LocationToDoItemDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 056EDC312B0E291D004090F6 /* LocationToDoItemDetailView.swift */; };
+		056EDC392B0E397D004090F6 /* LocationToDoItemAddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 056EDC382B0E397D004090F6 /* LocationToDoItemAddView.swift */; };
+		05733A8A2A51A42E00DF3B78 /* LocationToDoListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05733A892A51A42E00DF3B78 /* LocationToDoListView.swift */; };
 		057B50FA2AAB002B002260EC /* KakaoMapsSDK_SPM in Frameworks */ = {isa = PBXBuildFile; productRef = 057B50F92AAB002B002260EC /* KakaoMapsSDK_SPM */; };
 		057B50FD2AAB0095002260EC /* KakaoMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 057B50FC2AAB0095002260EC /* KakaoMapView.swift */; };
 		0587438B2AC31A8800075905 /* Coordinates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0587438A2AC31A8800075905 /* Coordinates.swift */; };
@@ -54,9 +56,9 @@
 		058A9E822A95FDF4005A498A /* DeviceKit in Frameworks */ = {isa = PBXBuildFile; productRef = 058A9E812A95FDF4005A498A /* DeviceKit */; };
 		058B7CA62A558DEE005C07BD /* Binggrae.otf in Resources */ = {isa = PBXBuildFile; fileRef = 058B7CA42A558DEE005C07BD /* Binggrae.otf */; };
 		058B7CA72A558DEE005C07BD /* Binggrae-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 058B7CA52A558DEE005C07BD /* Binggrae-Bold.otf */; };
-		058B7CA92A55C495005C07BD /* ToDoItemAddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 058B7CA82A55C495005C07BD /* ToDoItemAddView.swift */; };
+		058B7CA92A55C495005C07BD /* TimeToDoItemAddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 058B7CA82A55C495005C07BD /* TimeToDoItemAddView.swift */; };
 		0598717A2AB38C30009401D3 /* LocationCheckViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 059871792AB38C30009401D3 /* LocationCheckViewModel.swift */; };
-		05CCE8B32A51A6BE0037FF74 /* ToDoListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CCE8B22A51A6BE0037FF74 /* ToDoListViewModel.swift */; };
+		05CCE8B32A51A6BE0037FF74 /* LocationToDoListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CCE8B22A51A6BE0037FF74 /* LocationToDoListViewModel.swift */; };
 		05CD8E9A2A57631B00C1C187 /* ToDoItemAddViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CD8E992A57631B00C1C187 /* ToDoItemAddViewModel.swift */; };
 		05D69E432A696AD30074C84A /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05D69E422A696AD30074C84A /* SettingView.swift */; };
 		05EEE1042A8551C7007AD5F7 /* UITextViewWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05EEE1032A8551C7007AD5F7 /* UITextViewWrapper.swift */; };
@@ -79,7 +81,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		0500E9492A482D7700A3F338 /* ToDoListItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoListItemView.swift; sourceTree = "<group>"; };
+		0500E9492A482D7700A3F338 /* ToDoItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoItemView.swift; sourceTree = "<group>"; };
 		050EE3BC2ABCA1B6004E206F /* KakaoLocalKeyword.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoLocalKeyword.swift; sourceTree = "<group>"; };
 		050EE3BE2ABCE1BA004E206F /* KakaoAPIResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoAPIResult.swift; sourceTree = "<group>"; };
 		050EE3C02ABCE1E8004E206F /* LocationInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationInformation.swift; sourceTree = "<group>"; };
@@ -95,9 +97,9 @@
 		0534F99A2A8F9A2B00A90BF7 /* LocalNotificationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalNotificationManager.swift; sourceTree = "<group>"; };
 		0534F99C2A8F9AC000A90BF7 /* CustomNavigationBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomNavigationBar.swift; sourceTree = "<group>"; };
 		0534F9A62A8FBBC000A90BF7 /* SettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewModel.swift; sourceTree = "<group>"; };
-		05388A922A83798700C8A69A /* CalendarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewModel.swift; sourceTree = "<group>"; };
+		05388A922A83798700C8A69A /* TimeToDoListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeToDoListViewModel.swift; sourceTree = "<group>"; };
 		05477D072A7577BD00C16F4A /* View+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extensions.swift"; sourceTree = "<group>"; };
-		05477D2C2A77ED7400C16F4A /* ToDoItemDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoItemDetailView.swift; sourceTree = "<group>"; };
+		05477D2C2A77ED7400C16F4A /* TimeToDoItemDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeToDoItemDetailView.swift; sourceTree = "<group>"; };
 		05477D2E2A77ED8000C16F4A /* ToDoItemDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoItemDetailViewModel.swift; sourceTree = "<group>"; };
 		05477D302A77F47500C16F4A /* ToDoViewFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoViewFactory.swift; sourceTree = "<group>"; };
 		05477D342A7A85BF00C16F4A /* LocationSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSelectionView.swift; sourceTree = "<group>"; };
@@ -109,25 +111,27 @@
 		05477D432A7C228100C16F4A /* CoreDataBaseProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataBaseProtocol.swift; sourceTree = "<group>"; };
 		05477D452A7C3A7F00C16F4A /* LocationSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSearchView.swift; sourceTree = "<group>"; };
 		05477D472A7C3B4100C16F4A /* LocationCheckView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationCheckView.swift; sourceTree = "<group>"; };
-		05477D4E2A8222AB00C16F4A /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
+		05477D4E2A8222AB00C16F4A /* TimeToDoListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeToDoListView.swift; sourceTree = "<group>"; };
 		055E58EA2A973600005B91DC /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		055E58EC2A973702005B91DC /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		055E58EE2A9738D1005B91DC /* URLRequestBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLRequestBuilder.swift; sourceTree = "<group>"; };
 		055E58F02A97A8D5005B91DC /* LocationSearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSearchViewModel.swift; sourceTree = "<group>"; };
 		056B2B4F2A5FC8AC00D52CFF /* ToDoModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ToDoModel.xcdatamodel; sourceTree = "<group>"; };
 		056B2B512A5FC9D600D52CFF /* ToDoCoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoCoreDataManager.swift; sourceTree = "<group>"; };
-		056B2B722A640F9F00D52CFF /* ToDoListItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoListItemViewModel.swift; sourceTree = "<group>"; };
+		056B2B722A640F9F00D52CFF /* ToDoItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoItemViewModel.swift; sourceTree = "<group>"; };
 		056B2B752A64158000D52CFF /* ToDo+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ToDo+Extensions.swift"; sourceTree = "<group>"; };
-		05733A892A51A42E00DF3B78 /* ToDoListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoListView.swift; sourceTree = "<group>"; };
+		056EDC312B0E291D004090F6 /* LocationToDoItemDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationToDoItemDetailView.swift; sourceTree = "<group>"; };
+		056EDC382B0E397D004090F6 /* LocationToDoItemAddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationToDoItemAddView.swift; sourceTree = "<group>"; };
+		05733A892A51A42E00DF3B78 /* LocationToDoListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationToDoListView.swift; sourceTree = "<group>"; };
 		057B50FC2AAB0095002260EC /* KakaoMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoMapView.swift; sourceTree = "<group>"; };
 		0587438A2AC31A8800075905 /* Coordinates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinates.swift; sourceTree = "<group>"; };
 		058A9E7C2A95E40D005A498A /* Bundle+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Extensions.swift"; sourceTree = "<group>"; };
 		058A9E7E2A95E70D005A498A /* MailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MailView.swift; sourceTree = "<group>"; };
 		058B7CA42A558DEE005C07BD /* Binggrae.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Binggrae.otf; sourceTree = "<group>"; };
 		058B7CA52A558DEE005C07BD /* Binggrae-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Binggrae-Bold.otf"; sourceTree = "<group>"; };
-		058B7CA82A55C495005C07BD /* ToDoItemAddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoItemAddView.swift; sourceTree = "<group>"; };
+		058B7CA82A55C495005C07BD /* TimeToDoItemAddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeToDoItemAddView.swift; sourceTree = "<group>"; };
 		059871792AB38C30009401D3 /* LocationCheckViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationCheckViewModel.swift; sourceTree = "<group>"; };
-		05CCE8B22A51A6BE0037FF74 /* ToDoListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoListViewModel.swift; sourceTree = "<group>"; };
+		05CCE8B22A51A6BE0037FF74 /* LocationToDoListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationToDoListViewModel.swift; sourceTree = "<group>"; };
 		05CD8E992A57631B00C1C187 /* ToDoItemAddViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoItemAddViewModel.swift; sourceTree = "<group>"; };
 		05D69E422A696AD30074C84A /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
 		05EEE1032A8551C7007AD5F7 /* UITextViewWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextViewWrapper.swift; sourceTree = "<group>"; };
@@ -184,9 +188,11 @@
 				050FCC202A1C91E200270F97 /* Assets.xcassets */,
 				050FCC222A1C91E200270F97 /* Preview Content */,
 				0549F2CF2A386118002B1248 /* Location */,
+				056EDC332B0E3352004090F6 /* ToDoItemView */,
+				056EDC2E2B0E28CB004090F6 /* ToDoDetailView */,
 				054D4CE82AFE736E005CF34C /* ToDoAddView */,
-				05CCE8B12A51A66D0037FF74 /* TodayToDoView */,
-				058B7CAA2A55C8D2005C07BD /* WholeToDoView */,
+				05CCE8B12A51A66D0037FF74 /* LocationToDoView */,
+				058B7CAA2A55C8D2005C07BD /* TimeToDoView */,
 				0534F9A82A8FED2400A90BF7 /* NotificationListView */,
 				05D69E412A696A520074C84A /* SettingView */,
 			);
@@ -273,7 +279,7 @@
 		05477D4C2A82225A00C16F4A /* View */ = {
 			isa = PBXGroup;
 			children = (
-				05477D4E2A8222AB00C16F4A /* CalendarView.swift */,
+				05477D4E2A8222AB00C16F4A /* TimeToDoListView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -281,7 +287,7 @@
 		05477D4D2A82226500C16F4A /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				05388A922A83798700C8A69A /* CalendarViewModel.swift */,
+				05388A922A83798700C8A69A /* TimeToDoListViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -306,7 +312,8 @@
 		054D4CE92AFE7385005CF34C /* View */ = {
 			isa = PBXGroup;
 			children = (
-				058B7CA82A55C495005C07BD /* ToDoItemAddView.swift */,
+				058B7CA82A55C495005C07BD /* TimeToDoItemAddView.swift */,
+				056EDC382B0E397D004090F6 /* LocationToDoItemAddView.swift */,
 				05477D342A7A85BF00C16F4A /* LocationSelectionView.swift */,
 				05477D452A7C3A7F00C16F4A /* LocationSearchView.swift */,
 				05477D472A7C3B4100C16F4A /* LocationCheckView.swift */,
@@ -362,6 +369,57 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		056EDC2E2B0E28CB004090F6 /* ToDoDetailView */ = {
+			isa = PBXGroup;
+			children = (
+				056EDC2F2B0E28EA004090F6 /* View */,
+				056EDC302B0E28F1004090F6 /* ViewModel */,
+			);
+			path = ToDoDetailView;
+			sourceTree = "<group>";
+		};
+		056EDC2F2B0E28EA004090F6 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				05477D2C2A77ED7400C16F4A /* TimeToDoItemDetailView.swift */,
+				056EDC312B0E291D004090F6 /* LocationToDoItemDetailView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		056EDC302B0E28F1004090F6 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				05477D2E2A77ED8000C16F4A /* ToDoItemDetailViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		056EDC332B0E3352004090F6 /* ToDoItemView */ = {
+			isa = PBXGroup;
+			children = (
+				056EDC362B0E3371004090F6 /* View */,
+				056EDC372B0E3378004090F6 /* ViewModel */,
+			);
+			path = ToDoItemView;
+			sourceTree = "<group>";
+		};
+		056EDC362B0E3371004090F6 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				0500E9492A482D7700A3F338 /* ToDoItemView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		056EDC372B0E3378004090F6 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				056B2B722A640F9F00D52CFF /* ToDoItemViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		057B50FB2AAB0080002260EC /* Map */ = {
 			isa = PBXGroup;
 			children = (
@@ -379,30 +437,28 @@
 			path = fonts;
 			sourceTree = "<group>";
 		};
-		058B7CAA2A55C8D2005C07BD /* WholeToDoView */ = {
+		058B7CAA2A55C8D2005C07BD /* TimeToDoView */ = {
 			isa = PBXGroup;
 			children = (
 				05477D4C2A82225A00C16F4A /* View */,
 				05477D4D2A82226500C16F4A /* ViewModel */,
 			);
-			path = WholeToDoView;
+			path = TimeToDoView;
 			sourceTree = "<group>";
 		};
-		05CCE8B12A51A66D0037FF74 /* TodayToDoView */ = {
+		05CCE8B12A51A66D0037FF74 /* LocationToDoView */ = {
 			isa = PBXGroup;
 			children = (
 				05CCE8B52A51A6DC0037FF74 /* View */,
 				05CCE8B42A51A6CF0037FF74 /* ViewModel */,
 			);
-			path = TodayToDoView;
+			path = LocationToDoView;
 			sourceTree = "<group>";
 		};
 		05CCE8B42A51A6CF0037FF74 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				05CCE8B22A51A6BE0037FF74 /* ToDoListViewModel.swift */,
-				056B2B722A640F9F00D52CFF /* ToDoListItemViewModel.swift */,
-				05477D2E2A77ED8000C16F4A /* ToDoItemDetailViewModel.swift */,
+				05CCE8B22A51A6BE0037FF74 /* LocationToDoListViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -410,9 +466,7 @@
 		05CCE8B52A51A6DC0037FF74 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				05733A892A51A42E00DF3B78 /* ToDoListView.swift */,
-				0500E9492A482D7700A3F338 /* ToDoListItemView.swift */,
-				05477D2C2A77ED7400C16F4A /* ToDoItemDetailView.swift */,
+				05733A892A51A42E00DF3B78 /* LocationToDoListView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -520,14 +574,15 @@
 				05477D482A7C3B4100C16F4A /* LocationCheckView.swift in Sources */,
 				0534F9A72A8FBBC000A90BF7 /* SettingViewModel.swift in Sources */,
 				058A9E7F2A95E70D005A498A /* MailView.swift in Sources */,
-				0500E94A2A482D7700A3F338 /* ToDoListItemView.swift in Sources */,
+				0500E94A2A482D7700A3F338 /* ToDoItemView.swift in Sources */,
 				05477D412A7C220D00C16F4A /* Location+Extensions.swift in Sources */,
 				056B2B502A5FC8AC00D52CFF /* ToDoModel.xcdatamodeld in Sources */,
 				05477D3C2A7C177000C16F4A /* LocationSelectionViewModel.swift in Sources */,
 				05173EA62A8772B300CDF988 /* NotificationListViewModel.swift in Sources */,
 				056B2B762A64158000D52CFF /* ToDo+Extensions.swift in Sources */,
+				056EDC392B0E397D004090F6 /* LocationToDoItemAddView.swift in Sources */,
 				05D69E432A696AD30074C84A /* SettingView.swift in Sources */,
-				05477D4F2A8222AB00C16F4A /* CalendarView.swift in Sources */,
+				05477D4F2A8222AB00C16F4A /* TimeToDoListView.swift in Sources */,
 				056B2B522A5FC9D600D52CFF /* ToDoCoreDataManager.swift in Sources */,
 				05477D382A7C16A100C16F4A /* LocationModel.xcdatamodeld in Sources */,
 				05F233BB2A2AF3D10091D5B3 /* LocationService.swift in Sources */,
@@ -540,14 +595,15 @@
 				05477D442A7C228100C16F4A /* CoreDataBaseProtocol.swift in Sources */,
 				0587438B2AC31A8800075905 /* Coordinates.swift in Sources */,
 				05173EA82A880E6C00CDF988 /* NotificationListItemView.swift in Sources */,
-				05CCE8B32A51A6BE0037FF74 /* ToDoListViewModel.swift in Sources */,
-				056B2B732A640F9F00D52CFF /* ToDoListItemViewModel.swift in Sources */,
+				05CCE8B32A51A6BE0037FF74 /* LocationToDoListViewModel.swift in Sources */,
+				056B2B732A640F9F00D52CFF /* ToDoItemViewModel.swift in Sources */,
 				055E58EB2A973600005B91DC /* NetworkManager.swift in Sources */,
-				05733A8A2A51A42E00DF3B78 /* ToDoListView.swift in Sources */,
+				05733A8A2A51A42E00DF3B78 /* LocationToDoListView.swift in Sources */,
 				0598717A2AB38C30009401D3 /* LocationCheckViewModel.swift in Sources */,
 				050EE3BD2ABCA1B6004E206F /* KakaoLocalKeyword.swift in Sources */,
 				05477D352A7A85BF00C16F4A /* LocationSelectionView.swift in Sources */,
 				05EEE1082A8578CE007AD5F7 /* Date+Extensions.swift in Sources */,
+				056EDC322B0E291D004090F6 /* LocationToDoItemDetailView.swift in Sources */,
 				050FCC1F2A1C91E100270F97 /* ContentView.swift in Sources */,
 				05477D462A7C3A7F00C16F4A /* LocationSearchView.swift in Sources */,
 				05CD8E9A2A57631B00C1C187 /* ToDoItemAddViewModel.swift in Sources */,
@@ -557,16 +613,16 @@
 				058A9E7D2A95E40D005A498A /* Bundle+Extensions.swift in Sources */,
 				050EE3BF2ABCE1BA004E206F /* KakaoAPIResult.swift in Sources */,
 				05173EA42A87728A00CDF988 /* NotificationListView.swift in Sources */,
-				05388A932A83798700C8A69A /* CalendarViewModel.swift in Sources */,
+				05388A932A83798700C8A69A /* TimeToDoListViewModel.swift in Sources */,
 				05FD378D2A9FA045006FDAEC /* KakaoLocal.swift in Sources */,
 				05477D3F2A7C1B7900C16F4A /* CoreDataError.swift in Sources */,
 				050FCC1D2A1C91E100270F97 /* NaOngApp.swift in Sources */,
 				0534F99D2A8F9AC000A90BF7 /* CustomNavigationBar.swift in Sources */,
 				050EE3C12ABCE1E8004E206F /* LocationInformation.swift in Sources */,
 				05477D312A77F47500C16F4A /* ToDoViewFactory.swift in Sources */,
-				05477D2D2A77ED7400C16F4A /* ToDoItemDetailView.swift in Sources */,
+				05477D2D2A77ED7400C16F4A /* TimeToDoItemDetailView.swift in Sources */,
 				057B50FD2AAB0095002260EC /* KakaoMapView.swift in Sources */,
-				058B7CA92A55C495005C07BD /* ToDoItemAddView.swift in Sources */,
+				058B7CA92A55C495005C07BD /* TimeToDoItemAddView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

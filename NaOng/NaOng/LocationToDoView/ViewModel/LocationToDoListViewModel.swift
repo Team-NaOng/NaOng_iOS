@@ -1,23 +1,23 @@
 //
-//  CalendarViewModel.swift
+//  LocationToDoListViewModel.swift
 //  NaOng
 //
-//  Created by seohyeon park on 2023/08/09.
+//  Created by seohyeon park on 2023/07/02.
 //
 
 import Foundation
 import CoreData
 import Combine
 
-class CalendarViewModel: NSObject, ObservableObject {
-    @Published var date: Date = Date()
+class LocationToDoListViewModel: NSObject, ObservableObject {
     @Published var showingToDoItemAddView: Bool = false
     @Published var toDoItems: [ToDo] = [ToDo]()
     @Published var selectedViewOption = "전체"
     @Published var showErrorAlert = false
     var errorTitle: String = ""
     var errorMessage: String = ""
-
+    var addModel: ToDoItemAddViewModel?
+    
     private var fetchedResultsController: NSFetchedResultsController<ToDo> = NSFetchedResultsController()
     private var cancellables: Set<AnyCancellable> = []
     private(set) var localNotificationManager: LocalNotificationManager
@@ -26,13 +26,25 @@ class CalendarViewModel: NSObject, ObservableObject {
     init(viewContext: NSManagedObjectContext, localNotificationManager: LocalNotificationManager) {
         self.viewContext = viewContext
         self.localNotificationManager = localNotificationManager
-        
+
         super.init()
         fetchToDoItems(
-            format: "alarmDate == %@ OR (isRepeat == %@ AND alarmDate < %@)",
-            argumentArray: [date.getFormatDate(), true, date.getFormatDate()])
+            format: "alarmType == %@",
+            argumentArray: ["위치"])
     }
-    
+
+    func getMarkerName(isDone: Bool, alertType: String) -> String {
+        if isDone {
+            return "doneMarker"
+        }
+
+        if alertType == "location" {
+            return "locationMarker"
+        }
+
+        return "timeMarker"
+    }
+
     func deleteItems(offsets: IndexSet) {
         offsets.map { toDoItems[$0] }.forEach { todo in
             guard let id = todo.id else {
@@ -51,13 +63,30 @@ class CalendarViewModel: NSObject, ObservableObject {
         }
     }
     
+    func setFetchedResultsPredicate()  {
+        switch selectedViewOption {
+        case "한번":
+            fetchToDoItems(
+                format: "alarmType == %@ AND isRepeat == %@",
+                argumentArray: ["위치", false])
+            break
+        case "반복":
+            fetchToDoItems(
+                format: "alarmType == %@ AND isRepeat == %@",
+                argumentArray: ["위치", true])
+            break
+        default:
+            fetchToDoItems(
+                format: "alarmType == %@",
+                argumentArray: ["위치"])
+        }
+    }
+    
     func bind() {
         localNotificationManager.removalAllNotificationsPublisher
             .receive(on: RunLoop.main)
             .sink { [weak self] _ in
-                self?.fetchToDoItems(
-                    format: "alarmDate == %@",
-                    argumentArray: [Date().getFormatDate()])
+                self?.setFetchedResultsPredicate()
             }
             .store(in: &cancellables)
     }
@@ -83,42 +112,16 @@ class CalendarViewModel: NSObject, ObservableObject {
             guard let toDoItems = fetchedResultsController.fetchedObjects else {
                 return
             }
-
+            
             self.toDoItems = toDoItems
             self.toDoItems.sort { !$0.isDone && $1.isDone }
         } catch {
-            errorTitle = "할 일 가져오기 실패🥲"
-            errorMessage = error.localizedDescription
             showErrorAlert.toggle()
-        }
-    }
-    
-    func setFetchedResultsPredicate()  {
-        switch selectedViewOption {
-        case "위치":
-            fetchToDoItems(
-                format: "alarmDate == %@ AND alarmType == %@",
-                argumentArray: [date.getFormatDate(), "위치"])
-            break
-        case "시간":
-            fetchToDoItems(
-                format: "alarmDate == %@ AND alarmType == %@",
-                argumentArray: [date.getFormatDate(), "시간"])
-            break
-        case "반복":
-            fetchToDoItems(
-                format: "(alarmDate == %@ AND isRepeat == %@) OR (isRepeat == %@ AND alarmDate < %@)",
-                argumentArray: [date.getFormatDate(), true, true ,date.getFormatDate()])
-            break
-        default:
-            fetchToDoItems(
-                format: "alarmDate == %@ OR (isRepeat == %@ AND alarmDate < %@)",
-                argumentArray: [date.getFormatDate(), true, date.getFormatDate()])
         }
     }
 }
 
-extension CalendarViewModel: NSFetchedResultsControllerDelegate {
+extension LocationToDoListViewModel: NSFetchedResultsControllerDelegate {
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         guard let toDoItems = controller.fetchedObjects as? [ToDo] else {
             return
@@ -128,3 +131,4 @@ extension CalendarViewModel: NSFetchedResultsControllerDelegate {
         self.toDoItems.sort { !$0.isDone && $1.isDone }
     }
 }
+

@@ -8,12 +8,12 @@
 import SwiftUI
 import Combine
 
-struct CalendarView: View {
+struct TimeToDoListView: View {
     @Environment(\.managedObjectContext) var viewContext
-    @ObservedObject private var calendarViewModel: CalendarViewModel
+    @ObservedObject private var timeToDoListViewModel: TimeToDoListViewModel
     
-    init(calendarViewModel: CalendarViewModel) {
-        self.calendarViewModel = calendarViewModel
+    init(timeToDoListViewModel: TimeToDoListViewModel) {
+        self.timeToDoListViewModel = timeToDoListViewModel
     }
     
     var body: some View {
@@ -21,25 +21,22 @@ struct CalendarView: View {
             VStack {
                 DatePicker(
                         "Start Date",
-                        selection: $calendarViewModel.date,
+                        selection: $timeToDoListViewModel.date,
                         displayedComponents: [.date]
                     )
                     .datePickerStyle(.graphical)
                     .tint(.gray)
-                    .onChange(of: $calendarViewModel.date.wrappedValue) { newValue in
-                        calendarViewModel.setFetchedResultsPredicate()
+                    .onChange(of: $timeToDoListViewModel.date.wrappedValue) { newValue in
+                        timeToDoListViewModel.setFetchedResultsPredicate()
                     }
                     .frame(width: UIScreen.main.bounds.width - 50)
                 
-                Picker("보기 옵션", selection: $calendarViewModel.selectedViewOption) {
+                Picker("보기 옵션", selection: $timeToDoListViewModel.selectedViewOption) {
                     Text("전체")
                         .tag("전체")
                         .font(.custom("Binggrae", size: 15))
-                    Text("위치")
-                        .tag("위치")
-                        .font(.custom("Binggrae", size: 15))
-                    Text("시간")
-                        .tag("시간")
+                    Text("한번")
+                        .tag("한번")
                         .font(.custom("Binggrae", size: 15))
                     Text("반복")
                         .tag("반복")
@@ -49,22 +46,22 @@ struct CalendarView: View {
                 .font(.custom("Binggrae", size: 15))
                 .frame(width: UIScreen.main.bounds.width - 30)
                 .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20))
-                .onChange(of: calendarViewModel.selectedViewOption) { newValue in
-                    calendarViewModel.setFetchedResultsPredicate()
+                .onChange(of: timeToDoListViewModel.selectedViewOption) { newValue in
+                    timeToDoListViewModel.setFetchedResultsPredicate()
                 }
                 
                 List {
-                    ForEach($calendarViewModel.toDoItems) { item in
+                    ForEach($timeToDoListViewModel.toDoItems) { item in
                         let localNotificationManager = LocalNotificationManager()
-                        let viewModel = ToDoListItemViewModel(toDoItem: item.wrappedValue, viewContext: viewContext, localNotificationManager: localNotificationManager)
-                        ToDoListItemView(toDoListItemViewModel: viewModel)
+                        let viewModel = ToDoItemViewModel(toDoItem: item.wrappedValue, viewContext: viewContext, localNotificationManager: localNotificationManager)
+                        ToDoItemView(toDoItemViewModel: viewModel)
                             .frame(width: UIScreen.main.bounds.width)
                             .listRowSeparator(.hidden)
                             .listRowInsets(.init(top: 0, leading: 0, bottom: 0, trailing: 0))
                             .overlay {
                                 NavigationLink {
                                     let toDoItemDetailViewModel = ToDoItemDetailViewModel(viewContext: viewContext, toDoItem: item.wrappedValue, localNotificationManager: localNotificationManager)
-                                    ToDoItemDetailView(toDoItemDetailViewModel: toDoItemDetailViewModel)
+                                    TimeToDoItemDetailView(toDoItemDetailViewModel: toDoItemDetailViewModel)
                                 } label: {
                                     EmptyView()
                                 }
@@ -74,7 +71,7 @@ struct CalendarView: View {
                     }
                     .onDelete { indexSet in
                         withAnimation {
-                            calendarViewModel.deleteItems(offsets: indexSet)
+                            timeToDoListViewModel.deleteItems(offsets: indexSet)
                         }
                     }
                     
@@ -91,7 +88,7 @@ struct CalendarView: View {
             }
             .overlay {
                 Button {
-                    calendarViewModel.showingToDoItemAddView = true
+                    timeToDoListViewModel.showingToDoItemAddView = true
                 } label: {
                     ZStack {
                         Circle()
@@ -104,21 +101,25 @@ struct CalendarView: View {
                     }
                 }
                 .frame(width: UIScreen.main.bounds.width - 30, height: UIScreen.main.bounds.height - 170, alignment: .bottomTrailing)
-                .fullScreenCover(isPresented: $calendarViewModel.showingToDoItemAddView) {
-                    let viewModel = ToDoItemAddViewModel(viewContext: viewContext, localNotificationManager: calendarViewModel.localNotificationManager, alarmTime: calendarViewModel.date)
-                    ToDoItemAddView(toDoItemAddViewModel: viewModel)
+                .fullScreenCover(isPresented: $timeToDoListViewModel.showingToDoItemAddView) {
+                    let viewModel = ToDoItemAddViewModel(
+                        viewContext: viewContext,
+                        localNotificationManager: timeToDoListViewModel.localNotificationManager,
+                        alarmType: "시간",
+                        alarmTime: timeToDoListViewModel.date)
+                    TimeToDoItemAddView(toDoItemAddViewModel: viewModel)
                 }
             }
-            .alert(isPresented: $calendarViewModel.showErrorAlert) {
+            .alert(isPresented: $timeToDoListViewModel.showErrorAlert) {
                 Alert(
-                    title: Text(calendarViewModel.errorTitle),
-                    message: Text(calendarViewModel.errorMessage),
+                    title: Text(timeToDoListViewModel.errorTitle),
+                    message: Text(timeToDoListViewModel.errorMessage),
                     dismissButton: .default(Text("확인"))
                 )
             }
         }
         .onAppear(perform: {
-            calendarViewModel.bind()
+            timeToDoListViewModel.bind()
         })
     }
 }

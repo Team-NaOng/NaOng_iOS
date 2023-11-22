@@ -1,12 +1,11 @@
 //
-//  ToDoItemAddView.swift
+//  LocationToDoItemAddView.swift
 //  NaOng
 //
-//  Created by seohyeon park on 2023/07/06.
+//  Created by seohyeon park on 11/22/23.
 //
 
 import SwiftUI
-
 
 enum LocationViewStack {
     case first
@@ -14,7 +13,7 @@ enum LocationViewStack {
     case third
 }
 
-struct ToDoItemAddView: View {
+struct LocationToDoItemAddView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.managedObjectContext) var managedObjectContext
     
@@ -61,37 +60,33 @@ struct ToDoItemAddView: View {
                         )
                         
                         ToDoViewFactory.makeToDoMoldView(
-                            content: ToDoViewFactory.makeToDoPicker(
-                                title: "알림 타입",
-                                selection: $toDoItemAddViewModel.alarmType)
+                            content:
+                                HStack {
+                                    ToDoViewFactory.makeToDoTitle(title: "알림 타입")
+                                        .frame(width: (UIScreen.main.bounds.width - 90) / 2, alignment: .leading)
+                                    
+                                    Spacer()
+                                    
+                                    Text("위치")
+                                        .font(.custom("Binggrae", size: 15))
+                                        .padding(EdgeInsets(top: 8, leading: 10, bottom: 8, trailing: 10))
+                                        .background(Color(UIColor.systemGray4))
+                                        .cornerRadius(10)
+                                        
+                                }
+                                .frame(width: (UIScreen.main.bounds.width - 80))
                         )
                         
                         ToDoViewFactory.makeToDoMoldView(
-                            content: ToDoViewFactory.makeToDoDatePicker(
-                                selection: $toDoItemAddViewModel.alarmTime,
-                                title: "알림 날짜",
-                                displayedComponent: .date)
+                            content: Button {
+                                toDoItemAddViewModel.addPath(.first)
+                            } label: {
+                                ToDoViewFactory.makeAlarmLocationView(
+                                    title: "알람 위치",
+                                    selectedLocation: toDoItemAddViewModel.locationInformation.locationName
+                                )
+                            }
                         )
-                        
-                        if toDoItemAddViewModel.alarmType == "위치" {
-                            ToDoViewFactory.makeToDoMoldView(
-                                content: Button {
-                                    toDoItemAddViewModel.addPath(.first)
-                                } label: {
-                                    ToDoViewFactory.makeAlarmLocationView(
-                                        title: "알람 위치",
-                                        selectedLocation: toDoItemAddViewModel.locationInformation.locationName
-                                    )
-                                }
-                            )
-                        } else {
-                            ToDoViewFactory.makeToDoMoldView(
-                                content: ToDoViewFactory.makeAlarmTimeView(
-                                    selection: $toDoItemAddViewModel.alarmTime,
-                                    title: "알림 시간",
-                                    displayedComponent: .hourAndMinute)
-                            )
-                        }
 
                         Button {
                             if toDoItemAddViewModel.addEditToDo() {

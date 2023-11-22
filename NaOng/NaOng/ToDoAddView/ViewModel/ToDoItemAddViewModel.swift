@@ -12,7 +12,6 @@ class ToDoItemAddViewModel: ObservableObject {
     @Published var content: String = ""
     @Published var alarmTime: Date = Date()
     @Published var isRepeat: Bool = false
-    @Published var alarmType: String = "위치"
     @Published var locationInformation: LocationInformation = LocationInformation(locationName: "위치를 선택해 주세요", locationAddress: "", locationRoadAddress: "", locationCoordinates: Coordinates(lat: 0.0, lon: 0.0))
     @Published var path: [LocationViewStack] = [LocationViewStack]()
     @Published var showErrorAlert = false
@@ -22,11 +21,13 @@ class ToDoItemAddViewModel: ObservableObject {
     private let viewContext: NSManagedObjectContext
     private let localNotificationManager: LocalNotificationManager
     private let toDoItem: ToDo?
+    private let alarmType: String
     
-    init(viewContext: NSManagedObjectContext, localNotificationManager: LocalNotificationManager, toDoItem: ToDo? = nil, alarmTime: Date = Date()) {
+    init(viewContext: NSManagedObjectContext, localNotificationManager: LocalNotificationManager, toDoItem: ToDo? = nil, alarmType: String, alarmTime: Date = Date()) {
         self.viewContext = viewContext
         self.localNotificationManager = localNotificationManager
         self.toDoItem = toDoItem
+        self.alarmType = alarmType
         self.alarmTime = alarmTime
         
         setUpToDoFormData()
@@ -111,8 +112,7 @@ class ToDoItemAddViewModel: ObservableObject {
         self.content = toDoItem.content ?? ""
         self.alarmTime = toDoItem.alarmTime ?? Date()
         self.isRepeat = toDoItem.isRepeat
-        self.alarmType = toDoItem.alarmType ?? "위치"
-        
+
         let locationInformation = LocationInformation(
             locationName: toDoItem.alarmLocationName ?? "위치를 선택해 주세요",
             locationAddress: "",

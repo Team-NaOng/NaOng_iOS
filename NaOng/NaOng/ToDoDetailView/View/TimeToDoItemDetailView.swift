@@ -1,5 +1,5 @@
 //
-//  ToDoItemDetailView.swift
+//  TimeToDoItemDetailView.swift
 //  NaOng
 //
 //  Created by seohyeon park on 2023/07/31.
@@ -7,9 +7,8 @@
 
 import SwiftUI
 
-struct ToDoItemDetailView: View {
+struct TimeToDoItemDetailView: View {
     @Environment(\.managedObjectContext) var viewContext
-
     @ObservedObject private var toDoItemDetailViewModel: ToDoItemDetailViewModel
     
     init(toDoItemDetailViewModel: ToDoItemDetailViewModel) {
@@ -43,9 +42,21 @@ struct ToDoItemDetailView: View {
             )
             
             ToDoViewFactory.makeToDoMoldView(
-                content: ToDoViewFactory.makeToDoPicker(
-                    title: "알림 타입",
-                    selection:  .constant(toDoItemDetailViewModel.toDoItem.alarmType ?? "위치"))
+                content:
+                    HStack {
+                        ToDoViewFactory.makeToDoTitle(title: "알림 타입")
+                            .frame(width: (UIScreen.main.bounds.width - 90) / 2, alignment: .leading)
+                        
+                        Spacer()
+                        
+                        Text("시간")
+                            .font(.custom("Binggrae", size: 15))
+                            .padding(EdgeInsets(top: 8, leading: 10, bottom: 8, trailing: 10))
+                            .background(Color(UIColor.systemGray4))
+                            .cornerRadius(10)
+                            
+                    }
+                    .frame(width: (UIScreen.main.bounds.width - 80))
             )
             
             ToDoViewFactory.makeToDoMoldView(
@@ -56,29 +67,13 @@ struct ToDoItemDetailView: View {
                 .disabled(true)
             )
             
-            if toDoItemDetailViewModel.toDoItem.alarmType == "위치" {
-                ToDoViewFactory.makeToDoMoldView(
-                    content:
-                        VStack() {
-                            Text("알림 위치 \n")
-                                .frame(maxWidth: .infinity, alignment: .topLeading)
-                            Text(toDoItemDetailViewModel.toDoItem.alarmLocationName ?? "")
-                                .lineLimit(2)
-                                .frame(maxWidth: .infinity, alignment: .topLeading)
-                        }
-                        .font(.custom("Binggrae", size: 15))
-                        .frame(width: UIScreen.main.bounds.width - 80, alignment: .top),
-                    height: 100
-                )
-            } else {
-                ToDoViewFactory.makeToDoMoldView(
-                    content: ToDoViewFactory.makeAlarmTimeView(
-                        selection: .constant(toDoItemDetailViewModel.toDoItem.alarmTime ?? Date()),
-                        title: "알림 시간",
-                        displayedComponent: .hourAndMinute)
-                )
-                .disabled(true)
-            }
+            ToDoViewFactory.makeToDoMoldView(
+                content: ToDoViewFactory.makeAlarmTimeView(
+                    selection: .constant(toDoItemDetailViewModel.toDoItem.alarmTime ?? Date()),
+                    title: "알림 시간",
+                    displayedComponent: .hourAndMinute)
+            )
+            .disabled(true)
             
             Spacer()
         }
@@ -92,9 +87,12 @@ struct ToDoItemDetailView: View {
                 })
                 .frame(width: 50, height: 50)
                 .fullScreenCover(isPresented: $toDoItemDetailViewModel.showingToDoItemAddView) {
-                    let viewModel = ToDoItemAddViewModel(viewContext: viewContext, localNotificationManager: toDoItemDetailViewModel.localNotificationManager,
-                        toDoItem: toDoItemDetailViewModel.toDoItem)
-                    ToDoItemAddView(toDoItemAddViewModel: viewModel)
+                    let viewModel = ToDoItemAddViewModel(
+                        viewContext: viewContext,
+                        localNotificationManager: toDoItemDetailViewModel.localNotificationManager,
+                        toDoItem: toDoItemDetailViewModel.toDoItem,
+                        alarmType: toDoItemDetailViewModel.toDoItem.alarmType ?? "시간")
+                    TimeToDoItemAddView(toDoItemAddViewModel: viewModel)
                 }
         )
     }

@@ -19,23 +19,23 @@ struct ContentView: View {
     
     var body: some View {
         TabView {
-            let toDoListViewModel = ToDoListViewModel(viewContext: viewContext, localNotificationManager: localNotificationManager)
-            ToDoListView(toDoListViewModel: toDoListViewModel)
+            let locationToDoListViewModel = LocationToDoListViewModel(viewContext: viewContext, localNotificationManager: localNotificationManager)
+            LocationToDoListView(locationToDoListViewModel: locationToDoListViewModel)
                 .preferredColorScheme(.light)
                 .tabItem {
-                    Image(systemName: "checklist")
+                    Image(systemName: "mappin.and.ellipse")
                         .foregroundColor(.black)
-                    Text("오늘 할 일")
+                    Text("위치 할 일")
                         .font(.custom("Binggrae", size: 10))
                         .foregroundColor(.black)
                 }
             
-            let calendarViewModel = CalendarViewModel(viewContext: viewContext, localNotificationManager: localNotificationManager)
-            CalendarView(calendarViewModel: calendarViewModel)
+            let timeToDoListViewModel = TimeToDoListViewModel(viewContext: viewContext, localNotificationManager: localNotificationManager)
+            TimeToDoListView(timeToDoListViewModel: timeToDoListViewModel)
                 .tabItem {
-                    Image(systemName: "calendar")
+                    Image(systemName: "clock")
                         .foregroundColor(.black)
-                    Text("전체 할 일")
+                    Text("시간 할 일")
                         .font(.custom("Binggrae", size: 10))
                         .foregroundColor(.black)
                 }

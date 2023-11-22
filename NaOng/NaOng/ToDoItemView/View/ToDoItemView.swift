@@ -7,45 +7,45 @@
 
 import SwiftUI
 
-struct ToDoListItemView: View {
-    @ObservedObject private var toDoListItemViewModel: ToDoListItemViewModel
+struct ToDoItemView: View {
+    @ObservedObject private var toDoItemViewModel: ToDoItemViewModel
     
-    init(toDoListItemViewModel: ToDoListItemViewModel) {
-        self.toDoListItemViewModel = toDoListItemViewModel
+    init(toDoItemViewModel: ToDoItemViewModel) {
+        self.toDoItemViewModel = toDoItemViewModel
     }
     
     var body: some View {
         HStack(alignment: .top) {
             Button {
-                toDoListItemViewModel.didTapDoneButton()
+                toDoItemViewModel.didTapDoneButton()
             } label: {
-                Image(toDoListItemViewModel.markerName)
+                Image(toDoItemViewModel.markerName)
                     .resizable()
                     .frame(width: 30, height: 30, alignment: .center)
             }
             .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
-            .alert(isPresented: $toDoListItemViewModel.showErrorAlert) {
+            .alert(isPresented: $toDoItemViewModel.showErrorAlert) {
                 Alert(
-                    title: Text(toDoListItemViewModel.errorTitle),
-                    message: Text(toDoListItemViewModel.errorMessage),
+                    title: Text(toDoItemViewModel.errorTitle),
+                    message: Text(toDoItemViewModel.errorMessage),
                     dismissButton: .default(Text("확인"))
                 )
             }
             
-            Text(toDoListItemViewModel.toDoItem.content ?? "")
+            Text(toDoItemViewModel.toDoItem.content ?? "")
                 .font(.custom("Binggrae", size: 15))
-                .strikethrough(toDoListItemViewModel.toDoItem.isDone)
+                .strikethrough(toDoItemViewModel.toDoItem.isDone)
                 .foregroundColor(.black)
                 .padding(EdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 0))
                 .frame(width: (UIScreen.main.bounds.width - 60) * 0.6 , height: 80, alignment: .topLeading)
             
-            Text(toDoListItemViewModel.getDistinguishedAlarmInformation())
+            Text(toDoItemViewModel.getDistinguishedAlarmInformation())
                 .font(.custom("Binggrae", size: 12))
                 .foregroundColor(.black)
                 .padding(EdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 10))
                 .frame(width: (UIScreen.main.bounds.width - 60) * 0.2 , height: 80, alignment: .topTrailing)
         }
-        .background(Color(toDoListItemViewModel.backgroundColor))
+        .background(Color(toDoItemViewModel.backgroundColor))
         .cornerRadius(10)
         .overlay(
             RoundedRectangle(cornerRadius: 10)
@@ -53,8 +53,8 @@ struct ToDoListItemView: View {
         )
         .padding(10)
         .onReceive(NotificationCenter.default.publisher(for: .NSManagedObjectContextDidSave)) { _ in
-            toDoListItemViewModel.setMarkerName()
-            toDoListItemViewModel.setBackgroundColor()
+            toDoItemViewModel.setMarkerName()
+            toDoItemViewModel.setBackgroundColor()
         }
     }
 }

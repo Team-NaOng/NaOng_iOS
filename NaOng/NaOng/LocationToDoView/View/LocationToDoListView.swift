@@ -1,5 +1,5 @@
 //
-//  ToDoListView.swift
+//  LocationToDoListView.swift
 //  NaOng
 //
 //  Created by seohyeon park on 2023/07/02.
@@ -7,12 +7,12 @@
 
 import SwiftUI
 
-struct ToDoListView: View {
+struct LocationToDoListView: View {
     @Environment(\.managedObjectContext) var viewContext
-    @ObservedObject private var toDoListViewModel: ToDoListViewModel
+    @ObservedObject private var locationToDoListViewModel: LocationToDoListViewModel
     
-    init(toDoListViewModel: ToDoListViewModel) {
-        self.toDoListViewModel = toDoListViewModel
+    init(locationToDoListViewModel: LocationToDoListViewModel) {
+        self.locationToDoListViewModel = locationToDoListViewModel
         
         UISegmentedControl.appearance().setTitleTextAttributes([.font : UIFont(name: "Binggrae", size: 15) as Any], for: .normal)
     }
@@ -25,20 +25,18 @@ struct ToDoListView: View {
                     .font(.custom("Binggrae-Bold", size: 30))
                     .padding()
                 
-                Picker("보기 옵션", selection: $toDoListViewModel.selectedViewOption) {
+                Picker("보기 옵션", selection: $locationToDoListViewModel.selectedViewOption) {
                     Text("전체")
                         .tag("전체")
-                    Text("위치")
-                        .tag("위치")
-                    Text("시간")
-                        .tag("시간")
+                    Text("한번")
+                        .tag("한번")
                     Text("반복")
                         .tag("반복")
                 }
                 .pickerStyle(.segmented)
                 .frame(width: UIScreen.main.bounds.width - 30)
-                .onChange(of: toDoListViewModel.selectedViewOption) { newValue in
-                    toDoListViewModel.setFetchedResultsPredicate()
+                .onChange(of: locationToDoListViewModel.selectedViewOption) { newValue in
+                    locationToDoListViewModel.setFetchedResultsPredicate()
                 }
                 
                 ZStack {
@@ -46,7 +44,7 @@ struct ToDoListView: View {
                         .frame(width: UIScreen.main.bounds.width - 30, height: 316)
                         .foregroundColor(Color("secondary"))
                     
-                    if $toDoListViewModel.toDoItems.count == 0 {
+                    if $locationToDoListViewModel.toDoItems.count == 0 {
                         Text("오늘 할 일이 없어요. \n 아래 고양이를 눌러 \n 할 일을 추가해 보세요!")
                             .foregroundColor(.black)
                             .font(.custom("Binggrae", size: 20))
@@ -54,15 +52,15 @@ struct ToDoListView: View {
                             .padding()
                     } else {
                         List {
-                            ForEach($toDoListViewModel.toDoItems) { item in
-                                let viewModel = ToDoListItemViewModel(toDoItem: item.wrappedValue, viewContext: viewContext, localNotificationManager: toDoListViewModel.localNotificationManager)
-                                ToDoListItemView(toDoListItemViewModel: viewModel)
+                            ForEach($locationToDoListViewModel.toDoItems) { item in
+                                let viewModel = ToDoItemViewModel(toDoItem: item.wrappedValue, viewContext: viewContext, localNotificationManager: locationToDoListViewModel.localNotificationManager)
+                                ToDoItemView(toDoItemViewModel: viewModel)
                                     .listRowSeparator(.hidden)
                                     .listRowInsets(.init(top: 0, leading: 0, bottom: 0, trailing: 0))
                                     .overlay {
                                         NavigationLink {
-                                            let toDoItemDetailViewModel = ToDoItemDetailViewModel(viewContext: viewContext, toDoItem: item.wrappedValue, localNotificationManager: toDoListViewModel.localNotificationManager)
-                                            ToDoItemDetailView(toDoItemDetailViewModel: toDoItemDetailViewModel)
+                                            let toDoItemDetailViewModel = ToDoItemDetailViewModel(viewContext: viewContext, toDoItem: item.wrappedValue, localNotificationManager: locationToDoListViewModel.localNotificationManager)
+                                            LocationToDoItemDetailView(toDoItemDetailViewModel: toDoItemDetailViewModel)
                                         } label: {
                                             EmptyView()
                                         }
@@ -72,7 +70,7 @@ struct ToDoListView: View {
                             }
                             .onDelete { indexSet in
                                 withAnimation {
-                                    toDoListViewModel.deleteItems(offsets: indexSet)
+                                    locationToDoListViewModel.deleteItems(offsets: indexSet)
                                 }
                             }
                         }
@@ -84,35 +82,35 @@ struct ToDoListView: View {
                 }
                 
                 Button {
-                    toDoListViewModel.showingToDoItemAddView = true
-                    toDoListViewModel.addModel = ToDoItemAddViewModel(viewContext: viewContext, localNotificationManager: toDoListViewModel.localNotificationManager)
+                    locationToDoListViewModel.showingToDoItemAddView = true
+                    locationToDoListViewModel.addModel = ToDoItemAddViewModel(viewContext: viewContext, localNotificationManager: locationToDoListViewModel.localNotificationManager, alarmType: "위치")
                 } label: {
                     Image("toDoListImage1")
                         .resizable()
                         .scaledToFit()
                         .padding(EdgeInsets(top: 5, leading: 10, bottom: 5, trailing: 10))
                 }
-                .fullScreenCover(isPresented: $toDoListViewModel.showingToDoItemAddView) {
-                    toDoListViewModel.addModel = nil
+                .fullScreenCover(isPresented: $locationToDoListViewModel.showingToDoItemAddView) {
+                    locationToDoListViewModel.addModel = nil
                 } content: {
-                    if let viewModel = toDoListViewModel.addModel {
-                        ToDoItemAddView(toDoItemAddViewModel: viewModel)
+                    if let viewModel = locationToDoListViewModel.addModel {
+                        LocationToDoItemAddView(toDoItemAddViewModel: viewModel)
                     }
                 }
             }
             .background(
                 Image("backgroundPinkImage")
             )
-            .alert(isPresented: $toDoListViewModel.showErrorAlert) {
+            .alert(isPresented: $locationToDoListViewModel.showErrorAlert) {
                 Alert(
-                    title: Text(toDoListViewModel.errorTitle),
-                    message: Text(toDoListViewModel.errorMessage),
+                    title: Text(locationToDoListViewModel.errorTitle),
+                    message: Text(locationToDoListViewModel.errorMessage),
                     dismissButton: .default(Text("확인"))
                 )
             }
         }
         .onAppear(perform: {
-            toDoListViewModel.bind()
+            locationToDoListViewModel.bind()
         })
     }
 }

@@ -8,7 +8,7 @@
 import Foundation
 import CoreData
 
-class ToDoListItemViewModel: ObservableObject {
+class ToDoItemViewModel: ObservableObject {
     @Published var markerName: String = "doneMarker"
     @Published var backgroundColor: String = "white"
     @Published var showErrorAlert = false
@@ -79,7 +79,7 @@ class ToDoListItemViewModel: ObservableObject {
     func getDistinguishedAlarmInformation() -> String {
         switch toDoItem.alarmType {
         case "위치":
-            return getAlarmLocation()
+            return "위치"
         default:
             return getAlarmTime()
         }
@@ -92,10 +92,5 @@ class ToDoListItemViewModel: ObservableObject {
         
         let alarmTime = toDoItem.alarmTime ?? Date()
         return dateFormatter.string(from: alarmTime)
-    }
-    
-    private func getAlarmLocation() -> String {
-        // 수정
-        return "위치"
     }
 }
