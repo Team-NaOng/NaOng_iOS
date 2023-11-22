@@ -117,6 +117,9 @@ struct CalendarView: View {
                 )
             }
         }
+        .onAppear(perform: {
+            calendarViewModel.bind()
+        })
     }
 }
 

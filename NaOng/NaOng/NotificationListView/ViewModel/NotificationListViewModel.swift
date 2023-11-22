@@ -58,6 +58,15 @@ class NotificationListViewModel: NSObject, ObservableObject, NSFetchedResultsCon
                 }
             }
             .store(in: &cancellables)
+        
+        localNotificationManager.removalAllNotificationsPublisher
+            .receive(on: RunLoop.main)
+            .sink { [weak self] isRemove in
+                if let fetchedToDoItems = self?.fetchTodoItems(with: "isNotificationVisible == %@", argumentArray: [true]) {
+                    self?.replaceGroupedToDoItems(with: fetchedToDoItems, isRemove)
+                }
+            }
+            .store(in: &cancellables)
     }
 
     private func modifyToDoForDisplayOnNotificationView(id: String) {

@@ -44,7 +44,7 @@ class SettingViewModel: ObservableObject {
     func showEmailView() {
         isShowingEmail = true
     }
-    
+
     func showEmailAlert() {
         isShowingEmailAlert = true
     }

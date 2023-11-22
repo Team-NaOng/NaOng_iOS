@@ -7,6 +7,7 @@
 
 import Foundation
 import CoreData
+import Combine
 
 class CalendarViewModel: NSObject, ObservableObject {
     @Published var date: Date = Date()
@@ -18,6 +19,7 @@ class CalendarViewModel: NSObject, ObservableObject {
     var errorMessage: String = ""
 
     private var fetchedResultsController: NSFetchedResultsController<ToDo> = NSFetchedResultsController()
+    private var cancellables: Set<AnyCancellable> = []
     private(set) var localNotificationManager: LocalNotificationManager
     private let viewContext: NSManagedObjectContext
     
@@ -47,6 +49,17 @@ class CalendarViewModel: NSObject, ObservableObject {
             
             localNotificationManager.removeNotification(id: id)
         }
+    }
+    
+    func bind() {
+        localNotificationManager.removalAllNotificationsPublisher
+            .receive(on: RunLoop.main)
+            .sink { [weak self] _ in
+                self?.fetchToDoItems(
+                    format: "alarmDate == %@",
+                    argumentArray: [Date().getFormatDate()])
+            }
+            .store(in: &cancellables)
     }
 
     private func fetchToDoItems(format: String, argumentArray: [Any]?) {

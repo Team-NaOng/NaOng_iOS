@@ -19,10 +19,14 @@ class LocalNotificationManager: NSObject, ObservableObject {
     var removalNotificationsPublisher: AnyPublisher<Bool, Never> {
         removalNotificationsSubject.eraseToAnyPublisher()
     }
+    var removalAllNotificationsPublisher: AnyPublisher<Bool, Never> {
+        removalAllNotificationsSubject.eraseToAnyPublisher()
+    }
     
     private var deliveredNotificationsSubject = PassthroughSubject<[String], Never>()
     private var authorizationStatusSubject = PassthroughSubject<UNAuthorizationStatus, Never>()
     private var removalNotificationsSubject = PassthroughSubject<Bool, Never>()
+    private var removalAllNotificationsSubject = PassthroughSubject<Bool, Never>()
     
     private var previousPendingNotificationsID: [String] {
         get {
@@ -43,6 +47,10 @@ class LocalNotificationManager: NSObject, ObservableObject {
     
     func sendRemovedEvent() {
         removalNotificationsSubject.send(true)
+    }
+    
+    func sendAllRemoveEvent() {
+        removalAllNotificationsSubject.send(true)
     }
 
     func sendDeliveredEvent() {
