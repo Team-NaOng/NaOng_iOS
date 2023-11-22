@@ -23,10 +23,11 @@ class ToDoItemAddViewModel: ObservableObject {
     private let localNotificationManager: LocalNotificationManager
     private let toDoItem: ToDo?
     
-    init(viewContext: NSManagedObjectContext, localNotificationManager: LocalNotificationManager, toDoItem: ToDo? = nil) {
+    init(viewContext: NSManagedObjectContext, localNotificationManager: LocalNotificationManager, toDoItem: ToDo? = nil, alarmTime: Date = Date()) {
         self.viewContext = viewContext
         self.localNotificationManager = localNotificationManager
         self.toDoItem = toDoItem
+        self.alarmTime = alarmTime
         
         setUpToDoFormData()
     }

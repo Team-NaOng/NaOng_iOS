@@ -70,9 +70,9 @@ class LocalNotificationManager: NSObject, ObservableObject {
 
     func scheduleNotification(for toDoItem: ToDo) {
         if toDoItem.alarmType == "위치" {
-            LocalNotificationManager().setLocationNotification(toDo: toDoItem)
+            setLocationNotification(toDo: toDoItem)
         } else {
-            LocalNotificationManager().setCalendarNotification(toDo: toDoItem)
+            setCalendarNotification(toDo: toDoItem)
         }
     }
 
@@ -107,7 +107,7 @@ class LocalNotificationManager: NSObject, ObservableObject {
             from: date)
         let trigger = UNCalendarNotificationTrigger(
             dateMatching: components,
-            repeats: false)
+            repeats: toDo.isRepeat)
         let request = UNNotificationRequest(
             identifier: toDo.id ?? UUID().uuidString,
             content: content,
