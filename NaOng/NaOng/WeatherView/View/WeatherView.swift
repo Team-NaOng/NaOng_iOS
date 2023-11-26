@@ -23,7 +23,7 @@ struct WeatherView: View {
                     .scaledToFit()
                     .frame(width: 20, height: 20)
                 
-                Text("현재 위치")
+                Text(weatherViewModel.currentLocation ?? "알 수 없음")
                     .font(.custom("Binggrae", size: 15))
                 
                 Menu {
@@ -54,8 +54,11 @@ struct WeatherView: View {
             }
             
             List {
-                WeatherItemView(imageState: weatherViewModel.imageState, profileName: UserDefaults.standard.string(forKey: "weatherViewProfileName") ?? "나옹")
+                WeatherItemView(imageState: weatherViewModel.imageState, profileName: UserDefaults.standard.string(forKey: "weatherViewProfileName") ?? "나옹", context: "날씨")
             }
+        }
+        .onAppear {
+            weatherViewModel.setUpCurrentLocation()
         }
     }
 }

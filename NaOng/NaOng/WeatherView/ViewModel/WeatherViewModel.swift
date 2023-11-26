@@ -8,6 +8,7 @@
 import SwiftUI
 import PhotosUI
 import CoreTransferable
+import Combine
 
 enum ImageState {
     case success(Image)
@@ -20,7 +21,8 @@ enum TransferError: Error {
     case importFailed
 }
 
-class WeatherViewModel: ObservableObject {
+class WeatherViewModel: ObservableObject, GeoDataService {
+    // MARK: 프로필 이미지 관련 프로퍼티
     @Published private(set) var imageState: ImageState
     @Published var profileName = UserDefaults.standard.string(forKey: "weatherViewProfileName") ?? "나옹"
     @Published var isShowingPhotosPicker = false
@@ -36,10 +38,17 @@ class WeatherViewModel: ObservableObject {
         }
     }
     
+    // MARK: 데이터 관련 프로퍼티
+    @Published var currentLocation: String?
+    @Published var currentDustyInformation: Item?
+    private var cancellables: Set<AnyCancellable> = []
+    
+    // MARK: init
     init(imageState: ImageState) {
         self.imageState = imageState
     }
     
+    // MARK: 프로필 관련 메서드
     func showPhotosPicker() {
         isShowingPhotosPicker.toggle()
     }
@@ -98,5 +107,53 @@ class WeatherViewModel: ObservableObject {
                 return ProfileImage(image: image)
             }
         }
+    }
+    
+    // MARK: 데이터 관련 메서드
+    func setUpCurrentLocation() {
+        let coordinate = LocationService.shared.getLocation()
+        guard let urlRequest = getKakaoLocalGeoURLRequest(coordinate: coordinate) else {
+            return
+        }
+
+        NetworkManager.fetchData(from: urlRequest, responseType: KakaoLocal.self)
+            .receive(on: DispatchQueue.main)
+            .sink(receiveCompletion: { _ in },
+                  receiveValue: { [weak self] kakaoLocal in
+                self?.currentLocation = kakaoLocal.documents.first?.address?.region2DepthName
+                let stationName = kakaoLocal.documents.first?.address?.region3DepthName
+                
+                self?.setUpCurrentDustyInformation(stationName: stationName)
+            })
+            .store(in: &cancellables)
+    }
+    
+    private func setUpCurrentDustyInformation(stationName: String?) {
+        guard let stationName = stationName,
+        let urlRequest = getDustMeasurementRequest(stationName: stationName) else {
+            return
+        }
+        
+        NetworkManager.fetchData(from: urlRequest, responseType: AirKorea.self)
+            .receive(on: DispatchQueue.main)
+            .sink(receiveCompletion: { _ in },
+                  receiveValue: { [weak self] airKorea in
+                self?.currentDustyInformation = airKorea.response.body.items?.first
+            })
+            .store(in: &cancellables)
+    }
+    
+    private func getDustMeasurementRequest(stationName: String) -> URLRequest? {
+        return URLRequestBuilder()
+            .setHost("apis.data.go.kr")
+            .setPath("/B552584/ArpltnInforInqireSvc/getMsrstnAcctoRltmMesureDnsty")
+            .addQueryItem(name: "serviceKey", value: "서비스 키 수정")
+            .addQueryItem(name: "returnType", value: "json")
+            .addQueryItem(name: "numOfRows", value: "100")
+            .addQueryItem(name: "pageNo", value: "1")
+            .addQueryItem(name: "stationName", value: stationName)
+            .addQueryItem(name: "dataTerm", value: "DAILY")
+            .addQueryItem(name: "ver", value: "1.3")
+            .build()
     }
 }

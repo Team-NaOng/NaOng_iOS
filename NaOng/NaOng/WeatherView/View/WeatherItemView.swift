@@ -11,10 +11,12 @@ import PhotosUI
 struct WeatherItemView: View {
     let imageState: ImageState
     let profileName: String
+    let context: String
     
-    init(imageState: ImageState, profileName: String) {
+    init(imageState: ImageState, profileName: String, context: String) {
         self.imageState = imageState
         self.profileName = profileName
+        self.context = context
     }
     
     var body: some View {
@@ -26,7 +28,7 @@ struct WeatherItemView: View {
                     .font(.custom("Binggrae", size: 15))
                 
                 HStack(alignment:.bottom) {
-                    Text("날씨")
+                    Text(context)
                         .font(.custom("Binggrae", size: 15))
                         .padding()
                         .background(Color("primary"))
