@@ -41,6 +41,7 @@ class WeatherViewModel: ObservableObject, GeoDataService {
     // MARK: 데이터 관련 프로퍼티
     @Published var currentLocation: String?
     @Published var currentDustyInformation: Item?
+    @Published var currentWeatherInformation: OpenWeather?
     private var cancellables: Set<AnyCancellable> = []
     
     // MARK: init
@@ -157,6 +158,36 @@ class WeatherViewModel: ObservableObject, GeoDataService {
             .addQueryItem(name: "stationName", value: stationName)
             .addQueryItem(name: "dataTerm", value: "DAILY")
             .addQueryItem(name: "ver", value: "1.3")
+            .build()
+    }
+    
+    func setUpWeather() {
+        let coordinate = LocationService.shared.getLocation()
+        guard let urlRequest = getWeatherRequest(coordinate: coordinate) else {
+            return
+        }
+
+        NetworkManager.fetchData(from: urlRequest, responseType: OpenWeather.self)
+            .receive(on: DispatchQueue.main)
+            .sink(receiveCompletion: { _ in },
+                  receiveValue: { [weak self] openWeather in
+                self?.currentWeatherInformation = openWeather
+            })
+            .store(in: &cancellables)
+    }
+    
+    private func getWeatherRequest(coordinate: Coordinates) -> URLRequest? {
+        guard let apiId = Bundle.main.openWeatherKey else {
+            return nil
+        }
+        return URLRequestBuilder()
+            .setHost("api.openweathermap.org")
+            .setPath("/data/2.5/weather")
+            .addQueryItem(name: "lat", value: "\(coordinate.lat)")
+            .addQueryItem(name: "lon", value: "\(coordinate.lon)")
+            .addQueryItem(name: "appid", value: apiId)
+            .addQueryItem(name: "mode", value: "json")
+            .addQueryItem(name: "units", value: "metric")
             .build()
     }
 }

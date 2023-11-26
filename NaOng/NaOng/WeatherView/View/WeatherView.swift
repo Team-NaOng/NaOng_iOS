@@ -59,6 +59,7 @@ struct WeatherView: View {
         }
         .onAppear {
             weatherViewModel.setUpCurrentLocation()
+            weatherViewModel.setUpWeather()
         }
     }
 }
