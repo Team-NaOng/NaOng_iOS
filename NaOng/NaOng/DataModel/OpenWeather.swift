@@ -26,13 +26,13 @@ struct OpenWeather: Decodable {
     let wind: Wind?
     let clouds: Clouds?
     let rain: Rain?
-    let snow: Snow?
-    let dt: Int?
-    let sys: Sys?
-    let timezone: Int?
-    let id: Int?
-    let name: String?
-    let cod: Int?
+//    let snow: Snow?
+//    let dt: Int?
+//    let sys: Sys?
+//    let timezone: Int?
+//    let id: Int?
+//    let name: String?
+//    let cod: Int?
 }
 
 // MARK: - Weather
@@ -108,8 +108,8 @@ struct Clouds: Decodable {
  - the3h: 지난 3시간 동안의 강우량, mm.
 */
 struct Rain: Decodable {
-    let the1h: Int?
-    let the3h: Int?
+    let the1h: Double?
+    let the3h: Double?
 
     enum CodingKeys: String, CodingKey {
         case the1h = "1h"
@@ -123,8 +123,8 @@ struct Rain: Decodable {
  - the3h: 지난 3시간 동안의 적설량, mm.
 */
 struct Snow: Decodable {
-    let the1h: Int?
-    let the3h: Int?
+    let the1h: Double?
+    let the3h: Double?
 
     enum CodingKeys: String, CodingKey {
         case the1h = "1h"
