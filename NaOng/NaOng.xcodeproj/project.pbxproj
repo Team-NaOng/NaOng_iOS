@@ -52,6 +52,7 @@
 		056EDC432B0E8C2D004090F6 /* WeatherViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 056EDC422B0E8C2D004090F6 /* WeatherViewModel.swift */; };
 		056EDC452B0E96DA004090F6 /* WeatherProfileImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 056EDC442B0E96DA004090F6 /* WeatherProfileImageView.swift */; };
 		05733A8A2A51A42E00DF3B78 /* LocationToDoListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05733A892A51A42E00DF3B78 /* LocationToDoListView.swift */; };
+		0573C6912B13AEFF0012D501 /* AirKorea.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0573C6902B13AEFF0012D501 /* AirKorea.swift */; };
 		057B50FA2AAB002B002260EC /* KakaoMapsSDK_SPM in Frameworks */ = {isa = PBXBuildFile; productRef = 057B50F92AAB002B002260EC /* KakaoMapsSDK_SPM */; };
 		057B50FD2AAB0095002260EC /* KakaoMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 057B50FC2AAB0095002260EC /* KakaoMapView.swift */; };
 		0587438B2AC31A8800075905 /* Coordinates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0587438A2AC31A8800075905 /* Coordinates.swift */; };
@@ -131,6 +132,7 @@
 		056EDC422B0E8C2D004090F6 /* WeatherViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherViewModel.swift; sourceTree = "<group>"; };
 		056EDC442B0E96DA004090F6 /* WeatherProfileImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherProfileImageView.swift; sourceTree = "<group>"; };
 		05733A892A51A42E00DF3B78 /* LocationToDoListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationToDoListView.swift; sourceTree = "<group>"; };
+		0573C6902B13AEFF0012D501 /* AirKorea.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirKorea.swift; sourceTree = "<group>"; };
 		057B50FC2AAB0095002260EC /* KakaoMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoMapView.swift; sourceTree = "<group>"; };
 		0587438A2AC31A8800075905 /* Coordinates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinates.swift; sourceTree = "<group>"; };
 		058A9E7C2A95E40D005A498A /* Bundle+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Extensions.swift"; sourceTree = "<group>"; };
@@ -361,6 +363,7 @@
 				050EE3BC2ABCA1B6004E206F /* KakaoLocalKeyword.swift */,
 				050EE3C02ABCE1E8004E206F /* LocationInformation.swift */,
 				0587438A2AC31A8800075905 /* Coordinates.swift */,
+				0573C6902B13AEFF0012D501 /* AirKorea.swift */,
 			);
 			path = DataModel;
 			sourceTree = "<group>";
@@ -629,6 +632,7 @@
 				05477D082A7577BD00C16F4A /* View+Extensions.swift in Sources */,
 				055E58F12A97A8D5005B91DC /* LocationSearchViewModel.swift in Sources */,
 				05477D2F2A77ED8000C16F4A /* ToDoItemDetailViewModel.swift in Sources */,
+				0573C6912B13AEFF0012D501 /* AirKorea.swift in Sources */,
 				05477D442A7C228100C16F4A /* CoreDataBaseProtocol.swift in Sources */,
 				0587438B2AC31A8800075905 /* Coordinates.swift in Sources */,
 				05173EA82A880E6C00CDF988 /* NotificationListItemView.swift in Sources */,
