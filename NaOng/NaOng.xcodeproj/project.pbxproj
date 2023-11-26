@@ -21,6 +21,7 @@
 		051BFA1D2AB6E39E00BBC8C6 /* UIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051BFA1C2AB6E39E00BBC8C6 /* UIImage+Extensions.swift */; };
 		0534B41A2B13E11E0032B30A /* APIKey.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0534B4192B13E11E0032B30A /* APIKey.plist */; };
 		0534B41C2B13E28E0032B30A /* Bundle + Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0534B41B2B13E28E0032B30A /* Bundle + Extensions.swift */; };
+		0534B41E2B13EAE70032B30A /* OpenWeather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0534B41D2B13EAE70032B30A /* OpenWeather.swift */; };
 		0534F99B2A8F9A2B00A90BF7 /* LocalNotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0534F99A2A8F9A2B00A90BF7 /* LocalNotificationManager.swift */; };
 		0534F99D2A8F9AC000A90BF7 /* CustomNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0534F99C2A8F9AC000A90BF7 /* CustomNavigationBar.swift */; };
 		0534F9A72A8FBBC000A90BF7 /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0534F9A62A8FBBC000A90BF7 /* SettingViewModel.swift */; };
@@ -104,6 +105,7 @@
 		051BFA1C2AB6E39E00BBC8C6 /* UIImage+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extensions.swift"; sourceTree = "<group>"; };
 		0534B4192B13E11E0032B30A /* APIKey.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = APIKey.plist; sourceTree = "<group>"; };
 		0534B41B2B13E28E0032B30A /* Bundle + Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle + Extensions.swift"; sourceTree = "<group>"; };
+		0534B41D2B13EAE70032B30A /* OpenWeather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenWeather.swift; sourceTree = "<group>"; };
 		0534F99A2A8F9A2B00A90BF7 /* LocalNotificationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalNotificationManager.swift; sourceTree = "<group>"; };
 		0534F99C2A8F9AC000A90BF7 /* CustomNavigationBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomNavigationBar.swift; sourceTree = "<group>"; };
 		0534F9A62A8FBBC000A90BF7 /* SettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewModel.swift; sourceTree = "<group>"; };
@@ -372,6 +374,7 @@
 				050EE3C02ABCE1E8004E206F /* LocationInformation.swift */,
 				0587438A2AC31A8800075905 /* Coordinates.swift */,
 				0573C6902B13AEFF0012D501 /* AirKorea.swift */,
+				0534B41D2B13EAE70032B30A /* OpenWeather.swift */,
 			);
 			path = DataModel;
 			sourceTree = "<group>";
@@ -626,6 +629,7 @@
 				0500E94A2A482D7700A3F338 /* ToDoItemView.swift in Sources */,
 				05477D412A7C220D00C16F4A /* Location+Extensions.swift in Sources */,
 				056B2B502A5FC8AC00D52CFF /* ToDoModel.xcdatamodeld in Sources */,
+				0534B41E2B13EAE70032B30A /* OpenWeather.swift in Sources */,
 				05477D3C2A7C177000C16F4A /* LocationSelectionViewModel.swift in Sources */,
 				05173EA62A8772B300CDF988 /* NotificationListViewModel.swift in Sources */,
 				056B2B762A64158000D52CFF /* ToDo+Extensions.swift in Sources */,
