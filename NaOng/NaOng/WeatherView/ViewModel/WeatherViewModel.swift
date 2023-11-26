@@ -144,10 +144,13 @@ class WeatherViewModel: ObservableObject, GeoDataService {
     }
     
     private func getDustMeasurementRequest(stationName: String) -> URLRequest? {
+        guard let serviceKey = Bundle.main.publicDataPortalKey else {
+            return nil
+        }
         return URLRequestBuilder()
             .setHost("apis.data.go.kr")
             .setPath("/B552584/ArpltnInforInqireSvc/getMsrstnAcctoRltmMesureDnsty")
-            .addQueryItem(name: "serviceKey", value: "서비스 키 수정")
+            .addQueryItem(name: "serviceKey", value: serviceKey)
             .addQueryItem(name: "returnType", value: "json")
             .addQueryItem(name: "numOfRows", value: "100")
             .addQueryItem(name: "pageNo", value: "1")
