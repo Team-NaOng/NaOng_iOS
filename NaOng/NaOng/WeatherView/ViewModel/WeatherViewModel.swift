@@ -39,10 +39,9 @@ class WeatherViewModel: ObservableObject, GeoDataService {
     }
     
     // MARK: 데이터 관련 프로퍼티
-    @Published var contents: [String] = [String]()
+    @Published var isLoading: Bool = true
+    var contents: [String] = [String]()
     var currentLocation: String?
-//    var currentDustyInformation: Item?
-//    var currentWeatherInformation: OpenWeather?
     private var cancellables: Set<AnyCancellable> = []
     
     // MARK: init
@@ -212,6 +211,7 @@ class WeatherViewModel: ObservableObject, GeoDataService {
                         item: dustResponse.response?.body?.items?.first)
 
                     self?.contents = (currentTemperatureMessage ?? [String]()) + (currentDustMessage ?? [String]()) + (adviceMessage ?? [String]())
+                    self?.isLoading = false
                 })
                 .store(in: &cancellables)
         }
