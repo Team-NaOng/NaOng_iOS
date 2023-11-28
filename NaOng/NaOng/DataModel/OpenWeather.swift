@@ -26,13 +26,13 @@ struct OpenWeather: Decodable {
     let wind: Wind?
     let clouds: Clouds?
     let rain: Rain?
-//    let snow: Snow?
-//    let dt: Int?
-//    let sys: Sys?
-//    let timezone: Int?
-//    let id: Int?
-//    let name: String?
-//    let cod: Int?
+    let snow: Snow?
+    let dt: Int?
+    let sys: Sys?
+    let timezone: Int?
+    let id: Int?
+    let name: String?
+    let cod: Int?
 }
 
 // MARK: - Weather
@@ -138,8 +138,8 @@ struct Snow: Decodable {
  - id: 내부 매개 변수
  - message: 내부 매개 변수
  - country: 국가 코드
- - sunrise: 일출 시간
- - sunset: 일몰 시간
+ - sunrise: 일출 시간, unixTime
+ - sunset: 일몰 시간, unixTime
 */
 struct Sys: Decodable {
     let type: Int?

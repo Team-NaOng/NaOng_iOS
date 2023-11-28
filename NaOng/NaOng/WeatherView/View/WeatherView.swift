@@ -26,6 +26,8 @@ struct WeatherView: View {
                 Text(weatherViewModel.currentLocation ?? "알 수 없음")
                     .font(.custom("Binggrae", size: 15))
                 
+                Spacer()
+                
                 Menu {
                     Button("이름 수정하기") {
                         weatherViewModel.showProfileNameEditAlert()
@@ -52,14 +54,21 @@ struct WeatherView: View {
                     Button("취소", role: .cancel) { }
                 }
             }
+            .padding(EdgeInsets(top: 20, leading: 20, bottom: 0, trailing: 20))
             
-            List {
-                WeatherItemView(imageState: weatherViewModel.imageState, profileName: UserDefaults.standard.string(forKey: "weatherViewProfileName") ?? "나옹", context: "날씨")
+            Rectangle()
+                .frame(width: UIScreen.main.bounds.width, height: 2)
+                .foregroundStyle(.black)
+
+            List(weatherViewModel.contents, id: \.self) { content in
+                WeatherItemView(imageState: weatherViewModel.imageState, profileName: UserDefaults.standard.string(forKey: "weatherViewProfileName") ?? "나옹", context: content)
+                    .listRowSeparator(.hidden)
             }
+            .listStyle(.plain)
+
         }
         .onAppear {
             weatherViewModel.setUpCurrentLocation()
-            weatherViewModel.setUpWeather()
         }
     }
 }

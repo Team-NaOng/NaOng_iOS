@@ -7,15 +7,15 @@
 
 import Foundation
 
-// MARK: - Welcome
-struct AirKorea: Codable {
-    let response: Response
+// MARK: - AirKorea
+struct AirKorea: Decodable {
+    let response: Response?
 }
 
 // MARK: - Response
-struct Response: Codable {
-    let header: Header
-    let body: Body
+struct Response: Decodable {
+    let header: Header?
+    let body: Body?
 }
 
 // MARK: - Header
@@ -23,9 +23,9 @@ struct Response: Codable {
  - resultCode:  결과코드
  - resultMsg: 결과메세지
 */
-struct Header: Codable {
-    let resultCode: String
-    let resultMsg: String
+struct Header: Decodable {
+    let resultCode: String?
+    let resultMsg: String?
 }
 
 // MARK: - Body
@@ -35,10 +35,10 @@ struct Header: Codable {
  - totalCount:  전체 결과 수
  - items: 목록
 */
-struct Body: Codable {
-    let numOfRows: Int
-    let pageNo: Int
-    let totalCount: Int
+struct Body: Decodable {
+    let numOfRows: Int?
+    let pageNo: Int?
+    let totalCount: Int?
     let items: [Item]?
 }
 
@@ -73,7 +73,7 @@ struct Body: Codable {
  - pm10Flag: 미세먼지(PM10) 측정자료 상태정보 (점검및교정,장비점검,자료이상,통신장애)
  - pm25Flag: 미세먼지(PM2.5) 측정자료 상태정보 (점검및교정,장비점검,자료이상,통신장애)
 */
-struct Item: Codable {
+struct Item: Decodable {
     let dataTime: String?
     let stationName: String?
     let stationCode: String?

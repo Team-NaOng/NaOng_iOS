@@ -47,7 +47,22 @@ class URLRequestBuilder {
         urlComponents.path = path
         
         if queryItems.isEmpty == false {
-            urlComponents.queryItems = queryItems
+            var cs = CharacterSet.urlQueryAllowed
+            cs.remove("+")
+            
+            let percentEncodedQuery = queryItems.map { queryItem in
+                guard let encodedName = queryItem.name.addingPercentEncoding(withAllowedCharacters: cs),
+                      let encodedValue = queryItem.value?.addingPercentEncoding(withAllowedCharacters: cs) else {
+                    return ""
+                }
+                return "\(encodedName)=\(encodedValue)"
+            }
+            
+            if queryItems.count == percentEncodedQuery.count {
+                urlComponents.percentEncodedQuery = percentEncodedQuery.joined(separator: "&")
+            } else {
+                urlComponents.queryItems = queryItems
+            }
         }
         
         guard let url = urlComponents.url else {
