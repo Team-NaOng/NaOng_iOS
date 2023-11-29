@@ -113,8 +113,11 @@ class WeatherViewModel: ObservableObject, GeoDataService {
     // MARK: -
     // MARK: 데이터 관련 메서드
     func setUpCurrentLocation() {
-        // let coordinate = LocationService.shared.getLocation()
-        let coordinate = Coordinates(lat: 37.3914266, lon: 126.9534928)
+        var coordinate = LocationService.shared.getLocation()
+        if (coordinate.lat < 33 && coordinate.lat > 39) || (coordinate.lon < 125 && coordinate.lon > 132) {
+            coordinate = Coordinates(lat: 37.49806749166401, lon: 127.02801316172545)
+        }
+
         guard let urlRequest = getKakaoLocalGeoURLRequest(coordinate: coordinate) else {
             return
         }
@@ -129,8 +132,14 @@ class WeatherViewModel: ObservableObject, GeoDataService {
                     print(failure)
                 }
             }, receiveValue: { [weak self] kakaoLocal in
-                self?.currentLocation = kakaoLocal.documents.first?.address?.region2DepthName
-                let stationName = kakaoLocal.documents.first?.address?.region3DepthName
+                var stationName: String?
+                if kakaoLocal.documents.first?.address?.region1DepthName == "서울" {
+                    self?.currentLocation = kakaoLocal.documents.first?.address?.region3DepthName
+                    stationName = kakaoLocal.documents.first?.address?.region2DepthName
+                } else {
+                    self?.currentLocation = kakaoLocal.documents.first?.address?.region2DepthName
+                    stationName = kakaoLocal.documents.first?.address?.region3DepthName
+                }
                 
                 let dustPublisher = self?.getDustPublisher(stationName: stationName)
                 let weatherPublisher = self?.getWeatherPublisher(coordinate: coordinate)
@@ -309,9 +318,8 @@ class WeatherViewModel: ObservableObject, GeoDataService {
     
     private func addAdviceMessage(weatherState: String?,item: Item?) -> [String] {
         var messages = [String]()
-        guard let weatherState = weatherState,
-              let item = item else {
-            return [String]()
+        guard let weatherState = weatherState else {
+            return messages
         }
         
         switch weatherState {
@@ -334,6 +342,9 @@ class WeatherViewModel: ObservableObject, GeoDataService {
             break
         }
 
+        guard let item = item else {
+            return messages
+        }
         let fineDustGrade = Int(item.pm10Grade1h ?? "1") ?? 1
         let ultraFineDustGrade = Int(item.pm25Grade1h ?? "1") ?? 1
         if (fineDustGrade > 2) || (ultraFineDustGrade > 2) {
