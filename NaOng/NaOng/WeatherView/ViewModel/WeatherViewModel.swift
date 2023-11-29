@@ -115,7 +115,7 @@ class WeatherViewModel: ObservableObject, GeoDataService {
     // MARK: 데이터 관련 메서드
     func setUpCurrentLocation() {
         var coordinate = LocationService.shared.getLocation()
-        if (coordinate.lat < 33 && coordinate.lat > 39) || (coordinate.lon < 125 && coordinate.lon > 132) {
+        if (coordinate.lat < 33 || coordinate.lat > 39) || (coordinate.lon < 125 || coordinate.lon > 132) {
             coordinate = Coordinates(lat: 37.49806749166401, lon: 127.02801316172545)
         }
 
