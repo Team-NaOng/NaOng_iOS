@@ -29,8 +29,8 @@ class TimeToDoListViewModel: NSObject, ObservableObject {
         
         super.init()
         fetchToDoItems(
-            format: "alarmDate == %@ AND alarmType == %@",
-            argumentArray: [date.getFormatDate(), "시간"])
+            format: "(alarmDate == %@ AND alarmType == %@) OR (alarmDate < %@ AND alarmType == %@ AND isRepeat == %@)",
+            argumentArray: [date.getFormatDate(), "시간", date.getFormatDate(), "시간", true])
     }
     
     func deleteItems(offsets: IndexSet) {
@@ -100,13 +100,13 @@ class TimeToDoListViewModel: NSObject, ObservableObject {
             break
         case "반복":
             fetchToDoItems(
-                format: "alarmDate == %@ AND alarmType == %@ AND isRepeat == %@",
+                format: "alarmDate <= %@ AND alarmType == %@ AND isRepeat == %@",
                 argumentArray: [date.getFormatDate(), "시간", true])
             break
         default:
             fetchToDoItems(
-                format: "alarmDate == %@ AND alarmType == %@",
-                argumentArray: [date.getFormatDate(), "시간"])
+                format: "(alarmDate == %@ AND alarmType == %@) OR (alarmDate < %@ AND alarmType == %@ AND isRepeat == %@)",
+                argumentArray: [date.getFormatDate(), "시간", date.getFormatDate(), "시간", true])
         }
     }
 }
