@@ -189,7 +189,6 @@
 		050FCC1B2A1C91E100270F97 /* NaOng */ = {
 			isa = PBXGroup;
 			children = (
-				057B50FB2AAB0080002260EC /* Map */,
 				055E58E92A9735E0005B91DC /* Network */,
 				05EEE1022A8551B2007AD5F7 /* Helper */,
 				05477D492A7F686600C16F4A /* Notification */,
@@ -335,6 +334,7 @@
 				05477D342A7A85BF00C16F4A /* LocationSelectionView.swift */,
 				05477D452A7C3A7F00C16F4A /* LocationSearchView.swift */,
 				05477D472A7C3B4100C16F4A /* LocationCheckView.swift */,
+				057B50FB2AAB0080002260EC /* KakaoMap */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -468,12 +468,12 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
-		057B50FB2AAB0080002260EC /* Map */ = {
+		057B50FB2AAB0080002260EC /* KakaoMap */ = {
 			isa = PBXGroup;
 			children = (
 				057B50FC2AAB0095002260EC /* KakaoMapView.swift */,
 			);
-			path = Map;
+			path = KakaoMap;
 			sourceTree = "<group>";
 		};
 		058B7CA12A558BD9005C07BD /* fonts */ = {

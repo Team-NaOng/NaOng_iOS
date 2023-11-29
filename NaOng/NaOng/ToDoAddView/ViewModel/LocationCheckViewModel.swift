@@ -41,15 +41,19 @@ class LocationCheckViewModel: NSObject, ObservableObject, GeoDataService {
                   let documents = await performKakaoLocalRequest(urlRequest) else {
                 return
             }
-            
+
             var roadAddress = documents.first?.roadAddress?.addressName ?? ""
-            
-            if roadAddress == "" {
+            if roadAddress.isEmpty {
                 roadAddress = documents.first?.address?.addressName ?? "위치를 가져올 수 없습니다."
+            }
+            
+            var buildingName = documents.first?.roadAddress?.buildingName ?? ""
+            if buildingName.isEmpty {
+                buildingName = roadAddress
             }
 
             let locationInfo = LocationInformation(
-                locationName: documents.first?.roadAddress?.buildingName ?? roadAddress,
+                locationName: buildingName,
                 locationAddress: documents.first?.address?.addressName ?? roadAddress,
                 locationRoadAddress: roadAddress,
                 locationCoordinates: coordinate)
