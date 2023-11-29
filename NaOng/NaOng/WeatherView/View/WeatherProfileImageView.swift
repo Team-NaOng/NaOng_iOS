@@ -32,8 +32,11 @@ struct WeatherProfileImageView: View {
                     .frame(width: 40, height: 40)
                     .clipShape(.circle)
             } else {
-                Image(systemName: "person.circle")
-                    .font(.system(size: 40))
+                Image("profile", bundle: .main)
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: 40, height: 40)
+                    .clipShape(.circle)
             }
         }
     }
