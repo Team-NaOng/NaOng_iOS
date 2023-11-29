@@ -9,6 +9,7 @@ import SwiftUI
 import PhotosUI
 import CoreTransferable
 import Combine
+import os.log
 
 enum ImageState {
     case success(Image)
@@ -129,7 +130,9 @@ class WeatherViewModel: ObservableObject, GeoDataService {
                 case .finished:
                     break
                 case .failure(let failure):
-                    print(failure)
+                    let osLog = OSLog(subsystem: "Seohyeon.NaOng", category: "Weather")
+                    let log = Logger(osLog)
+                    log.log(level: .error, "현재 위치를 가져올 수 없습니다. Error Message: \(failure)")
                 }
             }, receiveValue: { [weak self] kakaoLocal in
                 var stationName: String?
@@ -210,7 +213,9 @@ class WeatherViewModel: ObservableObject, GeoDataService {
                     case .finished:
                         break
                     case .failure(let failure):
-                        print(failure)
+                        let osLog = OSLog(subsystem: "Seohyeon.NaOng", category: "Weather")
+                        let log = Logger(osLog)
+                        log.log(level: .error, "미세먼지와 날씨를 가져올 수 없습니다. Error Message: \(failure)")
                     }
                 }, receiveValue: { [weak self] dustResponse, weatherResponse in
                     let currentTemperatureMessage = self?.addCurrentTemperatureMessage(currentWeatherInformation: weatherResponse)
