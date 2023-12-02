@@ -88,7 +88,7 @@ struct TimeToDoItemDetailView: View {
             .frame(width: (UIScreen.main.bounds.width), height: 50)
             .background(Color("primary").opacity(0.5))
 
-            DoneView()
+            DoneListView(doneListViewModel: DoneListViewModel(viewContext: viewContext, toDoItem: toDoItemDetailViewModel.toDoItem))
         }
         .padding()
         .navigationBarItems(

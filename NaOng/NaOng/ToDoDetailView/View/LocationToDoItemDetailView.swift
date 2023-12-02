@@ -65,7 +65,7 @@ struct LocationToDoItemDetailView: View {
                         .background(Color("tertiary"))
             )
 
-            DoneView()
+            DoneListView(doneListViewModel: DoneListViewModel(viewContext: viewContext, toDoItem: toDoItemDetailViewModel.toDoItem))
         }
         .padding()
         .navigationBarItems(

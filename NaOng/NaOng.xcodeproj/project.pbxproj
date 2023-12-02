@@ -20,7 +20,6 @@
 		05173EA82A880E6C00CDF988 /* NotificationListItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05173EA72A880E6C00CDF988 /* NotificationListItemView.swift */; };
 		051BFA1D2AB6E39E00BBC8C6 /* UIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051BFA1C2AB6E39E00BBC8C6 /* UIImage+Extensions.swift */; };
 		052530B62B1B827600B586A4 /* DoneListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 052530B52B1B827600B586A4 /* DoneListView.swift */; };
-		052530B82B1B8D4200B586A4 /* DoneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 052530B72B1B8D4200B586A4 /* DoneView.swift */; };
 		0534B41A2B13E11E0032B30A /* APIKey.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0534B4192B13E11E0032B30A /* APIKey.plist */; };
 		0534B41E2B13EAE70032B30A /* OpenWeather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0534B41D2B13EAE70032B30A /* OpenWeather.swift */; };
 		0534F99B2A8F9A2B00A90BF7 /* LocalNotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0534F99A2A8F9A2B00A90BF7 /* LocalNotificationManager.swift */; };
@@ -74,6 +73,7 @@
 		05EEE1042A8551C7007AD5F7 /* UITextViewWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05EEE1032A8551C7007AD5F7 /* UITextViewWrapper.swift */; };
 		05EEE1082A8578CE007AD5F7 /* Date+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05EEE1072A8578CE007AD5F7 /* Date+Extensions.swift */; };
 		05F233BB2A2AF3D10091D5B3 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F233BA2A2AF3D10091D5B3 /* LocationService.swift */; };
+		05F3B74A2B1BB97400762F63 /* DoneListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F3B7492B1BB97400762F63 /* DoneListViewModel.swift */; };
 		05FD378D2A9FA045006FDAEC /* KakaoLocal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05FD378C2A9FA045006FDAEC /* KakaoLocal.swift */; };
 /* End PBXBuildFile section */
 
@@ -105,7 +105,6 @@
 		05173EA72A880E6C00CDF988 /* NotificationListItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationListItemView.swift; sourceTree = "<group>"; };
 		051BFA1C2AB6E39E00BBC8C6 /* UIImage+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extensions.swift"; sourceTree = "<group>"; };
 		052530B52B1B827600B586A4 /* DoneListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoneListView.swift; sourceTree = "<group>"; };
-		052530B72B1B8D4200B586A4 /* DoneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoneView.swift; sourceTree = "<group>"; };
 		0534B4192B13E11E0032B30A /* APIKey.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = APIKey.plist; sourceTree = "<group>"; };
 		0534B41D2B13EAE70032B30A /* OpenWeather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenWeather.swift; sourceTree = "<group>"; };
 		0534F99A2A8F9A2B00A90BF7 /* LocalNotificationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalNotificationManager.swift; sourceTree = "<group>"; };
@@ -158,6 +157,7 @@
 		05EEE1072A8578CE007AD5F7 /* Date+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extensions.swift"; sourceTree = "<group>"; };
 		05F233B92A29C79B0091D5B3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		05F233BA2A2AF3D10091D5B3 /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
+		05F3B7492B1BB97400762F63 /* DoneListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoneListViewModel.swift; sourceTree = "<group>"; };
 		05FD378C2A9FA045006FDAEC /* KakaoLocal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoLocal.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -408,7 +408,6 @@
 			children = (
 				05477D2C2A77ED7400C16F4A /* TimeToDoItemDetailView.swift */,
 				056EDC312B0E291D004090F6 /* LocationToDoItemDetailView.swift */,
-				052530B72B1B8D4200B586A4 /* DoneView.swift */,
 				052530B52B1B827600B586A4 /* DoneListView.swift */,
 			);
 			path = View;
@@ -418,6 +417,7 @@
 			isa = PBXGroup;
 			children = (
 				05477D2E2A77ED8000C16F4A /* ToDoItemDetailViewModel.swift */,
+				05F3B7492B1BB97400762F63 /* DoneListViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -638,6 +638,7 @@
 				056B2B762A64158000D52CFF /* ToDo+Extensions.swift in Sources */,
 				056EDC392B0E397D004090F6 /* LocationToDoItemAddView.swift in Sources */,
 				056EDC412B0E7619004090F6 /* WeatherItemView.swift in Sources */,
+				05F3B74A2B1BB97400762F63 /* DoneListViewModel.swift in Sources */,
 				05D69E432A696AD30074C84A /* SettingView.swift in Sources */,
 				05477D4F2A8222AB00C16F4A /* TimeToDoListView.swift in Sources */,
 				056B2B522A5FC9D600D52CFF /* ToDoCoreDataManager.swift in Sources */,
@@ -655,7 +656,6 @@
 				0587438B2AC31A8800075905 /* Coordinates.swift in Sources */,
 				05173EA82A880E6C00CDF988 /* NotificationListItemView.swift in Sources */,
 				056EDC432B0E8C2D004090F6 /* WeatherViewModel.swift in Sources */,
-				052530B82B1B8D4200B586A4 /* DoneView.swift in Sources */,
 				05CCE8B32A51A6BE0037FF74 /* LocationToDoListViewModel.swift in Sources */,
 				056B2B732A640F9F00D52CFF /* ToDoItemViewModel.swift in Sources */,
 				055E58EB2A973600005B91DC /* NetworkManager.swift in Sources */,

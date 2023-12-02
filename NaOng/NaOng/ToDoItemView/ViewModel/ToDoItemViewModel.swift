@@ -30,8 +30,17 @@ class ToDoItemViewModel: ObservableObject {
 
     func didTapDoneButton() {
         do {
-            let isDone = toDoItem.isDone ? false : true
-            toDoItem.isDone = isDone
+            if toDoItem.isRepeat {
+                if let doneList = toDoItem.doneList {
+                    toDoItem.doneList = [Date()] + doneList
+                } else {
+                    toDoItem.doneList = [Date()]
+                }
+            } else {
+                let isDone = toDoItem.isDone ? false : true
+                toDoItem.isDone = isDone
+                toDoItem.doneList = [Date()]
+            }
             
             try toDoItem.save(viewContext: viewContext)
         } catch {
@@ -46,7 +55,7 @@ class ToDoItemViewModel: ObservableObject {
         
         if toDoItem.isDone {
             localNotificationManager.removeNotification(id: id)
-        } else {
+        } else if toDoItem.isDone == false && toDoItem.isRepeat == false {
             localNotificationManager.scheduleNotification(for: toDoItem)
         }
     }
