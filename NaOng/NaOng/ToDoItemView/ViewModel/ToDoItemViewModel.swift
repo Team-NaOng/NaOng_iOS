@@ -30,33 +30,14 @@ class ToDoItemViewModel: ObservableObject {
 
     func didTapDoneButton() {
         do {
-            if toDoItem.isRepeat {
-                if let doneList = toDoItem.doneList {
-                    toDoItem.doneList = [Date()] + doneList
-                } else {
-                    toDoItem.doneList = [Date()]
-                }
-            } else {
-                let isDone = toDoItem.isDone ? false : true
-                toDoItem.isDone = isDone
-                toDoItem.doneList = [Date()]
-            }
-            
-            try toDoItem.save(viewContext: viewContext)
-        } catch {
-            errorTitle = "할 일 완료 실패🥲"
-            errorMessage = error.localizedDescription
-            showErrorAlert.toggle()
-        }
+            updateDoneList()
+            updateIsDone()
 
-        guard let id = toDoItem.id else {
-            return
-        }
-        
-        if toDoItem.isDone {
-            localNotificationManager.removeNotification(id: id)
-        } else if toDoItem.isDone == false && toDoItem.isRepeat == false {
-            localNotificationManager.scheduleNotification(for: toDoItem)
+            try toDoItem.save(viewContext: viewContext)
+            
+            manageLocalNotifications()
+        } catch {
+            handleSaveError(error)
         }
     }
 
@@ -92,6 +73,38 @@ class ToDoItemViewModel: ObservableObject {
         default:
             return getAlarmTime()
         }
+    }
+    
+    private func updateDoneList() {
+        if toDoItem.isRepeat, let doneList = toDoItem.doneList {
+            toDoItem.doneList = [Date()] + doneList
+        } else {
+            toDoItem.doneList = [Date()]
+        }
+    }
+    
+    private func updateIsDone() {
+        if toDoItem.isRepeat == false {
+            toDoItem.isDone.toggle()
+        }
+    }
+    
+    private func manageLocalNotifications() {
+        guard let id = toDoItem.id else {
+            return
+        }
+        
+        if toDoItem.isDone {
+            localNotificationManager.removeNotification(id: id)
+        } else if toDoItem.isDone == false && toDoItem.isRepeat == false {
+            localNotificationManager.scheduleNotification(for: toDoItem)
+        }
+    }
+    
+    private func handleSaveError(_ error: Error) {
+        errorTitle = "할 일 완료 실패🥲"
+        errorMessage = error.localizedDescription
+        showErrorAlert.toggle()
     }
     
     private func getAlarmTime() -> String {
