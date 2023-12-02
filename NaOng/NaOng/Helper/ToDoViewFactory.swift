@@ -142,4 +142,24 @@ class ToDoViewFactory {
             .font(.custom(fontName, size: fontSize))
             .foregroundColor(fontColor)
     }
+    
+    static func makeToDoDetailMoldView<Content: View>(
+        title: String,
+        content: Content,
+        width: CGFloat = UIScreen.main.bounds.width,
+        height: CGFloat = 50,
+        background: Color = Color("secondary")
+    ) -> some View {
+        return VStack(spacing: 0) {
+            HStack {
+                ToDoViewFactory.makeToDoTitle(title: title)
+                Spacer()
+            }
+            .padding()
+            .background(background)
+            .frame(width: width, height: height)
+            
+            content
+        }
+    }
 }

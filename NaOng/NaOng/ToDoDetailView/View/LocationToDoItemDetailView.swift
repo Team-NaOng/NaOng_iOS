@@ -17,66 +17,55 @@ struct LocationToDoItemDetailView: View {
     
     var body: some View {
         VStack(spacing: 10) {
-            ToDoViewFactory.makeToDoMoldView(
+            ToDoViewFactory.makeToDoDetailMoldView(
+                title: "할일 목록",
                 content:
-                    VStack(alignment: .leading) {
-                        ToDoViewFactory.makeToDoTitle(title: "할 일 내용")
-                        
-                        ScrollView {
-                            Text(toDoItemDetailViewModel.toDoItem.content ?? "")
-                                .font(.custom("Binggrae", size: 15))
-                                .frame(width: UIScreen.main.bounds.width - 100, alignment: .leading)
-                                .padding(10)
-                        }
-                        .frame(height: 140)
-                        .background(Color.white)
-                        .cornerRadius(10)
-                    },
-                height: 200
-            )
-
-            ToDoViewFactory.makeToDoMoldView(
-                content: ToDoViewFactory.makeToDoToggle(
-                    isOn: .constant(toDoItemDetailViewModel.toDoItem.isRepeat),
-                    title: "반복 여부")
-            )
-            
-            ToDoViewFactory.makeToDoMoldView(
-                content:
-                    HStack {
-                        ToDoViewFactory.makeToDoTitle(title: "알림 타입")
-                            .frame(width: (UIScreen.main.bounds.width - 90) / 2, alignment: .leading)
-                        
-                        Spacer()
-                        
-                        Text("위치")
+                    ScrollView {
+                        Text(toDoItemDetailViewModel.toDoItem.content ?? "")
                             .font(.custom("Binggrae", size: 15))
-                            .padding(EdgeInsets(top: 8, leading: 10, bottom: 8, trailing: 10))
-                            .background(Color(UIColor.systemGray4))
-                            .cornerRadius(10)
-                            
+                            .padding(EdgeInsets(top: 10, leading: 15, bottom: 10, trailing: 15))
+                            .frame(width: UIScreen.main.bounds.width, alignment: .leading)
                     }
-                    .frame(width: (UIScreen.main.bounds.width - 80))
+                    .frame(height: 140)
+                    .background(Color("tertiary"))
             )
+
+            ToDoViewFactory.makeToDoToggle(
+                isOn: .constant(toDoItemDetailViewModel.toDoItem.isRepeat),
+                title: "반복 여부",
+                width: UIScreen.main.bounds.width - 30)
+            .padding()
+            .frame(width: (UIScreen.main.bounds.width), height: 50)
+            .background(Color("secondary"))
             
-            ToDoViewFactory.makeToDoMoldView(
+            HStack {
+                ToDoViewFactory.makeToDoTitle(title: "알림 타입")
+                    .frame(width: (UIScreen.main.bounds.width - 90) / 2, alignment: .leading)
+                
+                Spacer()
+                
+                Text("위치")
+                    .font(.custom("Binggrae", size: 15))
+                    .padding(EdgeInsets(top: 8, leading: 10, bottom: 8, trailing: 10))
+                    .background(.white)
+                    .cornerRadius(10)
+                
+            }
+            .padding()
+            .frame(width: (UIScreen.main.bounds.width), height: 50)
+            .background(Color("secondary"))
+            
+            ToDoViewFactory.makeToDoDetailMoldView(
+                title: "알림 위치",
                 content:
-                    VStack(spacing: 0) {
-                        Text("알림 위치")
-                            .frame(width: UIScreen.main.bounds.width - 80, height: 30, alignment: .topLeading)
-
-                        Text(toDoItemDetailViewModel.toDoItem.alarmLocationName ?? "")
-                            .padding(10)
-                            .lineLimit(2)
-                            .frame(width: UIScreen.main.bounds.width - 80, height: 70, alignment: .topLeading)
-                            .background(Color.white)
-                            .cornerRadius(10)
-                    }
-                    .font(.custom("Binggrae", size: 15)),
-                height: 120
+                    ToDoViewFactory.makeToDoTitle(title: toDoItemDetailViewModel.toDoItem.alarmLocationName ?? "")
+                        .padding(EdgeInsets(top: 10, leading: 15, bottom: 10, trailing: 15))
+                        .lineLimit(2)
+                        .frame(width: UIScreen.main.bounds.width, height: 70, alignment: .topLeading)
+                        .background(Color("tertiary"))
             )
 
-            Spacer()
+            DoneView()
         }
         .padding()
         .navigationBarItems(
@@ -97,7 +86,6 @@ struct LocationToDoItemDetailView: View {
                     if toDoItemDetailViewModel.toDoItem.alarmType == "위치" {
                        LocationToDoItemAddView(toDoItemAddViewModel: viewModel)
                     }
-                    //ToDoItemAddView(toDoItemAddViewModel: viewModel)
                 }
         )
     }
