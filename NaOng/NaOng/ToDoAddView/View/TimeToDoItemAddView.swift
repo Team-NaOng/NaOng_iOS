@@ -73,7 +73,7 @@ struct TimeToDoItemAddView: View {
                     ToDoViewFactory.makeToDoMoldView(
                         content: ToDoViewFactory.makeToDoDatePicker(
                             selection: $toDoItemAddViewModel.alarmTime,
-                            title: "알림 날짜",
+                            title: "시작 날짜",
                             displayedComponent: .date)
                     )
                     

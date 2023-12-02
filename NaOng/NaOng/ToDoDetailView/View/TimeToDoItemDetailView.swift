@@ -56,12 +56,12 @@ struct TimeToDoItemDetailView: View {
             .background(Color("primary").opacity(0.5))
             
             HStack {
-                ToDoViewFactory.makeToDoTitle(title: "알림 날짜")
+                ToDoViewFactory.makeToDoTitle(title: "시작 날짜")
                     .frame(width: (UIScreen.main.bounds.width - 90) / 2, alignment: .leading)
                 
                 Spacer()
                 
-                Text(toDoItemDetailViewModel.toDoItem.alarmTime?.getFormatDate("yyyy-mm-dd-E") ?? "알 수 없음")
+                Text(toDoItemDetailViewModel.toDoItem.alarmTime?.getFormatDate("yyyy-MM-dd-E") ?? "알 수 없음")
                     .font(.custom("Binggrae", size: 15))
                     .padding(EdgeInsets(top: 8, leading: 10, bottom: 8, trailing: 10))
                     .background(.white)
@@ -73,7 +73,7 @@ struct TimeToDoItemDetailView: View {
             .background(Color("primary").opacity(0.5))
 
             HStack {
-                ToDoViewFactory.makeToDoTitle(title: "알림 날짜")
+                ToDoViewFactory.makeToDoTitle(title: "알림 시간")
                     .frame(width: (UIScreen.main.bounds.width - 90) / 2, alignment: .leading)
                 
                 Spacer()
