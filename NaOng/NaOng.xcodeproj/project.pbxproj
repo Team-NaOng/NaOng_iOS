@@ -74,6 +74,7 @@
 		05EEE1082A8578CE007AD5F7 /* Date+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05EEE1072A8578CE007AD5F7 /* Date+Extensions.swift */; };
 		05F233BB2A2AF3D10091D5B3 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F233BA2A2AF3D10091D5B3 /* LocationService.swift */; };
 		05F3B74A2B1BB97400762F63 /* DoneListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F3B7492B1BB97400762F63 /* DoneListViewModel.swift */; };
+		05F3B74C2B1BCB5D00762F63 /* AlertViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F3B74B2B1BCB5D00762F63 /* AlertViewModel.swift */; };
 		05FD378D2A9FA045006FDAEC /* KakaoLocal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05FD378C2A9FA045006FDAEC /* KakaoLocal.swift */; };
 /* End PBXBuildFile section */
 
@@ -158,6 +159,7 @@
 		05F233B92A29C79B0091D5B3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		05F233BA2A2AF3D10091D5B3 /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
 		05F3B7492B1BB97400762F63 /* DoneListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoneListViewModel.swift; sourceTree = "<group>"; };
+		05F3B74B2B1BCB5D00762F63 /* AlertViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertViewModel.swift; sourceTree = "<group>"; };
 		05FD378C2A9FA045006FDAEC /* KakaoLocal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoLocal.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -443,6 +445,7 @@
 			isa = PBXGroup;
 			children = (
 				056B2B722A640F9F00D52CFF /* ToDoItemViewModel.swift */,
+				05F3B74B2B1BCB5D00762F63 /* AlertViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -651,6 +654,7 @@
 				055E58F12A97A8D5005B91DC /* LocationSearchViewModel.swift in Sources */,
 				0573C68F2B13A5270012D501 /* GeoDataService.swift in Sources */,
 				05477D2F2A77ED8000C16F4A /* ToDoItemDetailViewModel.swift in Sources */,
+				05F3B74C2B1BCB5D00762F63 /* AlertViewModel.swift in Sources */,
 				0573C6912B13AEFF0012D501 /* AirKorea.swift in Sources */,
 				05477D442A7C228100C16F4A /* CoreDataBaseProtocol.swift in Sources */,
 				0587438B2AC31A8800075905 /* Coordinates.swift in Sources */,

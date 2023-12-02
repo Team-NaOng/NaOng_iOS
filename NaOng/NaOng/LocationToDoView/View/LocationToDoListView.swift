@@ -10,6 +10,7 @@ import SwiftUI
 struct LocationToDoListView: View {
     @Environment(\.managedObjectContext) var viewContext
     @ObservedObject private var locationToDoListViewModel: LocationToDoListViewModel
+    @ObservedObject private var alertViewModel = AlertViewModel()
     
     init(locationToDoListViewModel: LocationToDoListViewModel) {
         self.locationToDoListViewModel = locationToDoListViewModel
@@ -53,7 +54,7 @@ struct LocationToDoListView: View {
                     } else {
                         List {
                             ForEach($locationToDoListViewModel.toDoItems) { item in
-                                let viewModel = ToDoItemViewModel(toDoItem: item.wrappedValue, viewContext: viewContext, localNotificationManager: locationToDoListViewModel.localNotificationManager)
+                                let viewModel = ToDoItemViewModel(toDoItem: item.wrappedValue, viewContext: viewContext, localNotificationManager: locationToDoListViewModel.localNotificationManager, alertViewModel: alertViewModel)
                                 ToDoItemView(toDoItemViewModel: viewModel)
                                     .listRowSeparator(.hidden)
                                     .listRowInsets(.init(top: 0, leading: 0, bottom: 0, trailing: 0))
@@ -101,10 +102,10 @@ struct LocationToDoListView: View {
             .background(
                 Image("backgroundPinkImage")
             )
-            .alert(isPresented: $locationToDoListViewModel.showErrorAlert) {
+            .alert(isPresented: $alertViewModel.showAlert) {
                 Alert(
-                    title: Text(locationToDoListViewModel.errorTitle),
-                    message: Text(locationToDoListViewModel.errorMessage),
+                    title: Text(alertViewModel.alertTitle),
+                    message: Text(alertViewModel.alertMessage),
                     dismissButton: .default(Text("확인"))
                 )
             }

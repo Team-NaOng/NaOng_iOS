@@ -11,18 +11,17 @@ import CoreData
 class ToDoItemViewModel: ObservableObject {
     @Published var markerName: String = "doneMarker"
     @Published var backgroundColor: String = "white"
-    @Published var showErrorAlert = false
-    var errorTitle: String = ""
-    var errorMessage: String = ""
     
     private(set) var toDoItem: ToDo
     private let viewContext: NSManagedObjectContext
     private let localNotificationManager: LocalNotificationManager
+    private let alertViewModel: AlertViewModel
 
-    init(toDoItem: ToDo, viewContext: NSManagedObjectContext, localNotificationManager: LocalNotificationManager) {
+    init(toDoItem: ToDo, viewContext: NSManagedObjectContext, localNotificationManager: LocalNotificationManager, alertViewModel: AlertViewModel) {
         self.toDoItem = toDoItem
         self.viewContext = viewContext
         self.localNotificationManager = localNotificationManager
+        self.alertViewModel = alertViewModel
 
         setMarkerName()
         setBackgroundColor()
@@ -35,9 +34,10 @@ class ToDoItemViewModel: ObservableObject {
 
             try toDoItem.save(viewContext: viewContext)
             
+            showRepeatCompletionAlert()
             manageLocalNotifications()
         } catch {
-            handleSaveError(error)
+            showErrorAlert(error)
         }
     }
 
@@ -101,10 +101,27 @@ class ToDoItemViewModel: ObservableObject {
         }
     }
     
-    private func handleSaveError(_ error: Error) {
-        errorTitle = "할 일 완료 실패🥲"
-        errorMessage = error.localizedDescription
-        showErrorAlert.toggle()
+    private func showErrorAlert(_ error: Error) {
+        alertViewModel.alertTitle = "할 일 완료 실패🥲"
+        alertViewModel.alertMessage = error.localizedDescription
+        alertViewModel.showAlert.toggle()
+    }
+    
+    private func showRepeatCompletionAlert() {
+        if toDoItem.isRepeat {
+            alertViewModel.alertTitle = "할 일 완료🥳"
+            
+            let messages = [
+                "오늘도 멋지게 하루를 마무리했네요!",
+                "당신의 노력이 빛을 발하고 있어요. 멋져요!",
+                "할 일을 끝마치는 감각은 최고죠! 오늘도 고생하셨어요.",
+                "오늘 완료한 일은 내일의 당신을 더 강하게 만들 거예요.",
+                "오늘도 한걸음 나아간 당신! 너무 대단해요!"
+            ]
+            alertViewModel.alertMessage = messages.randomElement() ?? "할 일을 잘 끝낸 당신은 정말 최고예요!"
+
+            alertViewModel.showAlert.toggle()
+        }
     }
     
     private func getAlarmTime() -> String {

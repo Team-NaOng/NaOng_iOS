@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ToDoItemView: View {
     @ObservedObject private var toDoItemViewModel: ToDoItemViewModel
-    
+
     init(toDoItemViewModel: ToDoItemViewModel) {
         self.toDoItemViewModel = toDoItemViewModel
     }
@@ -24,13 +24,6 @@ struct ToDoItemView: View {
                     .frame(width: 30, height: 30, alignment: .center)
             }
             .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
-            .alert(isPresented: $toDoItemViewModel.showErrorAlert) {
-                Alert(
-                    title: Text(toDoItemViewModel.errorTitle),
-                    message: Text(toDoItemViewModel.errorMessage),
-                    dismissButton: .default(Text("확인"))
-                )
-            }
             
             Text(toDoItemViewModel.toDoItem.content ?? "")
                 .font(.custom("Binggrae", size: 15))

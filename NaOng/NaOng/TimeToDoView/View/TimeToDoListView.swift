@@ -11,6 +11,7 @@ import Combine
 struct TimeToDoListView: View {
     @Environment(\.managedObjectContext) var viewContext
     @ObservedObject private var timeToDoListViewModel: TimeToDoListViewModel
+    @ObservedObject private var alertViewModel = AlertViewModel()
     
     init(timeToDoListViewModel: TimeToDoListViewModel) {
         self.timeToDoListViewModel = timeToDoListViewModel
@@ -65,7 +66,7 @@ struct TimeToDoListView: View {
                     List {
                         ForEach($timeToDoListViewModel.toDoItems) { item in
                             let localNotificationManager = LocalNotificationManager()
-                            let viewModel = ToDoItemViewModel(toDoItem: item.wrappedValue, viewContext: viewContext, localNotificationManager: localNotificationManager)
+                            let viewModel = ToDoItemViewModel(toDoItem: item.wrappedValue, viewContext: viewContext, localNotificationManager: localNotificationManager,alertViewModel: alertViewModel)
                             ToDoItemView(toDoItemViewModel: viewModel)
                                 .frame(width: UIScreen.main.bounds.width)
                                 .listRowSeparator(.hidden)
@@ -123,10 +124,10 @@ struct TimeToDoListView: View {
                     TimeToDoItemAddView(toDoItemAddViewModel: viewModel)
                 }
             }
-            .alert(isPresented: $timeToDoListViewModel.showErrorAlert) {
+            .alert(isPresented: $alertViewModel.showAlert) {
                 Alert(
-                    title: Text(timeToDoListViewModel.errorTitle),
-                    message: Text(timeToDoListViewModel.errorMessage),
+                    title: Text(alertViewModel.alertTitle),
+                    message: Text(alertViewModel.alertMessage),
                     dismissButton: .default(Text("확인"))
                 )
             }
