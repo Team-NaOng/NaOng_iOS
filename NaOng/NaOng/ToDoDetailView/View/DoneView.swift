@@ -29,7 +29,7 @@ struct DoneView: View {
                 })
             }
             .padding()
-            .background(Color("secondary"))
+            .background(Color("primary").opacity(0.5))
             .frame(width: (UIScreen.main.bounds.width))
             
             DoneListView()

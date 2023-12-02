@@ -16,7 +16,7 @@ struct LocationToDoItemDetailView: View {
     }
     
     var body: some View {
-        VStack(spacing: 10) {
+        VStack(spacing: 15) {
             ToDoViewFactory.makeToDoDetailMoldView(
                 title: "할일 목록",
                 content:
@@ -36,7 +36,7 @@ struct LocationToDoItemDetailView: View {
                 width: UIScreen.main.bounds.width - 30)
             .padding()
             .frame(width: (UIScreen.main.bounds.width), height: 50)
-            .background(Color("secondary"))
+            .background(Color("primary").opacity(0.5))
             
             HStack {
                 ToDoViewFactory.makeToDoTitle(title: "알림 타입")
@@ -53,7 +53,7 @@ struct LocationToDoItemDetailView: View {
             }
             .padding()
             .frame(width: (UIScreen.main.bounds.width), height: 50)
-            .background(Color("secondary"))
+            .background(Color("primary").opacity(0.5))
             
             ToDoViewFactory.makeToDoDetailMoldView(
                 title: "알림 위치",

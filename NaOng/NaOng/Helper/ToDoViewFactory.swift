@@ -148,7 +148,7 @@ class ToDoViewFactory {
         content: Content,
         width: CGFloat = UIScreen.main.bounds.width,
         height: CGFloat = 50,
-        background: Color = Color("secondary")
+        background: Color = Color("primary").opacity(0.5)
     ) -> some View {
         return VStack(spacing: 0) {
             HStack {
