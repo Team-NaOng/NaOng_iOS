@@ -13,7 +13,7 @@ struct TimeAlertAnimationView: View {
         VStack(spacing:10) {
             ToDoViewFactory.makeToDoTitle(title: "시간 할 일", fontName: "Binggrae-Bold", fontSize: 30)
 
-            ToDoViewFactory.makeToDoTitle(title: "시간 할 일을 만들면 지정한 시간에\n알림을 받을 수 있어요.\n 반복을 하면 매일 지정한 시간에 알림이 와요.")
+            ToDoViewFactory.makeToDoTitle(title: "시간 할 일을 생성하면 지정한 시간에\n알림을 받을 수 있습니다.\n반복 설정 시, 매일 지정한 시간에 알림이 전송됩니다.")
                 .multilineTextAlignment(.center)
             
             Spacer()

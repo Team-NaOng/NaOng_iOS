@@ -13,7 +13,7 @@ struct LocationAlertAnimationView: View {
             VStack(spacing:10) {
                 ToDoViewFactory.makeToDoTitle(title: "위치 할 일", fontName: "Binggrae-Bold", fontSize: 30)
 
-                ToDoViewFactory.makeToDoTitle(title: "위치 할 일을 만들면 지정한 위치에서\n벗어나는 순간 알림을 받을 수 있어요.\n반복을 하면 위치를 벗어날 때마다 알림이 와요.")
+                ToDoViewFactory.makeToDoTitle(title: "위치 할 일을 생성하면 정해진 반경을 벗어나는 즉시 알림을 받을 수 있습니다.\n반복 설정 시, 위치를 벗어날 때마다 알림이 전송됩니다.")
                     .multilineTextAlignment(.center)
                 
                 Spacer()

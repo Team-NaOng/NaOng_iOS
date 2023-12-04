@@ -17,7 +17,7 @@ struct DoneListView: View {
     var body: some View {
         VStack(spacing: 0) {
             HStack {
-                ToDoViewFactory.makeToDoTitle(title: "완료 목록")
+                ToDoViewFactory.makeToDoTitle(title: "완료 시간")
 
                 Spacer()
                 

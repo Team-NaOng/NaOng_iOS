@@ -14,7 +14,7 @@ struct FinishAnimationView: View {
         VStack(spacing:10) {
             ToDoViewFactory.makeToDoTitle(title: "할 일 등록", fontName: "Binggrae-Bold", fontSize: 30)
 
-            ToDoViewFactory.makeToDoTitle(title: "모든 설명이 끝났어요!\n그럼 이제 할 일을 만들러 가볼까요?")
+            ToDoViewFactory.makeToDoTitle(title: "모든 설명이 끝났습니다!\n그럼 이제 할 일을 만들러 가볼까요?")
                 .multilineTextAlignment(.center)
 
             Spacer()
