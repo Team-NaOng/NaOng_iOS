@@ -9,26 +9,30 @@ import SwiftUI
 
 @main
 struct NaOngApp: App {
-    let viewContext = ToDoCoreDataManager().persistentContainer.viewContext
-    let localNotificationManager = LocalNotificationManager()
+    @AppStorage("isOnboarding") var isOnboarding: Bool = true
+    private let viewContext = ToDoCoreDataManager().persistentContainer.viewContext
+    private let localNotificationManager = LocalNotificationManager()
     
     var body: some Scene {
         WindowGroup {
-            ContentView()
-                .environment(\.managedObjectContext, viewContext)
-                .environmentObject(localNotificationManager)
-                .onAppear {
-                    LocationService.shared.loadLocation()
-                    localNotificationManager.requestAuthorization()
-                    UNUserNotificationCenter.current().delegate = localNotificationManager
-                    
-                    NotificationCenter.default.addObserver(
-                        forName: UIApplication.didBecomeActiveNotification,
-                        object: nil,
-                        queue: nil) { _ in
-                            localNotificationManager.sendAuthorizationStatusEvent()
-                        }
-                }
+            if isOnboarding {
+                OnboardingAnimationView()
+            } else {
+                ContentView()
+                    .environment(\.managedObjectContext, viewContext)
+                    .environmentObject(localNotificationManager)
+                    .onAppear {
+                        LocationService.shared.loadLocation()
+                        localNotificationManager.requestAuthorization()
+                        
+                        NotificationCenter.default.addObserver(
+                            forName: UIApplication.didBecomeActiveNotification,
+                            object: nil,
+                            queue: nil) { _ in
+                                localNotificationManager.sendAuthorizationStatusEvent()
+                            }
+                    }
+            }
         }
     }
 }
