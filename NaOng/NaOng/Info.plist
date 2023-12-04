@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>KAKAO_APP_KEY</key>
-	<string>e3e0e78f78ba766e4397da3973b41dd9</string>
+	<string>$(KAKAO_APP_KEY)</string>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>
