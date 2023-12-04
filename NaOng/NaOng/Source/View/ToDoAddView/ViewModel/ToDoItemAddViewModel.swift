@@ -37,6 +37,10 @@ class ToDoItemAddViewModel: ObservableObject {
         path.append(addedView)
     }
     
+    func getToDoTitle() -> String {
+        return (toDoItem != nil) ? "할 일 수정하기" : "할 일 추가하기"
+    }
+    
     func addEditToDo() -> Bool {
         if checkValidLocation() == false { return false }
         

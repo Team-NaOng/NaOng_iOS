@@ -38,7 +38,7 @@ struct LocationToDoItemAddView: View {
                 .padding(EdgeInsets(top: 20, leading: 0, bottom: 0, trailing: 60))
                 
                 ToDoViewFactory.makeToDoTitle(
-                    title: "할 일 추가하기",
+                    title: toDoItemAddViewModel.getToDoTitle(),
                     fontName: "Binggrae-Bold",
                     fontSize: 30
                 )
