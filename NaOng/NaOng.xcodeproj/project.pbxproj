@@ -66,7 +66,17 @@
 		058B7CA62A558DEE005C07BD /* Binggrae.otf in Resources */ = {isa = PBXBuildFile; fileRef = 058B7CA42A558DEE005C07BD /* Binggrae.otf */; };
 		058B7CA72A558DEE005C07BD /* Binggrae-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 058B7CA52A558DEE005C07BD /* Binggrae-Bold.otf */; };
 		058B7CA92A55C495005C07BD /* TimeToDoItemAddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 058B7CA82A55C495005C07BD /* TimeToDoItemAddView.swift */; };
+		059126752B1C60E700F044D0 /* OnboardingAnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 059126742B1C60E700F044D0 /* OnboardingAnimationView.swift */; };
 		059126782B1CE31900F044D0 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 059126772B1CE31900F044D0 /* Lottie */; };
+		059126852B1CF07800F044D0 /* LocationAlertAnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 059126842B1CF07800F044D0 /* LocationAlertAnimationView.swift */; };
+		059126872B1CF0EA00F044D0 /* TimeAlertAnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 059126862B1CF0EA00F044D0 /* TimeAlertAnimationView.swift */; };
+		0591268F2B1D127200F044D0 /* SwipeAnimation.json in Resources */ = {isa = PBXBuildFile; fileRef = 0591268A2B1D127200F044D0 /* SwipeAnimation.json */; };
+		059126902B1D127200F044D0 /* LocationAlertAnimation.json in Resources */ = {isa = PBXBuildFile; fileRef = 0591268B2B1D127200F044D0 /* LocationAlertAnimation.json */; };
+		059126922B1D127200F044D0 /* FinishAnimation.json in Resources */ = {isa = PBXBuildFile; fileRef = 0591268D2B1D127200F044D0 /* FinishAnimation.json */; };
+		059126932B1D127200F044D0 /* TimeAlertAnimation.json in Resources */ = {isa = PBXBuildFile; fileRef = 0591268E2B1D127200F044D0 /* TimeAlertAnimation.json */; };
+		059126952B1D12A400F044D0 /* SwipeAnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 059126942B1D12A400F044D0 /* SwipeAnimationView.swift */; };
+		059126972B1D12CB00F044D0 /* FinishAnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 059126962B1D12CB00F044D0 /* FinishAnimationView.swift */; };
+		0591269B2B1D27C400F044D0 /* BackgroundAnimation.json in Resources */ = {isa = PBXBuildFile; fileRef = 0591269A2B1D27C400F044D0 /* BackgroundAnimation.json */; };
 		0598717A2AB38C30009401D3 /* LocationCheckViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 059871792AB38C30009401D3 /* LocationCheckViewModel.swift */; };
 		05CCE8B32A51A6BE0037FF74 /* LocationToDoListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CCE8B22A51A6BE0037FF74 /* LocationToDoListViewModel.swift */; };
 		05CD8E9A2A57631B00C1C187 /* ToDoItemAddViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CD8E992A57631B00C1C187 /* ToDoItemAddViewModel.swift */; };
@@ -151,6 +161,16 @@
 		058B7CA42A558DEE005C07BD /* Binggrae.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Binggrae.otf; sourceTree = "<group>"; };
 		058B7CA52A558DEE005C07BD /* Binggrae-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Binggrae-Bold.otf"; sourceTree = "<group>"; };
 		058B7CA82A55C495005C07BD /* TimeToDoItemAddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeToDoItemAddView.swift; sourceTree = "<group>"; };
+		059126742B1C60E700F044D0 /* OnboardingAnimationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingAnimationView.swift; sourceTree = "<group>"; };
+		059126842B1CF07800F044D0 /* LocationAlertAnimationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationAlertAnimationView.swift; sourceTree = "<group>"; };
+		059126862B1CF0EA00F044D0 /* TimeAlertAnimationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeAlertAnimationView.swift; sourceTree = "<group>"; };
+		0591268A2B1D127200F044D0 /* SwipeAnimation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = SwipeAnimation.json; sourceTree = "<group>"; };
+		0591268B2B1D127200F044D0 /* LocationAlertAnimation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = LocationAlertAnimation.json; sourceTree = "<group>"; };
+		0591268D2B1D127200F044D0 /* FinishAnimation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = FinishAnimation.json; sourceTree = "<group>"; };
+		0591268E2B1D127200F044D0 /* TimeAlertAnimation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = TimeAlertAnimation.json; sourceTree = "<group>"; };
+		059126942B1D12A400F044D0 /* SwipeAnimationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeAnimationView.swift; sourceTree = "<group>"; };
+		059126962B1D12CB00F044D0 /* FinishAnimationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinishAnimationView.swift; sourceTree = "<group>"; };
+		0591269A2B1D27C400F044D0 /* BackgroundAnimation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = BackgroundAnimation.json; sourceTree = "<group>"; };
 		059871792AB38C30009401D3 /* LocationCheckViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationCheckViewModel.swift; sourceTree = "<group>"; };
 		05CCE8B22A51A6BE0037FF74 /* LocationToDoListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationToDoListViewModel.swift; sourceTree = "<group>"; };
 		05CD8E992A57631B00C1C187 /* ToDoItemAddViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoItemAddViewModel.swift; sourceTree = "<group>"; };
@@ -197,6 +217,7 @@
 		050FCC1B2A1C91E100270F97 /* NaOng */ = {
 			isa = PBXGroup;
 			children = (
+				059126802B1CEE5500F044D0 /* LottieJson */,
 				055E58E92A9735E0005B91DC /* Network */,
 				05EEE1022A8551B2007AD5F7 /* Helper */,
 				05477D492A7F686600C16F4A /* Notification */,
@@ -211,6 +232,7 @@
 				050FCC202A1C91E200270F97 /* Assets.xcassets */,
 				050FCC222A1C91E200270F97 /* Preview Content */,
 				0549F2CF2A386118002B1248 /* Location */,
+				059126732B1C60CB00F044D0 /* OnboardingView */,
 				056EDC332B0E3352004090F6 /* ToDoItemView */,
 				056EDC2E2B0E28CB004090F6 /* ToDoDetailView */,
 				054D4CE82AFE736E005CF34C /* ToDoAddView */,
@@ -505,6 +527,30 @@
 			path = TimeToDoView;
 			sourceTree = "<group>";
 		};
+		059126732B1C60CB00F044D0 /* OnboardingView */ = {
+			isa = PBXGroup;
+			children = (
+				059126742B1C60E700F044D0 /* OnboardingAnimationView.swift */,
+				059126842B1CF07800F044D0 /* LocationAlertAnimationView.swift */,
+				059126862B1CF0EA00F044D0 /* TimeAlertAnimationView.swift */,
+				059126942B1D12A400F044D0 /* SwipeAnimationView.swift */,
+				059126962B1D12CB00F044D0 /* FinishAnimationView.swift */,
+			);
+			path = OnboardingView;
+			sourceTree = "<group>";
+		};
+		059126802B1CEE5500F044D0 /* LottieJson */ = {
+			isa = PBXGroup;
+			children = (
+				0591269A2B1D27C400F044D0 /* BackgroundAnimation.json */,
+				0591268D2B1D127200F044D0 /* FinishAnimation.json */,
+				0591268B2B1D127200F044D0 /* LocationAlertAnimation.json */,
+				0591268A2B1D127200F044D0 /* SwipeAnimation.json */,
+				0591268E2B1D127200F044D0 /* TimeAlertAnimation.json */,
+			);
+			path = LottieJson;
+			sourceTree = "<group>";
+		};
 		05CCE8B12A51A66D0037FF74 /* LocationToDoView */ = {
 			isa = PBXGroup;
 			children = (
@@ -618,11 +664,16 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				059126932B1D127200F044D0 /* TimeAlertAnimation.json in Resources */,
 				0534B41A2B13E11E0032B30A /* APIKey.plist in Resources */,
 				050FCC242A1C91E200270F97 /* Preview Assets.xcassets in Resources */,
 				050FCC212A1C91E200270F97 /* Assets.xcassets in Resources */,
 				058B7CA72A558DEE005C07BD /* Binggrae-Bold.otf in Resources */,
+				059126902B1D127200F044D0 /* LocationAlertAnimation.json in Resources */,
 				058B7CA62A558DEE005C07BD /* Binggrae.otf in Resources */,
+				0591269B2B1D27C400F044D0 /* BackgroundAnimation.json in Resources */,
+				0591268F2B1D127200F044D0 /* SwipeAnimation.json in Resources */,
+				059126922B1D127200F044D0 /* FinishAnimation.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -633,6 +684,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				059126952B1D12A400F044D0 /* SwipeAnimationView.swift in Sources */,
 				05477D482A7C3B4100C16F4A /* LocationCheckView.swift in Sources */,
 				0534F9A72A8FBBC000A90BF7 /* SettingViewModel.swift in Sources */,
 				058A9E7F2A95E70D005A498A /* MailView.swift in Sources */,
@@ -647,7 +699,9 @@
 				056EDC412B0E7619004090F6 /* WeatherItemView.swift in Sources */,
 				05F3B74A2B1BB97400762F63 /* DoneListViewModel.swift in Sources */,
 				05D69E432A696AD30074C84A /* SettingView.swift in Sources */,
+				059126852B1CF07800F044D0 /* LocationAlertAnimationView.swift in Sources */,
 				05477D4F2A8222AB00C16F4A /* TimeToDoListView.swift in Sources */,
+				059126872B1CF0EA00F044D0 /* TimeAlertAnimationView.swift in Sources */,
 				056B2B522A5FC9D600D52CFF /* ToDoCoreDataManager.swift in Sources */,
 				05477D382A7C16A100C16F4A /* LocationModel.xcdatamodeld in Sources */,
 				05F233BB2A2AF3D10091D5B3 /* LocationService.swift in Sources */,
@@ -657,11 +711,13 @@
 				05477D082A7577BD00C16F4A /* View+Extensions.swift in Sources */,
 				055E58F12A97A8D5005B91DC /* LocationSearchViewModel.swift in Sources */,
 				0573C68F2B13A5270012D501 /* GeoDataService.swift in Sources */,
+				059126972B1D12CB00F044D0 /* FinishAnimationView.swift in Sources */,
 				05477D2F2A77ED8000C16F4A /* ToDoItemDetailViewModel.swift in Sources */,
 				05F3B74C2B1BCB5D00762F63 /* AlertViewModel.swift in Sources */,
 				0573C6912B13AEFF0012D501 /* AirKorea.swift in Sources */,
 				05477D442A7C228100C16F4A /* CoreDataBaseProtocol.swift in Sources */,
 				0587438B2AC31A8800075905 /* Coordinates.swift in Sources */,
+				059126752B1C60E700F044D0 /* OnboardingAnimationView.swift in Sources */,
 				05173EA82A880E6C00CDF988 /* NotificationListItemView.swift in Sources */,
 				056EDC432B0E8C2D004090F6 /* WeatherViewModel.swift in Sources */,
 				05CCE8B32A51A6BE0037FF74 /* LocationToDoListViewModel.swift in Sources */,
