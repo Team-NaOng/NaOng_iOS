@@ -64,7 +64,8 @@ class ToDoItemAddViewModel: ObservableObject {
 
     private func isLocationContained(locationInformation: LocationInformation) -> Bool {
         guard let fetchedLocations = fetchLocations() else { return false }
-        return fetchedLocations.contains { ($0.roadAddress == locationInformation.locationRoadAddress) || ($0.address == locationInformation.locationAddress) }
+
+        return fetchedLocations.contains { ($0.addressName == locationInformation.locationName) || ($0.roadAddress == locationInformation.locationRoadAddress) || ($0.address == locationInformation.locationAddress) }
     }
 
     private func saveLocation() {
