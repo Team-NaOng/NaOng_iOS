@@ -51,6 +51,25 @@ class TimeToDoListViewModel: NSObject, ObservableObject {
         }
     }
     
+    func setFetchedResultsPredicate()  {
+        switch selectedViewOption {
+        case "한번":
+            fetchToDoItems(
+                format: "alarmDate == %@ AND alarmType == %@ AND isRepeat == %@",
+                argumentArray: [date.getFormatDate(), "시간", false])
+            break
+        case "반복":
+            fetchToDoItems(
+                format: "alarmDate <= %@ AND alarmType == %@ AND isRepeat == %@",
+                argumentArray: [date.getFormatDate(), "시간", true])
+            break
+        default:
+            fetchToDoItems(
+                format: "(alarmDate == %@ AND alarmType == %@) OR (alarmDate < %@ AND alarmType == %@ AND isRepeat == %@)",
+                argumentArray: [date.getFormatDate(), "시간", date.getFormatDate(), "시간", true])
+        }
+    }
+    
     func bind() {
         localNotificationManager.removalAllNotificationsPublisher
             .receive(on: RunLoop.main)
@@ -82,8 +101,7 @@ class TimeToDoListViewModel: NSObject, ObservableObject {
                 return
             }
 
-            self.toDoItems = toDoItems
-            self.toDoItems.sort { !$0.isDone && $1.isDone }
+            self.toDoItems = sortedToDoItems(toDoItems: toDoItems)
         } catch {
             errorTitle = "할 일 가져오기 실패🥲"
             errorMessage = error.localizedDescription
@@ -91,22 +109,18 @@ class TimeToDoListViewModel: NSObject, ObservableObject {
         }
     }
     
-    func setFetchedResultsPredicate()  {
-        switch selectedViewOption {
-        case "한번":
-            fetchToDoItems(
-                format: "alarmDate == %@ AND alarmType == %@ AND isRepeat == %@",
-                argumentArray: [date.getFormatDate(), "시간", false])
-            break
-        case "반복":
-            fetchToDoItems(
-                format: "alarmDate <= %@ AND alarmType == %@ AND isRepeat == %@",
-                argumentArray: [date.getFormatDate(), "시간", true])
-            break
-        default:
-            fetchToDoItems(
-                format: "(alarmDate == %@ AND alarmType == %@) OR (alarmDate < %@ AND alarmType == %@ AND isRepeat == %@)",
-                argumentArray: [date.getFormatDate(), "시간", date.getFormatDate(), "시간", true])
+    private func sortedToDoItems(toDoItems: [ToDo]) -> [ToDo] {
+        return toDoItems.sorted {
+            if let alarmTime0 = $0.alarmTime,
+               let alarmTime1 = $1.alarmTime {
+                if $0.isDone == $1.isDone {
+                    return alarmTime0 < alarmTime1
+                } else {
+                    return !$0.isDone && $1.isDone
+                }
+            }
+            
+            return !$0.isDone && $1.isDone
         }
     }
 }
@@ -116,8 +130,7 @@ extension TimeToDoListViewModel: NSFetchedResultsControllerDelegate {
         guard let toDoItems = controller.fetchedObjects as? [ToDo] else {
             return
         }
-        
-        self.toDoItems = toDoItems
-        self.toDoItems.sort { !$0.isDone && $1.isDone }
+
+        self.toDoItems = sortedToDoItems(toDoItems: toDoItems)
     }
 }

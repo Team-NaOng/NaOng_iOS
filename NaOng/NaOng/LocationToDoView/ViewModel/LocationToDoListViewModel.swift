@@ -113,10 +113,24 @@ class LocationToDoListViewModel: NSObject, ObservableObject {
                 return
             }
             
-            self.toDoItems = toDoItems
-            self.toDoItems.sort { !$0.isDone && $1.isDone }
+            self.toDoItems = sortedToDoItems(toDoItems: toDoItems)
         } catch {
             showErrorAlert.toggle()
+        }
+    }
+    
+    private func sortedToDoItems(toDoItems: [ToDo]) -> [ToDo] {
+        return toDoItems.sorted {
+            if let alarmTime0 = $0.alarmTime,
+               let alarmTime1 = $1.alarmTime {
+                if $0.isDone == $1.isDone {
+                    return alarmTime0 < alarmTime1
+                } else {
+                    return !$0.isDone && $1.isDone
+                }
+            }
+            
+            return !$0.isDone && $1.isDone
         }
     }
 }
@@ -126,9 +140,8 @@ extension LocationToDoListViewModel: NSFetchedResultsControllerDelegate {
         guard let toDoItems = controller.fetchedObjects as? [ToDo] else {
             return
         }
-        
-        self.toDoItems = toDoItems
-        self.toDoItems.sort { !$0.isDone && $1.isDone }
+
+        self.toDoItems = sortedToDoItems(toDoItems: toDoItems)
     }
 }
 

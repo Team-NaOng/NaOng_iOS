@@ -42,7 +42,7 @@ class ToDoItemViewModel: ObservableObject {
     }
 
    func setMarkerName() {
-        if toDoItem.isDone {
+       if toDoItem.isDone || toDoItem.isRepeat {
             markerName = "doneMarker"
             return
         }
