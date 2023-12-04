@@ -30,6 +30,48 @@ class LocationToDoListViewModel: NSObject, ObservableObject {
             format: "alarmType == %@",
             argumentArray: ["위치"])
     }
+    
+    func addInitialData() {
+        let initialData = [
+            "할 일을 클릭하면 수정할 수 있으며,\n완료 시간도 볼 수 있어요!",
+            "👈왼쪽 버튼을 누르면\n할 일이 완료돼요!",
+            """
+            👈왼쪽 버튼에 대해 더 알고 싶다면,
+            여기를 클릭해 주세요.
+
+            [할 일 완료 버튼]
+            - 알림이 울리기 전에 버튼을 누르면 알림이 가지 않아요.
+            - 버튼을 눌렀다가 다시 해제하면 알림이 가요.
+            - 버튼을 누르면 아래 완료 시간에 기록이 남아요.
+            - 반복 여부에 따라 버튼 모양이 달라요.
+            - 반복되지 않는 할 일의 버튼을 누른 경우, 디자인이 바뀌어요.
+            - 반복되는 할 일의 버튼을 누른 경우, 완료를 알리는 알림 창이 떠요.
+            """
+        ]
+        
+        for index in 0..<3 {
+            let toDoItem = ToDo(context: viewContext)
+            toDoItem.id = UUID().uuidString
+            toDoItem.content = initialData[index]
+            toDoItem.alarmType = "위치"
+            toDoItem.alarmTime = Date()
+            
+            if index == 2 {
+                toDoItem.isRepeat = true
+            } else {
+                toDoItem.isRepeat = false
+            }
+            
+            toDoItem.alarmLocationLatitude = 0.0
+            toDoItem.alarmLocationLongitude = 0.0
+            toDoItem.alarmLocationName = "알 수 없음"
+            toDoItem.alarmDate = Date().getFormatDate()
+            toDoItem.isDone = false
+            toDoItem.isNotificationVisible = false
+            
+            try? toDoItem.save(viewContext: viewContext)
+        }
+    }
 
     func getMarkerName(isDone: Bool, alertType: String) -> String {
         if isDone {

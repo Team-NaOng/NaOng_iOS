@@ -10,6 +10,7 @@ import CoreData
 import Combine
 
 struct ContentView: View {
+    @AppStorage("isFirstRun") var isFirstRun: Bool = true
     @Environment(\.managedObjectContext) var viewContext
     @EnvironmentObject var localNotificationManager: LocalNotificationManager
 
@@ -29,6 +30,12 @@ struct ContentView: View {
                         .font(.custom("Binggrae", size: 10))
                         .foregroundColor(.black)
                 }
+                .onAppear(perform: {
+                    if isFirstRun {
+                        locationToDoListViewModel.addInitialData()
+                        isFirstRun = false
+                    }
+                })
             
             let timeToDoListViewModel = TimeToDoListViewModel(viewContext: viewContext, localNotificationManager: localNotificationManager)
             TimeToDoListView(timeToDoListViewModel: timeToDoListViewModel)
