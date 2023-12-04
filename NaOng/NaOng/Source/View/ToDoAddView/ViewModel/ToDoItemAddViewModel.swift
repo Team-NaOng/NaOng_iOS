@@ -88,7 +88,9 @@ class ToDoItemAddViewModel: ObservableObject {
     }
 
     private func fetchLocations() -> [Location]? {
-        let fetchRequest = Location.all() ?? Location.fetchRequest()
+        let fetchRequest = Location.fetchRequest()
+        fetchRequest.sortDescriptors = []
+
         let fetchedResultsController = NSFetchedResultsController(
             fetchRequest: fetchRequest,
             managedObjectContext: Location.viewContext,

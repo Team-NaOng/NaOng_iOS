@@ -30,14 +30,15 @@ struct ToDoItemView: View {
                 .strikethrough(toDoItemViewModel.toDoItem.isDone)
                 .foregroundColor(.black)
                 .padding(EdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 0))
-                .frame(width: (UIScreen.main.bounds.width - 60) * 0.6 , height: 80, alignment: .topLeading)
+            
+            Spacer()
             
             Text(toDoItemViewModel.getDistinguishedAlarmInformation())
                 .font(.custom("Binggrae", size: 12))
                 .foregroundColor(.black)
                 .padding(EdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 10))
-                .frame(width: (UIScreen.main.bounds.width - 60) * 0.2 , height: 80, alignment: .topTrailing)
         }
+        .frame(width: (UIScreen.main.bounds.width - 60), height: 80, alignment: .topLeading)
         .background(Color(toDoItemViewModel.backgroundColor))
         .cornerRadius(10)
         .overlay(

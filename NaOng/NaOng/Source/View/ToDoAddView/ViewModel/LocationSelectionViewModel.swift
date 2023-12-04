@@ -21,8 +21,12 @@ class LocationSelectionViewModel: NSObject, ObservableObject {
     
     init(viewContext: NSManagedObjectContext) {
         self.viewContext = viewContext
+        
+        let fetchRequest = Location.fetchRequest()
+        fetchRequest.sortDescriptors = []
+
         fetchedResultsController = NSFetchedResultsController(
-            fetchRequest: Location.all() ?? Location.fetchRequest(),
+            fetchRequest: fetchRequest,
             managedObjectContext: viewContext,
             sectionNameKeyPath: nil,
             cacheName: nil
