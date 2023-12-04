@@ -24,7 +24,7 @@ struct WeatherProfileImageView: View {
         case .loading:
             ProgressView()
         case .loaded:
-            if let data = UserDefaults.standard.data(forKey: "weatherViewProfileImage"),
+            if let data = UserDefaults.standard.data(forKey: UserDefaultsKey.weatherViewProfileImage),
                let image = UIImage(data: data) {
                 Image(uiImage: image)
                     .resizable()

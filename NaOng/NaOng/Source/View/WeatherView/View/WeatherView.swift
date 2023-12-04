@@ -64,7 +64,7 @@ struct WeatherView: View {
                     .foregroundStyle(.black)
 
                 List(weatherViewModel.contents, id: \.self) { content in
-                    WeatherItemView(imageState: weatherViewModel.imageState, profileName: UserDefaults.standard.string(forKey: "weatherViewProfileName") ?? "나옹", context: content)
+                    WeatherItemView(imageState: weatherViewModel.imageState, profileName: UserDefaults.standard.string(forKey: UserDefaultsKey.weatherViewProfileName) ?? "나옹", context: content)
                         .listRowSeparator(.hidden)
                 }
                 .listStyle(.plain)

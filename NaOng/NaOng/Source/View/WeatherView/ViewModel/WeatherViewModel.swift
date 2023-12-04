@@ -25,7 +25,7 @@ enum TransferError: Error {
 class WeatherViewModel: ObservableObject, GeoDataService {
     // MARK: 프로필 이미지 관련 프로퍼티
     @Published private(set) var imageState: ImageState
-    @Published var profileName = UserDefaults.standard.string(forKey: "weatherViewProfileName") ?? "나옹"
+    @Published var profileName = UserDefaults.standard.string(forKey: UserDefaultsKey.weatherViewProfileName) ?? "나옹"
     @Published var isShowingPhotosPicker = false
     @Published var isShowingProfileNameEditAlert = false
     @Published var imageSelection: PhotosPickerItem? = nil {
@@ -61,7 +61,7 @@ class WeatherViewModel: ObservableObject, GeoDataService {
     
     func submit() {
         let name = profileName.trimmingCharacters(in: .whitespaces)
-        UserDefaults.standard.setValue(name, forKey: "weatherViewProfileName")
+        UserDefaults.standard.setValue(name, forKey: UserDefaultsKey.weatherViewProfileName)
     }
     
     func verifyProfileName() -> Bool {
@@ -73,7 +73,7 @@ class WeatherViewModel: ObservableObject, GeoDataService {
     }
     
     func setupBasicProfileImage() {
-        UserDefaults.standard.removeObject(forKey: "weatherViewProfileImage")
+        UserDefaults.standard.removeObject(forKey: UserDefaultsKey.weatherViewProfileImage)
         imageState = .loaded
     }
     
@@ -104,7 +104,7 @@ class WeatherViewModel: ObservableObject, GeoDataService {
                 guard let uiImage = UIImage(data: data) else {
                     throw TransferError.importFailed
                 }
-                UserDefaults.standard.setValue(data, forKey: "weatherViewProfileImage")
+                UserDefaults.standard.setValue(data, forKey: UserDefaultsKey.weatherViewProfileImage)
                 let image = Image(uiImage: uiImage)
                 return ProfileImage(image: image)
             }

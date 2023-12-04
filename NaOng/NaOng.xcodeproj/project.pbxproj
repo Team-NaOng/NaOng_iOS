@@ -26,6 +26,7 @@
 		0534F99D2A8F9AC000A90BF7 /* CustomNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0534F99C2A8F9AC000A90BF7 /* CustomNavigationBar.swift */; };
 		0534F9A72A8FBBC000A90BF7 /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0534F9A62A8FBBC000A90BF7 /* SettingViewModel.swift */; };
 		05388A932A83798700C8A69A /* TimeToDoListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05388A922A83798700C8A69A /* TimeToDoListViewModel.swift */; };
+		05469BCC2B1E3795002FC582 /* UserDefaultsKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05469BCB2B1E3795002FC582 /* UserDefaultsKey.swift */; };
 		05477D082A7577BD00C16F4A /* View+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05477D072A7577BD00C16F4A /* View+Extensions.swift */; };
 		05477D2D2A77ED7400C16F4A /* TimeToDoItemDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05477D2C2A77ED7400C16F4A /* TimeToDoItemDetailView.swift */; };
 		05477D2F2A77ED8000C16F4A /* ToDoItemDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05477D2E2A77ED8000C16F4A /* ToDoItemDetailViewModel.swift */; };
@@ -123,6 +124,7 @@
 		0534F99C2A8F9AC000A90BF7 /* CustomNavigationBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomNavigationBar.swift; sourceTree = "<group>"; };
 		0534F9A62A8FBBC000A90BF7 /* SettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewModel.swift; sourceTree = "<group>"; };
 		05388A922A83798700C8A69A /* TimeToDoListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeToDoListViewModel.swift; sourceTree = "<group>"; };
+		05469BCB2B1E3795002FC582 /* UserDefaultsKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsKey.swift; sourceTree = "<group>"; };
 		05477D072A7577BD00C16F4A /* View+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extensions.swift"; sourceTree = "<group>"; };
 		05477D2C2A77ED7400C16F4A /* TimeToDoItemDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeToDoItemDetailView.swift; sourceTree = "<group>"; };
 		05477D2E2A77ED8000C16F4A /* ToDoItemDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoItemDetailViewModel.swift; sourceTree = "<group>"; };
@@ -217,30 +219,13 @@
 		050FCC1B2A1C91E100270F97 /* NaOng */ = {
 			isa = PBXGroup;
 			children = (
-				059126802B1CEE5500F044D0 /* LottieJson */,
-				055E58E92A9735E0005B91DC /* Network */,
-				05EEE1022A8551B2007AD5F7 /* Helper */,
-				05477D492A7F686600C16F4A /* Notification */,
-				05477D422A7C226000C16F4A /* Protocol */,
-				05477D3D2A7C1B5D00C16F4A /* Error */,
-				056B2B742A64156400D52CFF /* Extensions */,
-				056B2B4D2A5FC88F00D52CFF /* DataModel */,
-				058B7CA12A558BD9005C07BD /* fonts */,
-				05F233B92A29C79B0091D5B3 /* Info.plist */,
+				055C48ED2B1E352400593826 /* Source */,
+				055C48EC2B1E34DD00593826 /* Resources */,
 				050FCC1C2A1C91E100270F97 /* NaOngApp.swift */,
-				050FCC1E2A1C91E100270F97 /* ContentView.swift */,
+				05F233B92A29C79B0091D5B3 /* Info.plist */,
 				050FCC202A1C91E200270F97 /* Assets.xcassets */,
 				050FCC222A1C91E200270F97 /* Preview Content */,
-				0549F2CF2A386118002B1248 /* Location */,
-				059126732B1C60CB00F044D0 /* OnboardingView */,
-				056EDC332B0E3352004090F6 /* ToDoItemView */,
-				056EDC2E2B0E28CB004090F6 /* ToDoDetailView */,
-				054D4CE82AFE736E005CF34C /* ToDoAddView */,
-				05CCE8B12A51A66D0037FF74 /* LocationToDoView */,
-				058B7CAA2A55C8D2005C07BD /* TimeToDoView */,
 				0534F9A82A8FED2400A90BF7 /* NotificationListView */,
-				056EDC3B2B0E4D72004090F6 /* WeatherView */,
-				05D69E412A696A520074C84A /* SettingView */,
 				0534B4192B13E11E0032B30A /* APIKey.plist */,
 			);
 			path = NaOng;
@@ -380,6 +365,56 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
+		055C48EB2B1E344A00593826 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				050FCC1E2A1C91E100270F97 /* ContentView.swift */,
+				059126732B1C60CB00F044D0 /* OnboardingView */,
+				05CCE8B12A51A66D0037FF74 /* LocationToDoView */,
+				058B7CAA2A55C8D2005C07BD /* TimeToDoView */,
+				056EDC332B0E3352004090F6 /* ToDoItemView */,
+				056EDC2E2B0E28CB004090F6 /* ToDoDetailView */,
+				054D4CE82AFE736E005CF34C /* ToDoAddView */,
+				056EDC3B2B0E4D72004090F6 /* WeatherView */,
+				05D69E412A696A520074C84A /* SettingView */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		055C48EC2B1E34DD00593826 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				055C48EE2B1E36B800593826 /* Constants */,
+				059126802B1CEE5500F044D0 /* LottieJson */,
+				05EEE1022A8551B2007AD5F7 /* Helper */,
+				05477D3D2A7C1B5D00C16F4A /* Error */,
+				056B2B742A64156400D52CFF /* Extensions */,
+				058B7CA12A558BD9005C07BD /* Fonts */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		055C48ED2B1E352400593826 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				05477D492A7F686600C16F4A /* Notification */,
+				056B2B4D2A5FC88F00D52CFF /* DataModel */,
+				05477D422A7C226000C16F4A /* Protocol */,
+				055C48EB2B1E344A00593826 /* View */,
+				055E58E92A9735E0005B91DC /* Network */,
+				0549F2CF2A386118002B1248 /* Location */,
+			);
+			path = Source;
+			sourceTree = "<group>";
+		};
+		055C48EE2B1E36B800593826 /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				05469BCB2B1E3795002FC582 /* UserDefaultsKey.swift */,
+			);
+			path = Constants;
+			sourceTree = "<group>";
+		};
 		055E58E92A9735E0005B91DC /* Network */ = {
 			isa = PBXGroup;
 			children = (
@@ -509,13 +544,13 @@
 			path = KakaoMap;
 			sourceTree = "<group>";
 		};
-		058B7CA12A558BD9005C07BD /* fonts */ = {
+		058B7CA12A558BD9005C07BD /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
 				058B7CA52A558DEE005C07BD /* Binggrae-Bold.otf */,
 				058B7CA42A558DEE005C07BD /* Binggrae.otf */,
 			);
-			path = fonts;
+			path = Fonts;
 			sourceTree = "<group>";
 		};
 		058B7CAA2A55C8D2005C07BD /* TimeToDoView */ = {
@@ -741,6 +776,7 @@
 				050EE3BF2ABCE1BA004E206F /* KakaoAPIResult.swift in Sources */,
 				05173EA42A87728A00CDF988 /* NotificationListView.swift in Sources */,
 				05388A932A83798700C8A69A /* TimeToDoListViewModel.swift in Sources */,
+				05469BCC2B1E3795002FC582 /* UserDefaultsKey.swift in Sources */,
 				05FD378D2A9FA045006FDAEC /* KakaoLocal.swift in Sources */,
 				05477D3F2A7C1B7900C16F4A /* CoreDataError.swift in Sources */,
 				050FCC1D2A1C91E100270F97 /* NaOngApp.swift in Sources */,

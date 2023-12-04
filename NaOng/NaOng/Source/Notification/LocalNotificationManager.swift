@@ -30,10 +30,10 @@ class LocalNotificationManager: NSObject, ObservableObject {
     
     private var previousPendingNotificationsID: [String] {
         get {
-            return UserDefaults.standard.array(forKey: "previousPendingNotificationsID") as? [String] ?? [ ]
+            return UserDefaults.standard.array(forKey: UserDefaultsKey.previousPendingNotificationsID) as? [String] ?? [ ]
         }
         set {
-            UserDefaults.standard.setValue(newValue, forKey: "previousPendingNotificationsID")
+            UserDefaults.standard.setValue(newValue, forKey: UserDefaultsKey.previousPendingNotificationsID)
         }
     }
     
