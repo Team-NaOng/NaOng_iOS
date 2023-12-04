@@ -24,7 +24,6 @@ struct NaOngApp: App {
                     .onAppear {
                         LocationService.shared.loadLocation()
                         localNotificationManager.requestAuthorization()
-                        UNUserNotificationCenter.current().delegate = localNotificationManager
                         
                         NotificationCenter.default.addObserver(
                             forName: UIApplication.didBecomeActiveNotification,

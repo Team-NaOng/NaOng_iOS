@@ -10,58 +10,21 @@ import Combine
 import os.log
 
 class LocalNotificationManager: NSObject, ObservableObject {
-    var deliveredNotificationsPublisher: AnyPublisher<[String], Never> {
-        deliveredNotificationsSubject.eraseToAnyPublisher()
-    }
     var authorizationStatusPublisher: AnyPublisher<UNAuthorizationStatus, Never> {
         authorizationStatusSubject.eraseToAnyPublisher()
-    }
-    var removalNotificationsPublisher: AnyPublisher<Bool, Never> {
-        removalNotificationsSubject.eraseToAnyPublisher()
     }
     var removalAllNotificationsPublisher: AnyPublisher<Bool, Never> {
         removalAllNotificationsSubject.eraseToAnyPublisher()
     }
     
-    private var deliveredNotificationsSubject = PassthroughSubject<[String], Never>()
     private var authorizationStatusSubject = PassthroughSubject<UNAuthorizationStatus, Never>()
-    private var removalNotificationsSubject = PassthroughSubject<Bool, Never>()
     private var removalAllNotificationsSubject = PassthroughSubject<Bool, Never>()
-    
-    private var previousPendingNotificationsID: [String] {
-        get {
-            return UserDefaults.standard.array(forKey: UserDefaultsKey.previousPendingNotificationsID) as? [String] ?? [ ]
-        }
-        set {
-            UserDefaults.standard.setValue(newValue, forKey: UserDefaultsKey.previousPendingNotificationsID)
-        }
-    }
     
     func sendAuthorizationStatusEvent() {
         UNUserNotificationCenter.current().getNotificationSettings { [weak self] settings in
             DispatchQueue.main.async {
                 self?.authorizationStatusSubject.send(settings.authorizationStatus)
             }
-        }
-    }
-    
-    func sendRemovedEvent() {
-        removalNotificationsSubject.send(true)
-    }
-    
-    func sendAllRemoveEvent() {
-        removalAllNotificationsSubject.send(true)
-    }
-
-    func sendDeliveredEvent() {
-        UNUserNotificationCenter.current().getPendingNotificationRequests { [weak self] notifications in
-            let notificationsID = notifications.map { $0.identifier }
-
-            if let sendID = self?.previousPendingNotificationsID.filter({ notificationsID.contains($0) == false }) {
-                self?.deliveredNotificationsSubject.send(sendID)
-            }
-
-            self?.previousPendingNotificationsID = notificationsID
         }
     }
 
@@ -96,8 +59,6 @@ class LocalNotificationManager: NSObject, ObservableObject {
     func removeNotification(id: String) {
         UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [id])
         UNUserNotificationCenter.current().removeDeliveredNotifications(withIdentifiers: [id])
-
-        sendRemovedEvent()
     }
 
     private func setCalendarNotification(toDo:ToDo) {
@@ -122,7 +83,6 @@ class LocalNotificationManager: NSObject, ObservableObject {
             trigger: trigger)
 
         UNUserNotificationCenter.current().add(request)
-        previousPendingNotificationsID.append(request.identifier)
     }
 
     private func setLocationNotification(toDo:ToDo) {
@@ -143,7 +103,6 @@ class LocalNotificationManager: NSObject, ObservableObject {
             trigger: trigger)
 
         UNUserNotificationCenter.current().add(request)
-        previousPendingNotificationsID.append(request.identifier)
     }
     
     private func getNotificationContent(subtitle: String?, categoryIdentifier: String, badge: NSNumber? = nil) -> UNMutableNotificationContent {
@@ -157,20 +116,3 @@ class LocalNotificationManager: NSObject, ObservableObject {
         return content
     }
 }
-
-extension LocalNotificationManager: UNUserNotificationCenterDelegate {
-    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
-        let notification = response.notification
-        deliveredNotificationsSubject.send([notification.request.identifier])
- 
-        completionHandler()
-    }
-    
-    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-        deliveredNotificationsSubject.send([notification.request.identifier])
-
-        let options: UNNotificationPresentationOptions = [.banner, .badge, .sound]
-        completionHandler(options)
-    }
-}
-

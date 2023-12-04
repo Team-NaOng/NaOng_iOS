@@ -15,9 +15,6 @@
 		050FCC1F2A1C91E100270F97 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050FCC1E2A1C91E100270F97 /* ContentView.swift */; };
 		050FCC212A1C91E200270F97 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 050FCC202A1C91E200270F97 /* Assets.xcassets */; };
 		050FCC242A1C91E200270F97 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 050FCC232A1C91E200270F97 /* Preview Assets.xcassets */; };
-		05173EA42A87728A00CDF988 /* NotificationListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05173EA32A87728A00CDF988 /* NotificationListView.swift */; };
-		05173EA62A8772B300CDF988 /* NotificationListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05173EA52A8772B300CDF988 /* NotificationListViewModel.swift */; };
-		05173EA82A880E6C00CDF988 /* NotificationListItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05173EA72A880E6C00CDF988 /* NotificationListItemView.swift */; };
 		051BFA1D2AB6E39E00BBC8C6 /* UIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051BFA1C2AB6E39E00BBC8C6 /* UIImage+Extensions.swift */; };
 		052530B62B1B827600B586A4 /* DoneListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 052530B52B1B827600B586A4 /* DoneListView.swift */; };
 		0534B41A2B13E11E0032B30A /* APIKey.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0534B4192B13E11E0032B30A /* APIKey.plist */; };
@@ -113,9 +110,6 @@
 		050FCC1E2A1C91E100270F97 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		050FCC202A1C91E200270F97 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		050FCC232A1C91E200270F97 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		05173EA32A87728A00CDF988 /* NotificationListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationListView.swift; sourceTree = "<group>"; };
-		05173EA52A8772B300CDF988 /* NotificationListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationListViewModel.swift; sourceTree = "<group>"; };
-		05173EA72A880E6C00CDF988 /* NotificationListItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationListItemView.swift; sourceTree = "<group>"; };
 		051BFA1C2AB6E39E00BBC8C6 /* UIImage+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extensions.swift"; sourceTree = "<group>"; };
 		052530B52B1B827600B586A4 /* DoneListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoneListView.swift; sourceTree = "<group>"; };
 		0534B4192B13E11E0032B30A /* APIKey.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = APIKey.plist; sourceTree = "<group>"; };
@@ -225,7 +219,6 @@
 				05F233B92A29C79B0091D5B3 /* Info.plist */,
 				050FCC202A1C91E200270F97 /* Assets.xcassets */,
 				050FCC222A1C91E200270F97 /* Preview Content */,
-				0534F9A82A8FED2400A90BF7 /* NotificationListView */,
 				0534B4192B13E11E0032B30A /* APIKey.plist */,
 			);
 			path = NaOng;
@@ -252,32 +245,6 @@
 			isa = PBXGroup;
 			children = (
 				0534F9A62A8FBBC000A90BF7 /* SettingViewModel.swift */,
-			);
-			path = ViewModel;
-			sourceTree = "<group>";
-		};
-		0534F9A82A8FED2400A90BF7 /* NotificationListView */ = {
-			isa = PBXGroup;
-			children = (
-				0534F9A92A8FED3E00A90BF7 /* View */,
-				0534F9AA2A8FED4800A90BF7 /* ViewModel */,
-			);
-			path = NotificationListView;
-			sourceTree = "<group>";
-		};
-		0534F9A92A8FED3E00A90BF7 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				05173EA32A87728A00CDF988 /* NotificationListView.swift */,
-				05173EA72A880E6C00CDF988 /* NotificationListItemView.swift */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		0534F9AA2A8FED4800A90BF7 /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-				05173EA52A8772B300CDF988 /* NotificationListViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -728,7 +695,6 @@
 				056B2B502A5FC8AC00D52CFF /* ToDoModel.xcdatamodeld in Sources */,
 				0534B41E2B13EAE70032B30A /* OpenWeather.swift in Sources */,
 				05477D3C2A7C177000C16F4A /* LocationSelectionViewModel.swift in Sources */,
-				05173EA62A8772B300CDF988 /* NotificationListViewModel.swift in Sources */,
 				056B2B762A64158000D52CFF /* ToDo+Extensions.swift in Sources */,
 				056EDC392B0E397D004090F6 /* LocationToDoItemAddView.swift in Sources */,
 				056EDC412B0E7619004090F6 /* WeatherItemView.swift in Sources */,
@@ -753,7 +719,6 @@
 				05477D442A7C228100C16F4A /* CoreDataBaseProtocol.swift in Sources */,
 				0587438B2AC31A8800075905 /* Coordinates.swift in Sources */,
 				059126752B1C60E700F044D0 /* OnboardingAnimationView.swift in Sources */,
-				05173EA82A880E6C00CDF988 /* NotificationListItemView.swift in Sources */,
 				056EDC432B0E8C2D004090F6 /* WeatherViewModel.swift in Sources */,
 				05CCE8B32A51A6BE0037FF74 /* LocationToDoListViewModel.swift in Sources */,
 				056B2B732A640F9F00D52CFF /* ToDoItemViewModel.swift in Sources */,
@@ -774,7 +739,6 @@
 				05477D3A2A7C172600C16F4A /* LocationCoreDataManager.swift in Sources */,
 				058A9E7D2A95E40D005A498A /* Bundle+Extensions.swift in Sources */,
 				050EE3BF2ABCE1BA004E206F /* KakaoAPIResult.swift in Sources */,
-				05173EA42A87728A00CDF988 /* NotificationListView.swift in Sources */,
 				05388A932A83798700C8A69A /* TimeToDoListViewModel.swift in Sources */,
 				05469BCC2B1E3795002FC582 /* UserDefaultsKey.swift in Sources */,
 				05FD378D2A9FA045006FDAEC /* KakaoLocal.swift in Sources */,
