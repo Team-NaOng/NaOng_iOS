@@ -110,8 +110,5 @@ struct LocationToDoListView: View {
                 )
             }
         }
-        .onAppear(perform: {
-            locationToDoListViewModel.bind()
-        })
     }
 }

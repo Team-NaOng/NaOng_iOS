@@ -7,7 +7,6 @@
 
 import Foundation
 import CoreData
-import Combine
 
 class LocationToDoListViewModel: NSObject, ObservableObject {
     @Published var showingToDoItemAddView: Bool = false
@@ -19,7 +18,6 @@ class LocationToDoListViewModel: NSObject, ObservableObject {
     var addModel: ToDoItemAddViewModel?
     
     private var fetchedResultsController: NSFetchedResultsController<ToDo> = NSFetchedResultsController()
-    private var cancellables: Set<AnyCancellable> = []
     private(set) var localNotificationManager: LocalNotificationManager
     private let viewContext: NSManagedObjectContext
     
@@ -80,15 +78,6 @@ class LocationToDoListViewModel: NSObject, ObservableObject {
                 format: "alarmType == %@",
                 argumentArray: ["위치"])
         }
-    }
-    
-    func bind() {
-        localNotificationManager.removalAllNotificationsPublisher
-            .receive(on: RunLoop.main)
-            .sink { [weak self] _ in
-                self?.setFetchedResultsPredicate()
-            }
-            .store(in: &cancellables)
     }
 
     private func fetchToDoItems(format: String, argumentArray: [Any]?) {

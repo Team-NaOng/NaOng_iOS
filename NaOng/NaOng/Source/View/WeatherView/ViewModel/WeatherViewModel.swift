@@ -275,11 +275,6 @@ class WeatherViewModel: ObservableObject, GeoDataService {
         let currentTemperature = Int(round(currentWeatherInformation?.main?.temp ?? 0))
         message += " \(currentTemperature)℃"
         messages.append(message)
-
-        let maximumTemperature = Int(round(currentWeatherInformation?.main?.tempMax ?? 0))
-        let minimumTemperature = Int(round(currentWeatherInformation?.main?.tempMin ?? 0))
-        message = "최고 온도: \(maximumTemperature)℃\n최저 온도: \(minimumTemperature)℃"
-        messages.append(message)
         
         let sunrise = convertUnixTimeToCurrentTime(unixTime: TimeInterval(currentWeatherInformation?.sys?.sunrise ?? 0))
         let sunset = convertUnixTimeToCurrentTime(unixTime: TimeInterval(currentWeatherInformation?.sys?.sunset ?? 0))

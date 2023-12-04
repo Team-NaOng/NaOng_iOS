@@ -132,9 +132,6 @@ struct TimeToDoListView: View {
                 )
             }
         }
-        .onAppear(perform: {
-            timeToDoListViewModel.bind()
-        })
     }
 }
 

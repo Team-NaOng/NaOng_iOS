@@ -7,7 +7,6 @@
 
 import Foundation
 import CoreData
-import Combine
 
 class TimeToDoListViewModel: NSObject, ObservableObject {
     @Published var date: Date = Date()
@@ -19,7 +18,6 @@ class TimeToDoListViewModel: NSObject, ObservableObject {
     var errorMessage: String = ""
 
     private var fetchedResultsController: NSFetchedResultsController<ToDo> = NSFetchedResultsController()
-    private var cancellables: Set<AnyCancellable> = []
     private(set) var localNotificationManager: LocalNotificationManager
     private let viewContext: NSManagedObjectContext
     
@@ -68,15 +66,6 @@ class TimeToDoListViewModel: NSObject, ObservableObject {
                 format: "(alarmDate == %@ AND alarmType == %@) OR (alarmDate < %@ AND alarmType == %@ AND isRepeat == %@)",
                 argumentArray: [date.getFormatDate(), "시간", date.getFormatDate(), "시간", true])
         }
-    }
-    
-    func bind() {
-        localNotificationManager.removalAllNotificationsPublisher
-            .receive(on: RunLoop.main)
-            .sink { [weak self] _ in
-                self?.setFetchedResultsPredicate()
-            }
-            .store(in: &cancellables)
     }
 
     private func fetchToDoItems(format: String, argumentArray: [Any]?) {
