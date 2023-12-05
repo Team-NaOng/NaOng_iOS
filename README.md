@@ -80,7 +80,7 @@
 <details>
 <summary>알림</summary>
 
-<img src = "[https://i.imgur.com/0UjNUFH.jpg](https://github.com/seohyeon2/NaOng/assets/50102522/32b2c9ca-a156-4d02-b287-99943380b131)" width="256" height="554">
+<img src = "https://github.com/seohyeon2/NaOng/assets/50102522/32b2c9ca-a156-4d02-b287-99943380b131" width="256" height="554">
 </details>
 
 <br>
