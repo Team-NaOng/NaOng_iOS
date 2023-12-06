@@ -38,7 +38,8 @@ class ToDoItemAddViewModel: ObservableObject {
     }
     
     func getToDoTitle() -> String {
-        return (toDoItem != nil) ? "할 일 수정하기" : "할 일 추가하기"
+        let toDoTitle = (alarmType == "위치") ? "위치 할 일" : "시간 할 일"
+        return (toDoItem != nil) ? "\(toDoTitle) 수정하기" : "\(toDoTitle) 추가하기"
     }
     
     func addEditToDo() -> Bool {
