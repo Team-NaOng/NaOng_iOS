@@ -27,7 +27,7 @@ class DoneListViewModel: ObservableObject {
         }
         
         self.doneList = doneDateList.map { date in
-            [date.getFormatDate("hh:mm"), date.getFormatDate("yyyy-MM-dd-E")]
+            [date.getFormatDate("HH:mm"), date.getFormatDate("yyyy-MM-dd-E")]
         }
     }
 }
