@@ -16,7 +16,7 @@ struct WeatherView: View {
     }
 
     var body: some View {
-        VStack {
+        VStack(spacing: 0) {
             if weatherViewModel.isLoading {
                 ProgressView("Loading...")
             } else {
@@ -45,10 +45,13 @@ struct WeatherView: View {
                         }
                     } label: {
                         Image(systemName: "ellipsis")
+                            .frame(alignment: .center)
+                            .padding(EdgeInsets(top: 20, leading: 35, bottom: 20, trailing: 20))
                     }
                     .photosPicker(isPresented: $weatherViewModel.isShowingPhotosPicker, selection: $weatherViewModel.imageSelection)
                     .alert("수정할 이름을 적어주세요.", isPresented: $weatherViewModel.isShowingProfileNameEditAlert) {
                         TextField("수정할 이름을 적어주세요.", text: $weatherViewModel.profileName)
+                            .foregroundColor(.white)
 
                         Button("완료", role: .destructive) {
                             weatherViewModel.submit()
@@ -57,11 +60,12 @@ struct WeatherView: View {
                         Button("취소", role: .cancel) { }
                     }
                 }
-                .padding(EdgeInsets(top: 20, leading: 20, bottom: 0, trailing: 20))
+                .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 0))
                 
                 Rectangle()
-                    .frame(width: UIScreen.main.bounds.width, height: 2)
-                    .foregroundStyle(.black)
+                    .frame(width: UIScreen.main.bounds.width, height: 1.5)
+                    .foregroundStyle(Color("secondary"))
+                    .padding(EdgeInsets(top: 0, leading: 0, bottom: 10, trailing: 0))
 
                 List(weatherViewModel.contents, id: \.self) { content in
                     WeatherItemView(imageState: weatherViewModel.imageState, profileName: UserDefaults.standard.string(forKey: UserDefaultsKey.weatherViewProfileName) ?? "나옹", context: content)
