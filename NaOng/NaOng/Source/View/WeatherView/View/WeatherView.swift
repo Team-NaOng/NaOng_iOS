@@ -51,7 +51,7 @@ struct WeatherView: View {
                     .photosPicker(isPresented: $weatherViewModel.isShowingPhotosPicker, selection: $weatherViewModel.imageSelection)
                     .alert("수정할 이름을 적어주세요.", isPresented: $weatherViewModel.isShowingProfileNameEditAlert) {
                         TextField("수정할 이름을 적어주세요.", text: $weatherViewModel.profileName)
-                            .foregroundColor(.white)
+                            .foregroundStyle(.blue)
 
                         Button("완료", role: .destructive) {
                             weatherViewModel.submit()

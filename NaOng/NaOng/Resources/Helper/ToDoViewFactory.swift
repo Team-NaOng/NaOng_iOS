@@ -126,7 +126,7 @@ class ToDoViewFactory {
                 .lineLimit(1)
             
             Image(systemName: "chevron.right")
-                .foregroundColor(.black)
+                .foregroundStyle(.black)
         }
         .padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10))
         .frame(width: width)
@@ -140,7 +140,7 @@ class ToDoViewFactory {
     ) -> some View {
         return Text(title)
             .font(.custom(fontName, size: fontSize))
-            .foregroundColor(fontColor)
+            .foregroundStyle(fontColor)
     }
     
     static func makeToDoDetailVerticalContentView<Content: View>(

@@ -41,7 +41,7 @@ struct LocationSearchView: View {
                         Text(locationSearchViewModel.locationInformations[index].locationName)
                             .bold()
                         Text(locationSearchViewModel.locationInformations[index].locationAddress)
-                            .foregroundColor(.gray)
+                            .foregroundStyle(.gray)
                     }
                     .padding()
                     .onAppear {
