@@ -143,7 +143,7 @@ class ToDoViewFactory {
             .foregroundColor(fontColor)
     }
     
-    static func makeToDoDetailMoldView<Content: View>(
+    static func makeToDoDetailVerticalContentView<Content: View>(
         title: String,
         content: Content,
         width: CGFloat = UIScreen.main.bounds.width,
@@ -161,5 +161,32 @@ class ToDoViewFactory {
             
             content
         }
+    }
+
+    static func makeToDoDetailHorizontalContentView(
+        title: String,
+        content: String,
+        padding: EdgeInsets = EdgeInsets(top: 8, leading: 10, bottom: 8, trailing: 10),
+        contentBackground: Color = Color.white,
+        cornerRadius: CGFloat = 10,
+        width: CGFloat = UIScreen.main.bounds.width,
+        height: CGFloat = 50,
+        background: Color = Color("primary").opacity(0.5)
+    )-> some View {
+        return HStack {
+            ToDoViewFactory.makeToDoTitle(title: title)
+                .frame(alignment: .leading)
+
+            Spacer()
+            
+            ToDoViewFactory.makeToDoTitle(title: content)
+                .padding(padding)
+                .background(contentBackground)
+                .cornerRadius(cornerRadius)
+            
+        }
+        .padding()
+        .frame(width: width, height: height)
+        .background(background)
     }
 }
