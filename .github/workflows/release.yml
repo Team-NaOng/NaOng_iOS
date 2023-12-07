@@ -32,7 +32,6 @@ jobs:
       run: |
         gpg -d -o "$DECRYPTED_CERTS_FILE_PATH" --pinentry-mode=loopback --passphrase "$CERTS_ENCRYPTION_PWD" "$ENCRYPTED_CERTS_FILE_PATH"
         gpg -d -o "$DECRYPTED_PROVISION_FILE_PATH" --pinentry-mode=loopback --passphrase "$PROVISIONING_ENCRYPTION_KEY" "$ENCRYPTED_PROVISION_FILE_PATH"
-        security import "$DECRYPTED_CERTS_FILE_PATH" -k "$KEYCHAIN" -P "$CERT_EXPORT_KEY" -A
         security set-key-partition-list -S apple-tool:,apple: -s -k "" "$KEYCHAIN"
 
         mkdir -p "$HOME/Library/MobileDevice/Provisioning Profiles"
