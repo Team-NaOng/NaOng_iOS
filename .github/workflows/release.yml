@@ -13,8 +13,8 @@ jobs:
       XC_PROJECT: ${{ '/Users/seohyeonpark/Desktop/NaOng/NaOng/NaOng.xcodeproj' }}
       XC_SCHEME: ${{ 'NaOng' }}
       XC_CONFIGURATION: ${{ 'release' }}
-      XC_ARCHIVE_PATH: ${{ '/Users/seohyeonpark/Desktop/NaOng/NaOng/NaOng.xcarchive' }}
-      XC_PLIST_PATH: ${{ '/Users/seohyeonpark/Desktop/NaOng/NaOng/NaOng.xcarchive/info.plist' }}
+      XC_ARCHIVE_PATH: ${{ '/Users/seohyeonpark/Desktop/AppArchive' }}
+      XC_PLIST_PATH: ${{ '/Users/seohyeonpark/Desktop/AppArchive/info.plist' }}
 
       KEYCHAIN: ${{ 'login.keychain' }}
       ENCRYPTED_CERTS_FILE_PATH: ${{ '.github/secrets/certs.p12.gpg' }}
@@ -37,14 +37,14 @@ jobs:
         
     - name: EXPORT
       env:
-        XC_EXPORT_PATH: ${{ '/Users/seohyeonpark/Desktop/NaOng/NaOng/artifacts' }}
+        XC_EXPORT_PATH: ${{ '/Users/seohyeonpark/Desktop/AppArchive/artifacts' }}
       run: | 
         xcodebuild -exportArchive -archivePath "$XC_ARCHIVE_PATH" -exportPath "$XC_EXPORT_PATH" -exportOptionsPlist "$XC_PLIST_PATH" 
   
     - name: TestFlight
       uses: apple-actions/upload-testflight-build@v1
       with:
-        app-path: /Users/seohyeonpark/Desktop/NaOng/NaOng/artifacts/NaOng.ipa
+        app-path: /Users/seohyeonpark/Desktop/AppArchive/artifactsAppArchive/NaOng.ipa
         issuer-id: ${{ secrets.APPSTORE_ISSUER_ID }}
         api-key-id: ${{ secrets.APPSTORE_API_KEY_ID }}
         api-private-key: ${{ secrets.APPSTORE_PRIVATE_KEY }}
