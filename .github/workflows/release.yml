@@ -41,10 +41,19 @@ jobs:
       run: | 
         xcodebuild -exportArchive -archivePath "$XC_ARCHIVE_PATH" -exportPath "$XC_EXPORT_PATH" -exportOptionsPlist "$XC_PLIST_PATH" 
 
-    - name: TestFlight
-      uses: apple-actions/upload-testflight-build@v1
-      with:
-        app-path: /Users/seohyeonpark/Desktop/NaOng/NaOng/artifacts/NaOng.ipa
-        issuer-id: ${{ secrets.APPSTORE_ISSUER_ID }}
-        api-key-id: ${{ secrets.APPSTORE_API_KEY_ID }}
-        api-private-key: ${{ secrets.APPSTORE_PRIVATE_KEY }}
+    - name: Install private API key P8
+      env:
+        APPSTORE_PRIVATE_KEY: ${{ secrets.APPSTORE_PRIVATE_KEY }}
+        APPSTORE_API_KEY_ID: ${{ secrets.APPSTORE_API_KEY_ID }}
+      run: |
+        mkdir -p Users/seohyeonpark/private_keys
+        echo -n "$APPSTORE_PRIVATE_KEY" | base64 --decode --output ~/private_keys/AuthKey_$APPSTORE_API_KEY_ID.p8
+        
+    - name: Upload app to TestFlight
+      env:
+        APPSTORE_API_KEY_ID: ${{ secrets.APPSTORE_API_KEY_ID }}
+        APPSTORE_ISSUER_ID: ${{ secrets.APPSTORE_ISSUER_ID }}
+        XC_EXPORT_PATH: ${{ '/Users/seohyeonpark/Desktop/NaOng/NaOng/artifacts' }}
+      run: |
+        cd $XC_EXPORT_PATH
+        xcrun altool --output-format xml --upload-app -f NaOng.ipa -t ios --apiKey $APPSTORE_API_KEY_ID --apiIssuer $APPSTORE_ISSUER_ID
