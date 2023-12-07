@@ -10,7 +10,7 @@ jobs:
     name: seohyeon
     runs-on: seohyeonui-MacBookAir
     env:
-      XC_PROJECT: ${{ 'NaOng.xcodeproj' }}
+      XC_PROJECT: ${{ '/Users/seohyeonpark/Desktop/NaOng/NaOng/NaOng.xcodeproj' }}
       XC_SCHEME: ${{ 'NaOng' }}
       XC_CONFIGURATION: ${{ 'release' }}
       XC_ARCHIVE_PATH: ${{ 'NaOng.xcarchive' }}
