@@ -15,7 +15,7 @@ jobs:
       XC_CONFIGURATION: ${{ 'release' }}
       XC_ARCHIVE_PATH: ${{ 'NaOng.xcarchive' }}
       XC_EXPORT_PATH: ${{ './artifacts' }}
-      KEYCHAIN: ${{ 'temp.keychain' }}
+      KEYCHAIN: ${{ 'login.keychain' }}
       ENCRYPTED_CERTS_FILE_PATH: ${{ '.github/secrets/certs.p12.gpg' }}
       DECRYPTED_CERTS_FILE_PATH: ${{ '.github/secrets/certs.p12' }}
       ENCRYPTED_PROVISION_FILE_PATH: ${{ '.github/secrets/Seohyeon_Park.mobileprovision.gpg' }}
@@ -28,15 +28,6 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
 
-    - name: Configure Keychain
-      run: |
-        security create-keychain -p "" "$KEYCHAIN" 
-        security list-keychains -s "$KEYCHAIN" 
-        security default-keychain -s "$KEYCHAIN" 
-        security unlock-keychain -p "" "$KEYCHAIN"
-        security set-keychain-settings -lut 1200
-        security list-keychains
-        
     - name: Configure Code Signing
       run: |
         gpg -d -o "$DECRYPTED_CERTS_FILE_PATH" --pinentry-mode=loopback --passphrase "$CERTS_ENCRYPTION_PWD" "$ENCRYPTED_CERTS_FILE_PATH"
@@ -58,13 +49,13 @@ jobs:
         xcodebuild clean archive -workspace "$XC_PROJECT" -scheme "$XC_SCHEME" -configuration "$XC_CONFIGURATION" -archivePath "$XC_ARCHIVE_PATH" "OTHER_CODE_SIGN_FLAGS=--keychain '$KEYCHAIN'"
         mkdir artifacts
         
-    - name: "EXPORT"
+    - name: EXPORT
       env:
         XC_EXPORT_PATH: ${{ './artifacts' }}
       run: | 
         xcodebuild -exportArchive -archivePath "$XC_ARCHIVE_PATH" -exportOptionsPlist ExportOptions.plist -exportPath "$XC_EXPORT_PATH"
 
-    - name: "TestFlight"
+    - name: TestFlight
       uses: apple-actions/upload-testflight-build@v1
       with:
         app-path: ./artifacts/NaOng.ipa
