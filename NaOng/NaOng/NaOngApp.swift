@@ -19,6 +19,7 @@ struct NaOngApp: App {
                 OnboardingAnimationView()
             } else {
                 ContentView()
+                    .preferredColorScheme(.light)
                     .environment(\.managedObjectContext, viewContext)
                     .environmentObject(localNotificationManager)
                     .onAppear {

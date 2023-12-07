@@ -25,7 +25,7 @@ struct TimeToDoItemAddView: View {
                 Image(systemName: "x.circle")
                     .resizable()
                     .frame(width: 28, height: 28)
-                    .foregroundColor(Color("primary"))
+                    .foregroundStyle(Color("primary"))
             }
             .frame(width: UIScreen.main.bounds.width, alignment: .trailing)
             .padding(EdgeInsets(top: 20, leading: 0, bottom: 0, trailing: 60))

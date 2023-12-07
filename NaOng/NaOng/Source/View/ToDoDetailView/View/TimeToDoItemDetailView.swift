@@ -17,7 +17,7 @@ struct TimeToDoItemDetailView: View {
     
     var body: some View {
         VStack(spacing: 15) {
-            ToDoViewFactory.makeToDoDetailMoldView(
+            ToDoViewFactory.makeToDoDetailVerticalContentView(
                 title: "할일 목록",
                 content:
                     ScrollView {
@@ -29,64 +29,26 @@ struct TimeToDoItemDetailView: View {
                     .frame(height: 140)
                     .background(Color("tertiary"))
             )
-
-            ToDoViewFactory.makeToDoToggle(
-                isOn: .constant(toDoItemDetailViewModel.toDoItem.isRepeat),
+            
+            ToDoViewFactory.makeToDoDetailHorizontalContentView(
                 title: "반복 여부",
-                width: UIScreen.main.bounds.width - 30)
-            .padding()
-            .frame(width: (UIScreen.main.bounds.width), height: 50)
-            .background(Color("primary").opacity(0.5))
+                content: toDoItemDetailViewModel.getRepeatedStatus()
+            )
             
-            HStack {
-                ToDoViewFactory.makeToDoTitle(title: "알림 타입")
-                    .frame(width: (UIScreen.main.bounds.width - 90) / 2, alignment: .leading)
-                
-                Spacer()
-                
-                Text("시간")
-                    .font(.custom("Binggrae", size: 15))
-                    .padding(EdgeInsets(top: 8, leading: 10, bottom: 8, trailing: 10))
-                    .background(.white)
-                    .cornerRadius(10)
-                
-            }
-            .padding()
-            .frame(width: (UIScreen.main.bounds.width), height: 50)
-            .background(Color("primary").opacity(0.5))
-            
-            HStack {
-                ToDoViewFactory.makeToDoTitle(title: "시작 날짜")
-                    .frame(width: (UIScreen.main.bounds.width - 90) / 2, alignment: .leading)
-                
-                Spacer()
-                
-                Text(toDoItemDetailViewModel.toDoItem.alarmTime?.getFormatDate("yyyy-MM-dd-E") ?? "알 수 없음")
-                    .font(.custom("Binggrae", size: 15))
-                    .padding(EdgeInsets(top: 8, leading: 10, bottom: 8, trailing: 10))
-                    .background(.white)
-                    .cornerRadius(10)
-                
-            }
-            .padding()
-            .frame(width: (UIScreen.main.bounds.width), height: 50)
-            .background(Color("primary").opacity(0.5))
+            ToDoViewFactory.makeToDoDetailHorizontalContentView(
+                title: "알림 타입",
+                content: "시간"
+            )
 
-            HStack {
-                ToDoViewFactory.makeToDoTitle(title: "알림 시간")
-                    .frame(width: (UIScreen.main.bounds.width - 90) / 2, alignment: .leading)
-                
-                Spacer()
-                
-                Text(toDoItemDetailViewModel.toDoItem.alarmTime?.getFormatDate("hh:mm") ?? "알 수 없음")
-                    .font(.custom("Binggrae", size: 15))
-                    .padding(EdgeInsets(top: 8, leading: 10, bottom: 8, trailing: 10))
-                    .background(.white)
-                    .cornerRadius(10)
-            }
-            .padding()
-            .frame(width: (UIScreen.main.bounds.width), height: 50)
-            .background(Color("primary").opacity(0.5))
+            ToDoViewFactory.makeToDoDetailHorizontalContentView(
+                title: "시작 날짜",
+                content: toDoItemDetailViewModel.toDoItem.alarmTime?.getFormatDate("yyyy-MM-dd-E") ?? "알 수 없음"
+            )
+
+            ToDoViewFactory.makeToDoDetailHorizontalContentView(
+                title: "알림 시간",
+                content: toDoItemDetailViewModel.toDoItem.alarmTime?.getFormatDate("HH:mm") ?? "알 수 없음"
+            )
 
             DoneListView(doneListViewModel: DoneListViewModel(viewContext: viewContext, toDoItem: toDoItemDetailViewModel.toDoItem))
         }

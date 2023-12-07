@@ -54,7 +54,7 @@ struct TimeToDoListView: View {
                 if $timeToDoListViewModel.toDoItems.count == 0 {
                     ZStack {
                         Text("할 일이 없어요. \n 오른쪽 하단의 버튼을 눌러 \n 시간 할 일을 추가해 보세요!")
-                            .foregroundColor(.black)
+                            .foregroundStyle(.black)
                             .font(.custom("Binggrae", size: 20))
                             .multilineTextAlignment(.center)
                             .padding()
@@ -89,7 +89,7 @@ struct TimeToDoListView: View {
                         }
                         
                         Rectangle()
-                            .foregroundColor(Color("secondary"))
+                            .foregroundStyle(Color("secondary"))
                             .frame(width: UIScreen.main.bounds.width, height: 90)
                             .listRowSeparator(.hidden)
                             .listRowInsets(.init(top: 0, leading: 0, bottom: 0, trailing: 0))
@@ -107,11 +107,11 @@ struct TimeToDoListView: View {
                     ZStack {
                         Circle()
                             .frame(width: 70, height: 70)
-                            .foregroundColor(Color("primary"))
+                            .foregroundStyle(Color("primary"))
                         
                         Image(systemName: "plus")
                             .font(.custom("Binggrae-Bold", size: 35))
-                            .foregroundColor(.black)
+                            .foregroundStyle(.black)
                     }
                 }
                 .frame(width: UIScreen.main.bounds.width - 30, height: UIScreen.main.bounds.height - 170, alignment: .bottomTrailing)

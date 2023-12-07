@@ -26,7 +26,7 @@ struct LocationSelectionView: View {
             } label: {
                 ZStack {
                     RoundedRectangle(cornerRadius: 5)
-                        .foregroundColor(Color("secondary"))
+                        .foregroundStyle(Color("secondary"))
                     
                     HStack {
                         Image(systemName: "magnifyingglass")
@@ -66,7 +66,7 @@ struct LocationSelectionView: View {
                                 .font(.custom("Binggrae", size: 15))
                             Text(location.roadAddress ?? "")
                                 .font(.custom("Binggrae", size: 15))
-                                .foregroundColor(.gray)
+                                .foregroundStyle(.gray)
                         }
                     }
                     .padding(5)
@@ -86,7 +86,7 @@ struct LocationSelectionView: View {
         }
         .navigationTitle("위치 선택")
         .navigationBarItems(trailing: EditButton())
-        .foregroundColor(.black)
+        .foregroundStyle(.black)
         .alert(isPresented: $locationSelectionViewModel.showErrorAlert) {
             Alert(
                 title: Text(locationSelectionViewModel.errorTitle),
