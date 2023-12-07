@@ -36,7 +36,7 @@ jobs:
         
     - name: EXPORT
       run: | 
-        xcodebuild -exportArchive -archivePath "$XC_ARCHIVE_PATH"
+        xcodebuild -archivePath "$XC_ARCHIVE_PATH"
 
     - name: TestFlight
       uses: apple-actions/upload-testflight-build@v1
