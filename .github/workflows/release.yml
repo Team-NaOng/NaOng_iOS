@@ -47,13 +47,12 @@ jobs:
         APPSTORE_API_KEY_ID: ${{ secrets.APPSTORE_API_KEY_ID }}
       run: |
         mkdir -p Users/seohyeonpark/private_keys
-        echo -n "$APPSTORE_PRIVATE_KEY" | base64 --decode --output ~/private_keys/AuthKey_$APPSTORE_API_KEY_ID.p8
+        echo -n "$APPSTORE_PRIVATE_KEY" | base64 --decode --output Users/seohyeonpark/private_keys/AuthKey_$APPSTORE_API_KEY_ID.p8
         
     - name: Upload app to TestFlight
       env:
         APPSTORE_API_KEY_ID: ${{ secrets.APPSTORE_API_KEY_ID }}
         APPSTORE_ISSUER_ID: ${{ secrets.APPSTORE_ISSUER_ID }}
-        XC_EXPORT_PATH: ${{ '/Users/seohyeonpark/Desktop/NaOng/NaOng/artifacts' }}
+        XC_IPA_PATH: ${{ '/Users/seohyeonpark/Desktop/NaOng/NaOng/artifacts/NaOng.ipa' }}
       run: |
-        cd $XC_EXPORT_PATH
-        xcrun altool --output-format xml --upload-app -f NaOng.ipa -t ios --apiKey $APPSTORE_API_KEY_ID --apiIssuer $APPSTORE_ISSUER_ID
+        xcrun altool --output-format xml --upload-app -f $XC_IPA_PATH -t ios --apiKey $APPSTORE_API_KEY_ID --apiIssuer $APPSTORE_ISSUER_ID
