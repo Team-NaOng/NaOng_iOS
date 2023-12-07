@@ -33,11 +33,15 @@
 > 박서현(현이): 기획, 디자인, 개발
 
 ### 🔑 핵심 키워드
-> 사용 언어: `Swfitui`
-> 아키 텍처: `MVVM`
-> CI / CD: `GitHubAction`
-> 기술 스택: `Combine` `KakaoMapsSDK` `Lottie`
-> 사용 기능: `CoreData` `Local Notification` `OpenAPI` 
+> 사용 언어: `SwfitUI` <br>
+>
+> 아키 텍처: `MVVM` <br>
+>
+> CI / CD: `Github Action` <br>
+>
+> 기술 스택: `Combine` `KakaoMapsSDK` `Lottie` <br>
+>
+> 사용 기능: `CoreData` `Local Notification` `OpenAPI`
 
 <br>
 
