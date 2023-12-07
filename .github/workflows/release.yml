@@ -37,14 +37,14 @@ jobs:
         
     - name: EXPORT
       env:
-        XC_EXPORT_PATH: ${{ './artifacts' }}
+        XC_EXPORT_PATH: ${{ '/Users/seohyeonpark/Desktop/NaOng/NaOng/artifacts' }}
       run: | 
         xcodebuild -exportArchive -archivePath "$XC_ARCHIVE_PATH" -exportPath "$XC_EXPORT_PATH" -exportOptionsPlist "$XC_PLIST_PATH" 
 
     - name: TestFlight
       uses: apple-actions/upload-testflight-build@v1
       with:
-        app-path: ./artifacts/NaOng.ipa
+        app-path: /Users/seohyeonpark/Desktop/NaOng/NaOng/artifacts/NaOng.ipa
         issuer-id: ${{ secrets.APPSTORE_ISSUER_ID }}
         api-key-id: ${{ secrets.APPSTORE_API_KEY_ID }}
         api-private-key: ${{ secrets.APPSTORE_PRIVATE_KEY }}
