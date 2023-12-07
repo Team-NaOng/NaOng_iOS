@@ -14,7 +14,7 @@ jobs:
       XC_SCHEME: ${{ 'NaOng' }}
       XC_CONFIGURATION: ${{ 'release' }}
       XC_ARCHIVE_PATH: ${{ '/Users/seohyeonpark/Desktop/AppArchive/NaOng.xcarchive' }}
-      XC_PLIST_PATH: ${{ 'ExportOptions.plist' }}
+      XC_PLIST_PATH: ${{ '/Users/seohyeonpark/Desktop/AppArchive/artifacts/ExportOptions.plist' }}
 
       KEYCHAIN: ${{ 'login.keychain' }}
       ENCRYPTED_CERTS_FILE_PATH: ${{ '.github/secrets/certs.p12.gpg' }}
@@ -36,9 +36,11 @@ jobs:
         mkdir artifacts
         
     - name: EXPORT
+      env:
+        XC_EXPORT_PATH: ${{ '/Users/seohyeonpark/Desktop/AppArchive/artifacts' }}
       run: | 
-        xcodebuild -exportArchive -archivePath "$XC_ARCHIVE_PATH" -exportOptionsPlist "$XC_PLIST_PATH" -exportPath . -allowProvisioningUpdates 
-  
+        xcodebuild -exportArchive -archivePath "$XC_ARCHIVE_PATH" -exportPath "$XC_EXPORT_PATH" -exportOptionsPlist "$XC_PLIST_PATH" 
+
     - name: TestFlight
       uses: apple-actions/upload-testflight-build@v1
       with:
