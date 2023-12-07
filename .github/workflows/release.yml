@@ -13,8 +13,8 @@ jobs:
       XC_PROJECT: ${{ '/Users/seohyeonpark/Desktop/NaOng/NaOng/NaOng.xcodeproj' }}
       XC_SCHEME: ${{ 'NaOng' }}
       XC_CONFIGURATION: ${{ 'release' }}
-      XC_ARCHIVE_PATH: ${{ '/Users/seohyeonpark/Desktop/AppArchive' }}
-      XC_PLIST_PATH: ${{ '/Users/seohyeonpark/Desktop/AppArchive/info.plist' }}
+      XC_ARCHIVE_PATH: ${{ '/Users/seohyeonpark/Desktop/AppArchive/NaOng.xcarchive' }}
+      XC_PLIST_PATH: ${{ '/Users/seohyeonpark/Desktop/AppArchive/NaOng.xcarchive/info.plist' }}
 
       KEYCHAIN: ${{ 'login.keychain' }}
       ENCRYPTED_CERTS_FILE_PATH: ${{ '.github/secrets/certs.p12.gpg' }}
@@ -44,7 +44,7 @@ jobs:
     - name: TestFlight
       uses: apple-actions/upload-testflight-build@v1
       with:
-        app-path: /Users/seohyeonpark/Desktop/AppArchive/artifactsAppArchive/NaOng.ipa
+        app-path: /Users/seohyeonpark/Desktop/AppArchive/artifacts/NaOng.ipa
         issuer-id: ${{ secrets.APPSTORE_ISSUER_ID }}
         api-key-id: ${{ secrets.APPSTORE_API_KEY_ID }}
         api-private-key: ${{ secrets.APPSTORE_PRIVATE_KEY }}
