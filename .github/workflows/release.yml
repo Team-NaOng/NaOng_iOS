@@ -27,11 +27,6 @@ jobs:
 
     - name: Checkout
       uses: actions/checkout@v3
-        
-    - name: Configure Code Signing
-      run: |
-        gpg -d -o "$DECRYPTED_CERTS_FILE_PATH" --pinentry-mode=loopback --passphrase "$CERTS_ENCRYPTION_PWD" "$ENCRYPTED_CERTS_FILE_PATH"
-        gpg -d -o "$DECRYPTED_PROVISION_FILE_PATH" --pinentry-mode=loopback --passphrase "$PROVISIONING_ENCRYPTION_KEY" "$ENCRYPTED_PROVISION_FILE_PATH"
   
     - name: Archive
       run: |
