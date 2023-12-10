@@ -14,11 +14,11 @@ jobs:
       XC_SCHEME: ${{ 'NaOng' }}
       XC_CONFIGURATION: ${{ 'release' }}
       XC_ARCHIVE_PATH: ${{ '/Users/seohyeonpark/Desktop/AppArchive/NaOng.xcarchive' }}
-      XC_PLIST_PATH: ${{ '/Users/seohyeonpark/Desktop/AppArchive/artifacts/ExportOptions.plist' }}
+      XC_PLIST_PATH: ${{ 'ExportOptions.plist' }}
 
       KEYCHAIN: ${{ 'login.keychain' }}
-      ENCRYPTED_CERTS_FILE_PATH: ${{ '.github/secrets/certs.p12.gpg' }}
-      DECRYPTED_CERTS_FILE_PATH: ${{ '.github/secrets/certs.p12' }}
+      ENCRYPTED_CERTS_FILE_PATH: ${{ '.github/secrets/certification.p12.gpg' }}
+      DECRYPTED_CERTS_FILE_PATH: ${{ '.github/secrets/certification.p12' }}
       ENCRYPTED_PROVISION_FILE_PATH: ${{ '.github/secrets/Seohyeon_Park.mobileprovision.gpg' }}
       DECRYPTED_PROVISION_FILE_PATH: ${{ '.github/secrets/Seohyeon_Park.mobileprovision' }} 
       PROVISIONING_ENCRYPTION_KEY: ${{ secrets.PROVISIONING_ENCRYPTION_KEY }}       
