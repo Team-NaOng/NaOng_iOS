@@ -20,5 +20,14 @@ class ToDoItemDetailViewModel: ObservableObject {
         self.toDoItem = toDoItem
         self.localNotificationManager = localNotificationManager
     }
+    
+    func getRepeatedStatus() -> String {
+        switch toDoItem.isRepeat {
+        case true:
+            return "⭕️"
+        default:
+            return "❌"
+        }
+    }
 }
 

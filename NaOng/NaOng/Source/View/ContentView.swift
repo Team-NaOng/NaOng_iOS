@@ -22,13 +22,10 @@ struct ContentView: View {
         TabView {
             let locationToDoListViewModel = LocationToDoListViewModel(viewContext: viewContext, localNotificationManager: localNotificationManager)
             LocationToDoListView(locationToDoListViewModel: locationToDoListViewModel)
-                .preferredColorScheme(.light)
                 .tabItem {
                     Image(systemName: "mappin.and.ellipse")
-                        .foregroundColor(.black)
                     Text("위치 할 일")
                         .font(.custom("Binggrae", size: 10))
-                        .foregroundColor(.black)
                 }
                 .onAppear(perform: {
                     if isFirstRun {
@@ -41,10 +38,8 @@ struct ContentView: View {
             TimeToDoListView(timeToDoListViewModel: timeToDoListViewModel)
                 .tabItem {
                     Image(systemName: "clock")
-                        .foregroundColor(.black)
                     Text("시간 할 일")
                         .font(.custom("Binggrae", size: 10))
-                        .foregroundColor(.black)
                 }
 
             let weatherViewModel = WeatherViewModel(imageState: .loaded)
@@ -53,7 +48,6 @@ struct ContentView: View {
                     Image(systemName: "thermometer.sun.fill")
                     Text("오늘 날씨")
                         .font(.custom("Binggrae", size: 10))
-                        .foregroundColor(.black)
                 }
             
             let settingViewModel = SettingViewModel( localNotificationManager: localNotificationManager)
@@ -62,7 +56,6 @@ struct ContentView: View {
                     Image(systemName: "gearshape")
                     Text("설정")
                         .font(.custom("Binggrae", size: 10))
-                        .foregroundColor(.black)
                 }
         }
         .tint(Color("primary"))

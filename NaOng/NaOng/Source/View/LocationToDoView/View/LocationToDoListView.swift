@@ -22,7 +22,7 @@ struct LocationToDoListView: View {
         NavigationView {
             VStack {
                 Text("나가기 전에 생각했나옹?")
-                    .foregroundColor(.black)
+                    .foregroundStyle(.black)
                     .font(.custom("Binggrae-Bold", size: 30))
                     .padding()
                 
@@ -43,11 +43,11 @@ struct LocationToDoListView: View {
                 ZStack {
                     RoundedRectangle(cornerRadius: 10)
                         .frame(width: UIScreen.main.bounds.width - 30, height: 316)
-                        .foregroundColor(Color("secondary"))
+                        .foregroundStyle(Color("secondary"))
                     
                     if $locationToDoListViewModel.toDoItems.count == 0 {
                         Text("할 일이 없어요. \n 아래 고양이를 눌러 \n 위치 할 일을 추가해 보세요!")
-                            .foregroundColor(.black)
+                            .foregroundStyle(.black)
                             .font(.custom("Binggrae", size: 20))
                             .multilineTextAlignment(.center)
                             .padding()

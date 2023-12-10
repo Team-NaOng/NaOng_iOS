@@ -20,7 +20,7 @@ struct SettingView: View {
         VStack(alignment: .leading, spacing: 30) {
             
             Text("설정")
-                .foregroundColor(.black)
+                .foregroundStyle(.black)
                 .font(.custom("Binggrae-Bold", size: 30))
             
             Button {
@@ -38,11 +38,11 @@ struct SettingView: View {
                     
                     Text(settingViewModel.authorizationStatus)
                         .font(.custom("Binggrae", size: 16))
-                        .foregroundColor(.gray)
+                        .foregroundStyle(.gray)
                     Image(systemName: "chevron.right")
                 }
             }
-            .foregroundColor(.black)
+            .foregroundStyle(.black)
             .alert("앱의 알림 설정으로 이동합니다.\n이동하는 화면에서 알림을 허용해 주세요.", isPresented: $settingViewModel.isShowingNotificationAlert) {
                 Button("취소", role: .cancel) { }
                 Button("확인", role: .destructive) {
@@ -67,7 +67,7 @@ struct SettingView: View {
                     Text("문의 하기")
                         .font(.custom("Binggrae", size: 16))
                 }
-                .foregroundColor(.black)
+                .foregroundStyle(.black)
             }
             .sheet(isPresented: $settingViewModel.isShowingEmail) {
                 MailView()

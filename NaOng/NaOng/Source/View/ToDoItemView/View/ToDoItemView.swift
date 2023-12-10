@@ -28,14 +28,14 @@ struct ToDoItemView: View {
             Text(toDoItemViewModel.toDoItem.content ?? "")
                 .font(.custom("Binggrae", size: 15))
                 .strikethrough(toDoItemViewModel.toDoItem.isDone)
-                .foregroundColor(.black)
+                .foregroundStyle(.black)
                 .padding(EdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 0))
             
             Spacer()
             
             Text(toDoItemViewModel.getDistinguishedAlarmInformation())
                 .font(.custom("Binggrae", size: 12))
-                .foregroundColor(.black)
+                .foregroundStyle(.black)
                 .padding(EdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 10))
         }
         .frame(width: (UIScreen.main.bounds.width - 60), height: 80, alignment: .topLeading)

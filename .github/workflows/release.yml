@@ -10,54 +10,41 @@ jobs:
     name: seohyeon
     runs-on: seohyeonui-MacBookAir
     env:
-      XC_PROJECT: ${{ 'NaOng.xcodeproj' }}
+      XC_PROJECT: ${{ '/Users/seohyeonpark/Desktop/NaOng/NaOng/NaOng.xcodeproj' }}
       XC_SCHEME: ${{ 'NaOng' }}
       XC_CONFIGURATION: ${{ 'release' }}
-      XC_ARCHIVE_PATH: ${{ 'NaOng.xcarchive' }}
-      XC_EXPORT_PATH: ${{ './artifacts' }}
+      XC_ARCHIVE_PATH: ${{ '/Users/seohyeonpark/Desktop/AppArchive/NaOng.xcarchive' }}
+      XC_PLIST_PATH: ${{ 'ExportOptions.plist' }}
+
       KEYCHAIN: ${{ 'login.keychain' }}
-      ENCRYPTED_CERTS_FILE_PATH: ${{ '.github/secrets/certs.p12.gpg' }}
-      DECRYPTED_CERTS_FILE_PATH: ${{ '.github/secrets/certs.p12' }}
+      ENCRYPTED_CERTS_FILE_PATH: ${{ '.github/secrets/certification.p12.gpg' }}
+      DECRYPTED_CERTS_FILE_PATH: ${{ '.github/secrets/certification.p12' }}
       ENCRYPTED_PROVISION_FILE_PATH: ${{ '.github/secrets/Seohyeon_Park.mobileprovision.gpg' }}
       DECRYPTED_PROVISION_FILE_PATH: ${{ '.github/secrets/Seohyeon_Park.mobileprovision' }} 
       PROVISIONING_ENCRYPTION_KEY: ${{ secrets.PROVISIONING_ENCRYPTION_KEY }}       
       CERTS_ENCRYPTION_PWD: ${{ secrets.CERTS_ENCRYPTION_PWD }} 
       CERT_EXPORT_KEY: ${{ secrets.CERT_EXPORT_PWD }}
     steps:
-  
+
     - name: Checkout
       uses: actions/checkout@v3
-
-    - name: Configure Code Signing
-      run: |
-        gpg -d -o "$DECRYPTED_CERTS_FILE_PATH" --pinentry-mode=loopback --passphrase "$CERTS_ENCRYPTION_PWD" "$ENCRYPTED_CERTS_FILE_PATH"
-        gpg -d -o "$DECRYPTED_PROVISION_FILE_PATH" --pinentry-mode=loopback --passphrase "$PROVISIONING_ENCRYPTION_KEY" "$ENCRYPTED_PROVISION_FILE_PATH"
-        security set-key-partition-list -S apple-tool:,apple: -s -k "" "$KEYCHAIN"
-
-        mkdir -p "$HOME/Library/MobileDevice/Provisioning Profiles"
-        echo `ls .github/secrets/*.mobileprovision`
-          for PROVISION in `ls .github/secrets/*.mobileprovision`
-          do
-            UUID=`/usr/libexec/PlistBuddy -c 'Print :UUID' /dev/stdin <<< $(security cms -D -i ./$PROVISION)`
-          cp "./$PROVISION" "$HOME/Library/MobileDevice/Provisioning Profiles/$UUID.mobileprovision"
-        done
   
     - name: Archive
       run: |
         ls
-        xcodebuild clean archive -workspace "$XC_PROJECT" -scheme "$XC_SCHEME" -configuration "$XC_CONFIGURATION" -archivePath "$XC_ARCHIVE_PATH" "OTHER_CODE_SIGN_FLAGS=--keychain '$KEYCHAIN'"
+        xcodebuild clean archive -project "$XC_PROJECT" -scheme "$XC_SCHEME" -configuration "$XC_CONFIGURATION" -archivePath "$XC_ARCHIVE_PATH" "OTHER_CODE_SIGN_FLAGS=--keychain '$KEYCHAIN'"
         mkdir artifacts
         
     - name: EXPORT
       env:
-        XC_EXPORT_PATH: ${{ './artifacts' }}
+        XC_EXPORT_PATH: ${{ '/Users/seohyeonpark/Desktop/AppArchive/artifacts' }}
       run: | 
-        xcodebuild -exportArchive -archivePath "$XC_ARCHIVE_PATH" -exportOptionsPlist ExportOptions.plist -exportPath "$XC_EXPORT_PATH"
+        xcodebuild -exportArchive -archivePath "$XC_ARCHIVE_PATH" -exportPath "$XC_EXPORT_PATH" -exportOptionsPlist "$XC_PLIST_PATH" 
 
     - name: TestFlight
       uses: apple-actions/upload-testflight-build@v1
       with:
-        app-path: ./artifacts/NaOng.ipa
+        app-path: /Users/seohyeonpark/Desktop/AppArchive/artifacts/NaOng.ipa
         issuer-id: ${{ secrets.APPSTORE_ISSUER_ID }}
         api-key-id: ${{ secrets.APPSTORE_API_KEY_ID }}
         api-private-key: ${{ secrets.APPSTORE_PRIVATE_KEY }}

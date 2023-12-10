@@ -32,6 +32,17 @@
 ### 👥 구성원 및 역할
 > 박서현(현이): 기획, 디자인, 개발
 
+### 🔑 핵심 키워드
+> 사용 언어: `SwfitUI` <br>
+>
+> 아키 텍처: `MVVM` <br>
+>
+> CI / CD: `Github Action` <br>
+>
+> 기술 스택: `Combine` `KakaoMapsSDK` `Lottie` <br>
+>
+> 사용 기능: `CoreData` `Local Notification` `OpenAPI`
+
 <br>
 
 ### 📺 실행 영상
@@ -85,5 +96,5 @@
 
 <br>
 
-### 🔨 기술적 고민
+### 🔨 기술적 고민 !!
 > [트러블 슈팅](https://github.com/seohyeon2/NaOng/wiki/%ED%8A%B8%EB%9F%AC%EB%B8%94-%EC%8A%88%ED%8C%85)

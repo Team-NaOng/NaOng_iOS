@@ -34,7 +34,7 @@ struct LocationCheckView: View {
                 } label: {
                     Text("이 위치로 설정")
                         .font(.custom("Binggrae", size: 15))
-                        .foregroundColor(.black)
+                        .foregroundStyle(.black)
                         .frame(maxWidth: .infinity)
                         .padding()
                         .background(Color("primary"))
