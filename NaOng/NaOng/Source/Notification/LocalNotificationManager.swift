@@ -17,8 +17,8 @@ class LocalNotificationManager: NSObject, ObservableObject {
         removalAllNotificationsSubject.eraseToAnyPublisher()
     }
     
-    private var authorizationStatusSubject = PassthroughSubject<UNAuthorizationStatus, Never>()
-    private var removalAllNotificationsSubject = PassthroughSubject<Bool, Never>()
+    private var authorizationStatusSubject: PassthroughSubject<UNAuthorizationStatus, Never> = PassthroughSubject<UNAuthorizationStatus, Never>()
+    private var removalAllNotificationsSubject: PassthroughSubject<Bool, Never> = PassthroughSubject<Bool, Never>()
     
     func sendAuthorizationStatusEvent() {
         UNUserNotificationCenter.current().getNotificationSettings { [weak self] settings in

@@ -13,7 +13,7 @@ class LocationSearchViewModel: NSObject, ObservableObject {
     @Published var keyword: String = ""
     @Published var locationInformations: [LocationInformation] = []
     @Published var announcementImageName: String = "defaultSearch"
-    @Published var showErrorAlert = false
+    @Published var isShowingErrorAlert: Bool = false
     var errorTitle: String = ""
     var errorMessage: String = ""
     
@@ -68,7 +68,7 @@ class LocationSearchViewModel: NSObject, ObservableObject {
         } catch {
             errorTitle = "네트워크 에러🥲"
             errorMessage = error.localizedDescription
-            showErrorAlert.toggle()
+            isShowingErrorAlert.toggle()
             return nil
         }
     }

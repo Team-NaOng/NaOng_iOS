@@ -9,10 +9,10 @@ import Foundation
 import CoreData
 
 class LocationToDoListViewModel: NSObject, ObservableObject {
-    @Published var showingToDoItemAddView: Bool = false
+    @Published var isShowingToDoItemAddView: Bool = false
     @Published var toDoItems: [ToDo] = [ToDo]()
-    @Published var selectedViewOption = "전체"
-    @Published var showErrorAlert = false
+    @Published var selectedViewOption: String = "전체"
+    @Published var isShowingErrorAlert: Bool = false
     var errorTitle: String = ""
     var errorMessage: String = ""
     var addModel: ToDoItemAddViewModel?
@@ -96,7 +96,7 @@ class LocationToDoListViewModel: NSObject, ObservableObject {
             } catch {
                 errorTitle = "할 일 삭제 실패🥲"
                 errorMessage = error.localizedDescription
-                showErrorAlert.toggle()
+                isShowingErrorAlert.toggle()
             }
             
             localNotificationManager.removeNotification(id: id)
@@ -146,7 +146,7 @@ class LocationToDoListViewModel: NSObject, ObservableObject {
             
             self.toDoItems = sortedToDoItems(toDoItems: toDoItems)
         } catch {
-            showErrorAlert.toggle()
+            isShowingErrorAlert.toggle()
         }
     }
     

@@ -97,7 +97,7 @@ struct TimeToDoItemAddView: View {
                         )
                     }
                     .padding()
-                    .alert(isPresented: $toDoItemAddViewModel.showErrorAlert) {
+                    .alert(isPresented: $toDoItemAddViewModel.isShowingErrorAlert) {
                         Alert(
                             title: Text(toDoItemAddViewModel.errorTitle),
                             message: Text(toDoItemAddViewModel.errorMessage),

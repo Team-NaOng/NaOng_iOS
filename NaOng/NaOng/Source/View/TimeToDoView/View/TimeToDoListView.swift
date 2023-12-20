@@ -122,7 +122,7 @@ struct TimeToDoListView: View {
                     TimeToDoItemAddView(toDoItemAddViewModel: viewModel)
                 }
             }
-            .alert(isPresented: $alertViewModel.showAlert) {
+            .alert(isPresented: $alertViewModel.isShowingAlert) {
                 Alert(
                     title: Text(alertViewModel.alertTitle),
                     message: Text(alertViewModel.alertMessage),

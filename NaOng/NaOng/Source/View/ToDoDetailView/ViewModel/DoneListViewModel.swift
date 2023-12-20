@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 
 class DoneListViewModel: ObservableObject {
-    @Published var showingList: Bool = false
+    @Published var isShowingList: Bool = false
     
     private(set) var doneList: [[String]] = []
     private let viewContext: NSManagedObjectContext
