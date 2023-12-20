@@ -20,20 +20,15 @@ struct TimeToDoListView: View {
     var body: some View {
         NavigationView {
             VStack {
-//                DatePicker(
-//                        "Start Date",
-//                        selection: $timeToDoListViewModel.date,
-//                        displayedComponents: [.date]
-//                    )
-//                    .datePickerStyle(.graphical)
-//                    .tint(.gray)
-//                    .onChange(of: $timeToDoListViewModel.date.wrappedValue) { newValue in
-//                        timeToDoListViewModel.setFetchedResultsPredicate()
-//                    }
-//                    .frame(width: UIScreen.main.bounds.width - 50)
-                let vm = CustomDatePickerViewModel(viewContext: viewContext)
-                CustomDatePickerView(customDatePickerViewModel: vm)
+                CustomDatePickerView(timeToDoListViewModel: timeToDoListViewModel)
                     .frame(width: UIScreen.main.bounds.width - 50)
+                    .onChange(of: timeToDoListViewModel.currentMonth) { newValue in
+                        timeToDoListViewModel.refreshData()
+                        timeToDoListViewModel.setFetchedResultsPredicate()
+                    }
+                    .onChange(of: timeToDoListViewModel.selectedDate) { _ in
+                        timeToDoListViewModel.setFetchedResultsPredicate()
+                    }
                 
                 Picker("보기 옵션", selection: $timeToDoListViewModel.selectedViewOption) {
                     Text("전체")
@@ -105,7 +100,7 @@ struct TimeToDoListView: View {
             }
             .overlay {
                 Button {
-                    timeToDoListViewModel.showingToDoItemAddView = true
+                    timeToDoListViewModel.isShowingToDoItemAddView = true
                 } label: {
                     ZStack {
                         Circle()
@@ -118,12 +113,12 @@ struct TimeToDoListView: View {
                     }
                 }
                 .frame(width: UIScreen.main.bounds.width - 30, height: UIScreen.main.bounds.height - 170, alignment: .bottomTrailing)
-                .fullScreenCover(isPresented: $timeToDoListViewModel.showingToDoItemAddView) {
+                .fullScreenCover(isPresented: $timeToDoListViewModel.isShowingToDoItemAddView) {
                     let viewModel = ToDoItemAddViewModel(
                         viewContext: viewContext,
                         localNotificationManager: timeToDoListViewModel.localNotificationManager,
                         alarmType: "시간",
-                        alarmTime: timeToDoListViewModel.date)
+                        alarmTime: timeToDoListViewModel.selectedDate)
                     TimeToDoItemAddView(toDoItemAddViewModel: viewModel)
                 }
             }

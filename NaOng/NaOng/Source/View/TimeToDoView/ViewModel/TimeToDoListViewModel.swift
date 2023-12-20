@@ -9,14 +9,19 @@ import Foundation
 import CoreData
 
 class TimeToDoListViewModel: NSObject, ObservableObject {
-    @Published var date: Date = Date()
-    @Published var showingToDoItemAddView: Bool = false
+    @Published var selectedDate: Date = Date()
+    @Published var isShowingToDoItemAddView: Bool = false
     @Published var toDoItems: [ToDo] = [ToDo]()
-    @Published var selectedViewOption = "전체"
-    @Published var showErrorAlert = false
+    @Published var dateValues: [DateValue] = []
+    @Published var currentMonth: Int = 0
+    @Published var selectedViewOption: String = "전체"
+    @Published var isShowingErrorAlert: Bool = false
+    
     var errorTitle: String = ""
     var errorMessage: String = ""
-
+    var toDoItemsForMonth: [ToDo] = [ToDo]()
+    
+    let days: [String] = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"]
     private var fetchedResultsController: NSFetchedResultsController<ToDo> = NSFetchedResultsController()
     private(set) var localNotificationManager: LocalNotificationManager
     private let viewContext: NSManagedObjectContext
@@ -26,9 +31,13 @@ class TimeToDoListViewModel: NSObject, ObservableObject {
         self.localNotificationManager = localNotificationManager
         
         super.init()
-        fetchToDoItems(
-            format: "(alarmDate == %@ AND alarmType == %@) OR (alarmDate < %@ AND alarmType == %@ AND isRepeat == %@)",
-            argumentArray: [date.getFormatDate(), "시간", date.getFormatDate(), "시간", true])
+        refreshData()
+        filterAllDate()
+    }
+    
+    func refreshData() {
+        selectedDate = Date().getMonth(for: currentMonth)
+        fetchToDoItems()
     }
     
     func deleteItems(offsets: IndexSet) {
@@ -42,7 +51,7 @@ class TimeToDoListViewModel: NSObject, ObservableObject {
             } catch {
                 errorTitle = "할 일 삭제 실패🥲"
                 errorMessage = error.localizedDescription
-                showErrorAlert.toggle()
+                isShowingErrorAlert.toggle()
             }
             
             localNotificationManager.removeNotification(id: id)
@@ -52,29 +61,26 @@ class TimeToDoListViewModel: NSObject, ObservableObject {
     func setFetchedResultsPredicate()  {
         switch selectedViewOption {
         case "한번":
-            fetchToDoItems(
-                format: "alarmDate == %@ AND alarmType == %@ AND isRepeat == %@",
-                argumentArray: [date.getFormatDate(), "시간", false])
+            filterNoneRepeatingDate()
             break
         case "반복":
-            fetchToDoItems(
-                format: "alarmDate <= %@ AND alarmType == %@ AND isRepeat == %@",
-                argumentArray: [date.getFormatDate(), "시간", true])
+            filterRepeatingDate()
             break
         default:
-            fetchToDoItems(
-                format: "(alarmDate == %@ AND alarmType == %@) OR (alarmDate < %@ AND alarmType == %@ AND isRepeat == %@)",
-                argumentArray: [date.getFormatDate(), "시간", date.getFormatDate(), "시간", true])
+            filterAllDate()
         }
     }
 
-    private func fetchToDoItems(format: String, argumentArray: [Any]?) {
+    private func fetchToDoItems(format: String = "alarmType == %@", argumentArray: [Any]? = ["시간"]) {
         let fetchRequest: NSFetchRequest<ToDo> = ToDo.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: format, argumentArray: argumentArray)
+        fetchRequest.predicate = NSPredicate(
+            format: format,
+            argumentArray: argumentArray
+        )
         
         let sortDescriptor = NSSortDescriptor(keyPath: \ToDo.alarmDate, ascending: true)
         fetchRequest.sortDescriptors = [sortDescriptor]
-
+        
         fetchedResultsController = NSFetchedResultsController(
             fetchRequest: fetchRequest,
             managedObjectContext: viewContext,
@@ -89,13 +95,63 @@ class TimeToDoListViewModel: NSObject, ObservableObject {
             guard let toDoItems = fetchedResultsController.fetchedObjects else {
                 return
             }
-
-            self.toDoItems = sortedToDoItems(toDoItems: toDoItems)
+            
+            updateDateValuesAndMark(toDoItems: toDoItems)
+            toDoItemsForMonth = toDoItems
         } catch {
             errorTitle = "할 일 가져오기 실패🥲"
             errorMessage = error.localizedDescription
-            showErrorAlert.toggle()
+            isShowingErrorAlert.toggle()
         }
+    }
+    
+    private func updateDateValuesAndMark(toDoItems: [ToDo]){
+        var days = selectedDate.getDatesInCurrentMonth().compactMap { date -> DateValue in
+            let day = Calendar.current.component(.day, from: date)
+            let hasMark = toDoItems.contains { toDo in
+                if (toDo.alarmDate == date.getFormatDate()) && (toDo.isRepeat == false) {
+                    return true
+                } else {
+                    let dateFormatter = DateFormatter()
+                    dateFormatter.dateFormat = "yyyy-MM-dd"
+                    let alarmDate = dateFormatter.date(from: toDo.alarmDate ?? "") ?? Date()
+                    return (toDo.isRepeat) && (date >= alarmDate)
+                }
+            }
+            return DateValue(day: day, date: date, hasMark: hasMark)
+        }
+
+        let firstWeekday = Calendar.current.component(.weekday, from: days.first?.date ?? Date())
+        
+        for _ in 0..<(firstWeekday - 1) {
+            days.insert(DateValue(day: -1, date: Date(), hasMark: false), at: 0)
+        }
+
+        dateValues = days
+    }
+    
+    private func filterNoneRepeatingDate() {
+        let filtered = toDoItemsForMonth.filter { toDo in
+            return (toDo.alarmDate == selectedDate.getFormatDate()) && (toDo.isRepeat == false)
+        }
+        self.toDoItems = sortedToDoItems(toDoItems: filtered)
+    }
+    
+    private func filterRepeatingDate() {
+        let filtered = toDoItemsForMonth.filter { toDo in
+            return (toDo.alarmDate ?? "" <= selectedDate.getFormatDate()) && (toDo.isRepeat == true)
+        }
+        self.toDoItems = sortedToDoItems(toDoItems: filtered)
+    }
+    
+    private func filterAllDate() {
+        let filtered =  toDoItemsForMonth.filter { toDo in
+            let isTodayToDo = toDo.alarmDate == selectedDate.getFormatDate()
+            let isRepeatToDo = (toDo.alarmDate ?? "" < selectedDate.getFormatDate()) && (toDo.isRepeat == true)
+
+            return isTodayToDo || isRepeatToDo
+        }
+        self.toDoItems = sortedToDoItems(toDoItems: filtered)
     }
     
     private func sortedToDoItems(toDoItems: [ToDo]) -> [ToDo] {
@@ -120,6 +176,8 @@ extension TimeToDoListViewModel: NSFetchedResultsControllerDelegate {
             return
         }
 
-        self.toDoItems = sortedToDoItems(toDoItems: toDoItems)
+        updateDateValuesAndMark(toDoItems: toDoItems)
+        toDoItemsForMonth = toDoItems
+        setFetchedResultsPredicate()
     }
 }

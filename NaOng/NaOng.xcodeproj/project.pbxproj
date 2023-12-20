@@ -82,7 +82,6 @@
 		05EEE1042A8551C7007AD5F7 /* UITextViewWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05EEE1032A8551C7007AD5F7 /* UITextViewWrapper.swift */; };
 		05EEE1082A8578CE007AD5F7 /* Date+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05EEE1072A8578CE007AD5F7 /* Date+Extensions.swift */; };
 		05F1CBA12B3308F0002669A2 /* CustomDatePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F1CBA02B3308F0002669A2 /* CustomDatePickerView.swift */; };
-		05F1CBA32B330A1F002669A2 /* CustomDatePickerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F1CBA22B330A1F002669A2 /* CustomDatePickerViewModel.swift */; };
 		05F1CBA72B33180B002669A2 /* DateValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F1CBA62B33180B002669A2 /* DateValue.swift */; };
 		05F233BB2A2AF3D10091D5B3 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F233BA2A2AF3D10091D5B3 /* LocationService.swift */; };
 		05F3B74A2B1BB97400762F63 /* DoneListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F3B7492B1BB97400762F63 /* DoneListViewModel.swift */; };
@@ -178,7 +177,6 @@
 		05EEE1032A8551C7007AD5F7 /* UITextViewWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextViewWrapper.swift; sourceTree = "<group>"; };
 		05EEE1072A8578CE007AD5F7 /* Date+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extensions.swift"; sourceTree = "<group>"; };
 		05F1CBA02B3308F0002669A2 /* CustomDatePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDatePickerView.swift; sourceTree = "<group>"; };
-		05F1CBA22B330A1F002669A2 /* CustomDatePickerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDatePickerViewModel.swift; sourceTree = "<group>"; };
 		05F1CBA62B33180B002669A2 /* DateValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateValue.swift; sourceTree = "<group>"; };
 		05F233B92A29C79B0091D5B3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		05F233BA2A2AF3D10091D5B3 /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
@@ -296,7 +294,6 @@
 			isa = PBXGroup;
 			children = (
 				05388A922A83798700C8A69A /* TimeToDoListViewModel.swift */,
-				05F1CBA22B330A1F002669A2 /* CustomDatePickerViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -730,7 +727,6 @@
 				0573C6912B13AEFF0012D501 /* AirKorea.swift in Sources */,
 				05477D442A7C228100C16F4A /* CoreDataBaseProtocol.swift in Sources */,
 				0587438B2AC31A8800075905 /* Coordinates.swift in Sources */,
-				05F1CBA32B330A1F002669A2 /* CustomDatePickerViewModel.swift in Sources */,
 				059126752B1C60E700F044D0 /* OnboardingAnimationView.swift in Sources */,
 				056EDC432B0E8C2D004090F6 /* WeatherViewModel.swift in Sources */,
 				05CCE8B32A51A6BE0037FF74 /* LocationToDoListViewModel.swift in Sources */,
