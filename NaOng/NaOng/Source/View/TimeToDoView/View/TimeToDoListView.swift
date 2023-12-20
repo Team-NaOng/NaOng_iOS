@@ -20,16 +20,19 @@ struct TimeToDoListView: View {
     var body: some View {
         NavigationView {
             VStack {
-                DatePicker(
-                        "Start Date",
-                        selection: $timeToDoListViewModel.date,
-                        displayedComponents: [.date]
-                    )
-                    .datePickerStyle(.graphical)
-                    .tint(.gray)
-                    .onChange(of: $timeToDoListViewModel.date.wrappedValue) { newValue in
-                        timeToDoListViewModel.setFetchedResultsPredicate()
-                    }
+//                DatePicker(
+//                        "Start Date",
+//                        selection: $timeToDoListViewModel.date,
+//                        displayedComponents: [.date]
+//                    )
+//                    .datePickerStyle(.graphical)
+//                    .tint(.gray)
+//                    .onChange(of: $timeToDoListViewModel.date.wrappedValue) { newValue in
+//                        timeToDoListViewModel.setFetchedResultsPredicate()
+//                    }
+//                    .frame(width: UIScreen.main.bounds.width - 50)
+                let vm = CustomDatePickerViewModel(viewContext: viewContext)
+                CustomDatePickerView(customDatePickerViewModel: vm)
                     .frame(width: UIScreen.main.bounds.width - 50)
                 
                 Picker("보기 옵션", selection: $timeToDoListViewModel.selectedViewOption) {
