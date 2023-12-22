@@ -67,7 +67,7 @@ struct LocationSearchView: View {
             }
         }
         .background(Color("secondary"))
-        .alert(isPresented: $locationSearchViewModel.showErrorAlert) {
+        .alert(isPresented: $locationSearchViewModel.isShowingErrorAlert) {
             Alert(
                 title: Text(locationSearchViewModel.errorTitle),
                 message: Text(locationSearchViewModel.errorMessage),

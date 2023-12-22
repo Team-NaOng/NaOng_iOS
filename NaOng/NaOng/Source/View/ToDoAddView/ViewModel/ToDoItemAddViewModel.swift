@@ -14,7 +14,7 @@ class ToDoItemAddViewModel: ObservableObject {
     @Published var isRepeat: Bool = false
     @Published var locationInformation: LocationInformation = LocationInformation(locationName: "위치를 선택해 주세요", locationAddress: "", locationRoadAddress: "", locationCoordinates: Coordinates(lat: 0.0, lon: 0.0))
     @Published var path: [LocationViewStack] = [LocationViewStack]()
-    @Published var showErrorAlert = false
+    @Published var isShowingErrorAlert: Bool = false
     var errorTitle: String = ""
     var errorMessage: String = ""
 
@@ -88,7 +88,7 @@ class ToDoItemAddViewModel: ObservableObject {
         } catch {
             errorTitle = "위치 목록 저장 실패🥲"
             errorMessage = error.localizedDescription
-            showErrorAlert.toggle()
+            isShowingErrorAlert.toggle()
         }
     }
 
@@ -109,7 +109,7 @@ class ToDoItemAddViewModel: ObservableObject {
         } catch {
             errorTitle = "위치 목록 불러오기 실패🥲"
             errorMessage = error.localizedDescription
-            showErrorAlert.toggle()
+            isShowingErrorAlert.toggle()
             return nil
         }
     }
@@ -149,7 +149,7 @@ class ToDoItemAddViewModel: ObservableObject {
         } catch {
             errorTitle = "할 일 저장 실패🥲"
             errorMessage = error.localizedDescription
-            showErrorAlert.toggle()
+            isShowingErrorAlert.toggle()
         }
     }
     
@@ -157,7 +157,7 @@ class ToDoItemAddViewModel: ObservableObject {
         if alarmType == "위치" && (locationInformation.locationCoordinates.lat == 0.0 || locationInformation.locationCoordinates.lon == 0.0) {
             errorTitle = "위치가 선택되지 않았습니다."
             errorMessage = "위치를 다시 선택해 주세요."
-            showErrorAlert.toggle()
+            isShowingErrorAlert.toggle()
             return false
         }
         

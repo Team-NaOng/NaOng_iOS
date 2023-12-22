@@ -83,7 +83,7 @@ struct LocationToDoListView: View {
                 }
                 
                 Button {
-                    locationToDoListViewModel.showingToDoItemAddView = true
+                    locationToDoListViewModel.isShowingToDoItemAddView = true
                     locationToDoListViewModel.addModel = ToDoItemAddViewModel(viewContext: viewContext, localNotificationManager: locationToDoListViewModel.localNotificationManager, alarmType: "위치")
                 } label: {
                     Image("toDoListImage1")
@@ -91,7 +91,7 @@ struct LocationToDoListView: View {
                         .scaledToFit()
                         .padding(EdgeInsets(top: 5, leading: 10, bottom: 5, trailing: 10))
                 }
-                .fullScreenCover(isPresented: $locationToDoListViewModel.showingToDoItemAddView) {
+                .fullScreenCover(isPresented: $locationToDoListViewModel.isShowingToDoItemAddView) {
                     locationToDoListViewModel.addModel = nil
                 } content: {
                     if let viewModel = locationToDoListViewModel.addModel {
@@ -102,7 +102,7 @@ struct LocationToDoListView: View {
             .background(
                 Image("backgroundPinkImage")
             )
-            .alert(isPresented: $alertViewModel.showAlert) {
+            .alert(isPresented: $alertViewModel.isShowingAlert) {
                 Alert(
                     title: Text(alertViewModel.alertTitle),
                     message: Text(alertViewModel.alertMessage),
