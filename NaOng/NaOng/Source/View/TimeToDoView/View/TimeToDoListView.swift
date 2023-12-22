@@ -22,12 +22,8 @@ struct TimeToDoListView: View {
             VStack {
                 CustomDatePickerView(timeToDoListViewModel: timeToDoListViewModel)
                     .frame(width: UIScreen.main.bounds.width - 50)
-                    .onChange(of: timeToDoListViewModel.currentMonth) { newValue in
-                        timeToDoListViewModel.refreshData()
-                        timeToDoListViewModel.setFetchedResultsPredicate()
-                    }
                     .onChange(of: timeToDoListViewModel.selectedDate) { _ in
-                        timeToDoListViewModel.setFetchedResultsPredicate()
+                        timeToDoListViewModel.updateCalendar()
                     }
                 
                 Picker("보기 옵션", selection: $timeToDoListViewModel.selectedViewOption) {

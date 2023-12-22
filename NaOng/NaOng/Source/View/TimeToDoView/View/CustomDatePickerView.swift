@@ -22,8 +22,7 @@ struct CustomDatePickerView: View {
                     .font(.headline)
                 
                 Button(action: {
-                    //TODO: 월 / 년 선택하는 picker 추가하기
-                    
+                    timeToDoListViewModel.isPickerPresented.toggle()
                 }, label: {
                     Image(systemName: "chevron.right")
                         .font(.body)
@@ -34,7 +33,7 @@ struct CustomDatePickerView: View {
                 
                 Button(action: {
                     withAnimation {
-                        timeToDoListViewModel.currentMonth -= 1
+                        timeToDoListViewModel.decreaseMonth()
                     }
                 }, label: {
                     Image(systemName: "chevron.left")
@@ -45,7 +44,7 @@ struct CustomDatePickerView: View {
                 
                 Button(action: {
                     withAnimation {
-                        timeToDoListViewModel.currentMonth += 1
+                        timeToDoListViewModel.increaseMonth()
                     }
                 }, label: {
                     Image(systemName: "chevron.right")
@@ -57,31 +56,42 @@ struct CustomDatePickerView: View {
             .frame(maxWidth: .infinity)
             .padding(EdgeInsets(top: 10, leading: 5, bottom: 10, trailing: 5))
             
-            HStack {
-                ForEach(timeToDoListViewModel.days, id: \.self) { day in
-                    Text(day)
-                        .font(.footnote)
-                        .fontWeight(.semibold)
-                        .foregroundStyle(Color(UIColor.lightGray))
-                        .frame(maxWidth: .infinity)
+            if timeToDoListViewModel.isPickerPresented {
+                let customWheelPickerViewModel = CustomWheelPickerViewModel(selectedDate: $timeToDoListViewModel.selectedDate)
+                CustomWheelPickerView(customWheelPickerViewModel: customWheelPickerViewModel)
+                .onDisappear(perform: {
+                    customWheelPickerViewModel.setSelectedDate()
+                })
+                .onTapGesture {
+                    timeToDoListViewModel.isPickerPresented.toggle()
                 }
-            }
-            
-            let columns = Array(repeating: GridItem(.flexible()), count: 7)
-            LazyVGrid(columns: columns) {
-                ForEach(timeToDoListViewModel.dateValues) { value in
-                    DatesView(
-                        value: value,
-                        isSelected: value.date.isSameDay(as: timeToDoListViewModel.selectedDate),
-                        isToday: value.date.isSameDay(as: Date())
-                    )
-                    .background(
-                        Circle()
-                            .fill(Color(UIColor.systemGray5))
-                            .opacity(value.date.isSameDay(as: timeToDoListViewModel.selectedDate) ? 1 : 0)
-                    )
-                    .onTapGesture {
-                        timeToDoListViewModel.selectedDate = value.date
+            } else {
+                HStack {
+                    ForEach(timeToDoListViewModel.days, id: \.self) { day in
+                        Text(day)
+                            .font(.footnote)
+                            .fontWeight(.semibold)
+                            .foregroundStyle(Color(UIColor.lightGray))
+                            .frame(maxWidth: .infinity)
+                    }
+                }
+                
+                let columns = Array(repeating: GridItem(.flexible()), count: 7)
+                LazyVGrid(columns: columns) {
+                    ForEach(timeToDoListViewModel.dateValues) { value in
+                        DatesView(
+                            value: value,
+                            isSelected: value.date.isSameDay(as: timeToDoListViewModel.selectedDate),
+                            isToday: value.date.isSameDay(as: Date())
+                        )
+                        .background(
+                            Circle()
+                                .fill(Color(UIColor.systemGray5))
+                                .opacity(value.date.isSameDay(as: timeToDoListViewModel.selectedDate) ? 1 : 0)
+                        )
+                        .onTapGesture {
+                            timeToDoListViewModel.selectedDate = value.date
+                        }
                     }
                 }
             }
