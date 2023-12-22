@@ -32,9 +32,7 @@ struct CustomDatePickerView: View {
                 Spacer(minLength: 0)
                 
                 Button(action: {
-                    withAnimation {
-                        timeToDoListViewModel.decreaseMonth()
-                    }
+                    timeToDoListViewModel.decreaseMonth()
                 }, label: {
                     Image(systemName: "chevron.left")
                         .font(.headline)
@@ -43,9 +41,7 @@ struct CustomDatePickerView: View {
                 .frame(width: 25)
                 
                 Button(action: {
-                    withAnimation {
-                        timeToDoListViewModel.increaseMonth()
-                    }
+                    timeToDoListViewModel.increaseMonth()
                 }, label: {
                     Image(systemName: "chevron.right")
                         .font(.headline)
@@ -54,7 +50,7 @@ struct CustomDatePickerView: View {
                 .frame(width: 25, alignment: .trailing)
             }
             .frame(maxWidth: .infinity)
-            .padding(EdgeInsets(top: 10, leading: 5, bottom: 10, trailing: 5))
+            .padding(EdgeInsets(top: 20, leading: 5, bottom: 20, trailing: 5))
             
             if timeToDoListViewModel.isPickerPresented {
                 let customWheelPickerViewModel = CustomWheelPickerViewModel(selectedDate: $timeToDoListViewModel.selectedDate)
