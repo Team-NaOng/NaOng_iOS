@@ -94,6 +94,7 @@ struct CustomDatePickerView: View {
                         }
                     }
                 }
+                .frame(height: 280)
             }
         }
     }

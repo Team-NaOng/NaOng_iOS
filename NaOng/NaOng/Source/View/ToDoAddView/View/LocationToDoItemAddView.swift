@@ -60,24 +60,6 @@ struct LocationToDoItemAddView: View {
                         )
                         
                         ToDoViewFactory.makeToDoMoldView(
-                            content:
-                                HStack {
-                                    ToDoViewFactory.makeToDoTitle(title: "알림 타입")
-                                        .frame(width: (UIScreen.main.bounds.width - 90) / 2, alignment: .leading)
-                                    
-                                    Spacer()
-                                    
-                                    Text("위치")
-                                        .font(.custom("Binggrae", size: 15))
-                                        .padding(EdgeInsets(top: 8, leading: 10, bottom: 8, trailing: 10))
-                                        .background(Color(UIColor.systemGray4))
-                                        .cornerRadius(10)
-                                        
-                                }
-                                .frame(width: (UIScreen.main.bounds.width - 80))
-                        )
-                        
-                        ToDoViewFactory.makeToDoMoldView(
                             content: Button {
                                 toDoItemAddViewModel.addPath(.first)
                             } label: {
@@ -110,6 +92,8 @@ struct LocationToDoItemAddView: View {
                         }
                     }
                 }
+                
+                Spacer()
             }
             .navigationDestination(for: LocationViewStack.self) { myStack in
                 switch myStack {

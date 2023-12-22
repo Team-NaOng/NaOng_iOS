@@ -18,7 +18,7 @@ struct LocationToDoItemDetailView: View {
     var body: some View {
         VStack(spacing: 15) {
             ToDoViewFactory.makeToDoDetailVerticalContentView(
-                title: "할일 목록",
+                title: "할일 내용",
                 content:
                     ScrollView {
                         Text(toDoItemDetailViewModel.toDoItem.content ?? "")
