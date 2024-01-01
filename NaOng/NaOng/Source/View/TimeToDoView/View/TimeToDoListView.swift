@@ -20,17 +20,11 @@ struct TimeToDoListView: View {
     var body: some View {
         NavigationView {
             VStack {
-                DatePicker(
-                        "Start Date",
-                        selection: $timeToDoListViewModel.date,
-                        displayedComponents: [.date]
-                    )
-                    .datePickerStyle(.graphical)
-                    .tint(.gray)
-                    .onChange(of: $timeToDoListViewModel.date.wrappedValue) { newValue in
-                        timeToDoListViewModel.setFetchedResultsPredicate()
-                    }
+                CustomDatePickerView(timeToDoListViewModel: timeToDoListViewModel)
                     .frame(width: UIScreen.main.bounds.width - 50)
+                    .onChange(of: timeToDoListViewModel.selectedDate) { _ in
+                        timeToDoListViewModel.updateCalendar()
+                    }
                 
                 Picker("보기 옵션", selection: $timeToDoListViewModel.selectedViewOption) {
                     Text("전체")
@@ -102,7 +96,7 @@ struct TimeToDoListView: View {
             }
             .overlay {
                 Button {
-                    timeToDoListViewModel.showingToDoItemAddView = true
+                    timeToDoListViewModel.isShowingToDoItemAddView = true
                 } label: {
                     ZStack {
                         Circle()
@@ -115,16 +109,16 @@ struct TimeToDoListView: View {
                     }
                 }
                 .frame(width: UIScreen.main.bounds.width - 30, height: UIScreen.main.bounds.height - 170, alignment: .bottomTrailing)
-                .fullScreenCover(isPresented: $timeToDoListViewModel.showingToDoItemAddView) {
+                .fullScreenCover(isPresented: $timeToDoListViewModel.isShowingToDoItemAddView) {
                     let viewModel = ToDoItemAddViewModel(
                         viewContext: viewContext,
                         localNotificationManager: timeToDoListViewModel.localNotificationManager,
                         alarmType: "시간",
-                        alarmTime: timeToDoListViewModel.date)
+                        alarmTime: timeToDoListViewModel.selectedDate)
                     TimeToDoItemAddView(toDoItemAddViewModel: viewModel)
                 }
             }
-            .alert(isPresented: $alertViewModel.showAlert) {
+            .alert(isPresented: $alertViewModel.isShowingAlert) {
                 Alert(
                     title: Text(alertViewModel.alertTitle),
                     message: Text(alertViewModel.alertMessage),

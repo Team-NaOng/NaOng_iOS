@@ -8,6 +8,6 @@
 import Foundation
 
 enum UserDefaultsKey {
-    static let weatherViewProfileName = "weatherViewProfileName"
-    static let weatherViewProfileImage = "weatherViewProfileImage"
+    static let weatherViewProfileName: String = "weatherViewProfileName"
+    static let weatherViewProfileImage: String = "weatherViewProfileImage"
 }

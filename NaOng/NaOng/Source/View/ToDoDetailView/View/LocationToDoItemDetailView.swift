@@ -18,7 +18,7 @@ struct LocationToDoItemDetailView: View {
     var body: some View {
         VStack(spacing: 15) {
             ToDoViewFactory.makeToDoDetailVerticalContentView(
-                title: "할일 목록",
+                title: "할일 내용",
                 content:
                     ScrollView {
                         Text(toDoItemDetailViewModel.toDoItem.content ?? "")
@@ -56,12 +56,12 @@ struct LocationToDoItemDetailView: View {
         .navigationBarItems(
             trailing:
                 Button(action: {
-                    toDoItemDetailViewModel.showingToDoItemAddView = true
+                    toDoItemDetailViewModel.isShowingToDoItemAddView = true
                 }, label: {
                     Text("수정")
                 })
                 .frame(width: 50, height: 50)
-                .fullScreenCover(isPresented: $toDoItemDetailViewModel.showingToDoItemAddView) {
+                .fullScreenCover(isPresented: $toDoItemDetailViewModel.isShowingToDoItemAddView) {
                     let viewModel = ToDoItemAddViewModel(
                         viewContext: viewContext,
                         localNotificationManager: toDoItemDetailViewModel.localNotificationManager,

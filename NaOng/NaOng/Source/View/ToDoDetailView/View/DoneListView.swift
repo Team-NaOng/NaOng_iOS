@@ -23,12 +23,12 @@ struct DoneListView: View {
                 
                 Button(action: {
                     withAnimation {
-                        doneListViewModel.showingList.toggle()
+                        doneListViewModel.isShowingList.toggle()
                     }
                 }, label: {
                     Image(systemName: "chevron.down")
-                        .rotationEffect(.degrees(doneListViewModel.showingList ? -90 : 0))
-                        .animation(.easeInOut, value: doneListViewModel.showingList)
+                        .rotationEffect(.degrees(doneListViewModel.isShowingList ? -90 : 0))
+                        .animation(.easeInOut, value: doneListViewModel.isShowingList)
                         .foregroundStyle(.black)
                 })
             }
@@ -55,7 +55,7 @@ struct DoneListView: View {
             .listRowSpacing(10.0)
             .listStyle(.insetGrouped)
             .frame(width: UIScreen.main.bounds.width)
-            .hideView(doneListViewModel.showingList)
+            .hideView(doneListViewModel.isShowingList)
         }
     }
 }

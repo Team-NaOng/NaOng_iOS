@@ -87,7 +87,7 @@ struct LocationSelectionView: View {
         .navigationTitle("위치 선택")
         .navigationBarItems(trailing: EditButton())
         .foregroundStyle(.black)
-        .alert(isPresented: $locationSelectionViewModel.showErrorAlert) {
+        .alert(isPresented: $locationSelectionViewModel.isShowingErrorAlert) {
             Alert(
                 title: Text(locationSelectionViewModel.errorTitle),
                 message: Text(locationSelectionViewModel.errorMessage),

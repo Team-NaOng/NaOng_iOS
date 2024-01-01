@@ -25,9 +25,9 @@ enum TransferError: Error {
 class WeatherViewModel: ObservableObject, GeoDataService {
     // MARK: 프로필 이미지 관련 프로퍼티
     @Published private(set) var imageState: ImageState
-    @Published var profileName = UserDefaults.standard.string(forKey: UserDefaultsKey.weatherViewProfileName) ?? "나옹"
-    @Published var isShowingPhotosPicker = false
-    @Published var isShowingProfileNameEditAlert = false
+    @Published var profileName: String = UserDefaults.standard.string(forKey: UserDefaultsKey.weatherViewProfileName) ?? "나옹"
+    @Published var isShowingPhotosPicker: Bool = false
+    @Published var isShowingProfileNameEditAlert: Bool = false
     @Published var imageSelection: PhotosPickerItem? = nil {
         didSet {
             if let imageSelection {

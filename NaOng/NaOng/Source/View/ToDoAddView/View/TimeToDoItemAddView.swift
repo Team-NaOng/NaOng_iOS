@@ -53,24 +53,6 @@ struct TimeToDoItemAddView: View {
                     )
                     
                     ToDoViewFactory.makeToDoMoldView(
-                        content:
-                            HStack {
-                                ToDoViewFactory.makeToDoTitle(title: "알림 타입")
-                                    .frame(width: (UIScreen.main.bounds.width - 90) / 2, alignment: .leading)
-                                
-                                Spacer()
-                                
-                                Text("시간")
-                                    .font(.custom("Binggrae", size: 15))
-                                    .padding(EdgeInsets(top: 8, leading: 10, bottom: 8, trailing: 10))
-                                    .background(Color(UIColor.systemGray4))
-                                    .cornerRadius(10)
-                                
-                            }
-                            .frame(width: (UIScreen.main.bounds.width - 80))
-                    )
-                    
-                    ToDoViewFactory.makeToDoMoldView(
                         content: ToDoViewFactory.makeToDoDatePicker(
                             selection: $toDoItemAddViewModel.alarmTime,
                             title: "시작 날짜",
@@ -97,7 +79,7 @@ struct TimeToDoItemAddView: View {
                         )
                     }
                     .padding()
-                    .alert(isPresented: $toDoItemAddViewModel.showErrorAlert) {
+                    .alert(isPresented: $toDoItemAddViewModel.isShowingErrorAlert) {
                         Alert(
                             title: Text(toDoItemAddViewModel.errorTitle),
                             message: Text(toDoItemAddViewModel.errorMessage),
@@ -106,6 +88,8 @@ struct TimeToDoItemAddView: View {
                     }
                 }
             }
+            
+            Spacer()
         }
     }
 }

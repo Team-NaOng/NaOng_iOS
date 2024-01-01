@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 
 class ToDoItemDetailViewModel: ObservableObject {
-    @Published var showingToDoItemAddView: Bool = false
+    @Published var isShowingToDoItemAddView: Bool = false
     
     private(set) var toDoItem: ToDo
     private let viewContext: NSManagedObjectContext

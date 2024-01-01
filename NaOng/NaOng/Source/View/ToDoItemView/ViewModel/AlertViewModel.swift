@@ -8,8 +8,8 @@
 import Combine
 
 class AlertViewModel: ObservableObject {
-    @Published var showAlert = false
-    @Published var alertTitle = ""
-    @Published var alertMessage = ""
+    @Published var isShowingAlert: Bool = false
+    @Published var alertTitle: String = ""
+    @Published var alertMessage: String = ""
 }
 

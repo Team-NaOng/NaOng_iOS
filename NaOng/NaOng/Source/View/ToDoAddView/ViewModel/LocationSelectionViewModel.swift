@@ -12,7 +12,7 @@ import CoreData
 
 class LocationSelectionViewModel: NSObject, ObservableObject {
     @Published var locations: [Location] = [Location]()
-    @Published var showErrorAlert = false
+    @Published var isShowingErrorAlert: Bool = false
     var errorTitle: String = ""
     var errorMessage: String = ""
     
@@ -45,7 +45,7 @@ class LocationSelectionViewModel: NSObject, ObservableObject {
         } catch {
             errorTitle = "위치 목록 불러오기 실패🥲"
             errorMessage = error.localizedDescription
-            showErrorAlert.toggle()
+            isShowingErrorAlert.toggle()
         }
     }
     
@@ -56,7 +56,7 @@ class LocationSelectionViewModel: NSObject, ObservableObject {
             } catch {
                 errorTitle = "위치 목록 삭제 실패🥲"
                 errorMessage = error.localizedDescription
-                showErrorAlert.toggle()
+                isShowingErrorAlert.toggle()
             }
         }
     }

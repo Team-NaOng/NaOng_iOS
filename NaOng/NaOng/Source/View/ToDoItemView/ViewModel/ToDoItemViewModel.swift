@@ -104,7 +104,7 @@ class ToDoItemViewModel: ObservableObject {
     private func showErrorAlert(_ error: Error) {
         alertViewModel.alertTitle = "할 일 완료 실패🥲"
         alertViewModel.alertMessage = error.localizedDescription
-        alertViewModel.showAlert.toggle()
+        alertViewModel.isShowingAlert.toggle()
     }
     
     private func showRepeatCompletionAlert() {
@@ -120,7 +120,7 @@ class ToDoItemViewModel: ObservableObject {
             ]
             alertViewModel.alertMessage = messages.randomElement() ?? "할 일을 잘 끝낸 당신은 정말 최고예요!"
 
-            alertViewModel.showAlert.toggle()
+            alertViewModel.isShowingAlert.toggle()
         }
     }
     
