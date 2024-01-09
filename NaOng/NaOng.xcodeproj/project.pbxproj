@@ -76,6 +76,7 @@
 		059126972B1D12CB00F044D0 /* FinishAnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 059126962B1D12CB00F044D0 /* FinishAnimationView.swift */; };
 		0591269B2B1D27C400F044D0 /* BackgroundAnimation.json in Resources */ = {isa = PBXBuildFile; fileRef = 0591269A2B1D27C400F044D0 /* BackgroundAnimation.json */; };
 		0598717A2AB38C30009401D3 /* LocationCheckViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 059871792AB38C30009401D3 /* LocationCheckViewModel.swift */; };
+		05BEC15C2B47E2D0008BFC02 /* WeatherServiceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05BEC15B2B47E2D0008BFC02 /* WeatherServiceManager.swift */; };
 		05CCE8B32A51A6BE0037FF74 /* LocationToDoListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CCE8B22A51A6BE0037FF74 /* LocationToDoListViewModel.swift */; };
 		05CD8E9A2A57631B00C1C187 /* ToDoItemAddViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CD8E992A57631B00C1C187 /* ToDoItemAddViewModel.swift */; };
 		05D69E432A696AD30074C84A /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05D69E422A696AD30074C84A /* SettingView.swift */; };
@@ -116,6 +117,7 @@
 		050FCC232A1C91E200270F97 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		051BFA1C2AB6E39E00BBC8C6 /* UIImage+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extensions.swift"; sourceTree = "<group>"; };
 		052530B52B1B827600B586A4 /* DoneListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoneListView.swift; sourceTree = "<group>"; };
+		052FE69D2B46ABCE003897C6 /* NaOng.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NaOng.entitlements; sourceTree = "<group>"; };
 		0534B4192B13E11E0032B30A /* APIKey.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = APIKey.plist; sourceTree = "<group>"; };
 		0534B41D2B13EAE70032B30A /* OpenWeather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenWeather.swift; sourceTree = "<group>"; };
 		0534F99A2A8F9A2B00A90BF7 /* LocalNotificationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalNotificationManager.swift; sourceTree = "<group>"; };
@@ -173,6 +175,7 @@
 		059126962B1D12CB00F044D0 /* FinishAnimationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinishAnimationView.swift; sourceTree = "<group>"; };
 		0591269A2B1D27C400F044D0 /* BackgroundAnimation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = BackgroundAnimation.json; sourceTree = "<group>"; };
 		059871792AB38C30009401D3 /* LocationCheckViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationCheckViewModel.swift; sourceTree = "<group>"; };
+		05BEC15B2B47E2D0008BFC02 /* WeatherServiceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherServiceManager.swift; sourceTree = "<group>"; };
 		05CCE8B22A51A6BE0037FF74 /* LocationToDoListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationToDoListViewModel.swift; sourceTree = "<group>"; };
 		05CD8E992A57631B00C1C187 /* ToDoItemAddViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoItemAddViewModel.swift; sourceTree = "<group>"; };
 		05D69E422A696AD30074C84A /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
@@ -222,6 +225,7 @@
 		050FCC1B2A1C91E100270F97 /* NaOng */ = {
 			isa = PBXGroup;
 			children = (
+				052FE69D2B46ABCE003897C6 /* NaOng.entitlements */,
 				055C48ED2B1E352400593826 /* Source */,
 				055C48EC2B1E34DD00593826 /* Resources */,
 				050FCC1C2A1C91E100270F97 /* NaOngApp.swift */,
@@ -513,6 +517,7 @@
 			isa = PBXGroup;
 			children = (
 				056EDC422B0E8C2D004090F6 /* WeatherViewModel.swift */,
+				05BEC15B2B47E2D0008BFC02 /* WeatherServiceManager.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -718,6 +723,7 @@
 				059126852B1CF07800F044D0 /* LocationAlertAnimationView.swift in Sources */,
 				05477D4F2A8222AB00C16F4A /* TimeToDoListView.swift in Sources */,
 				059126872B1CF0EA00F044D0 /* TimeAlertAnimationView.swift in Sources */,
+				05BEC15C2B47E2D0008BFC02 /* WeatherServiceManager.swift in Sources */,
 				056B2B522A5FC9D600D52CFF /* ToDoCoreDataManager.swift in Sources */,
 				05477D382A7C16A100C16F4A /* LocationModel.xcdatamodeld in Sources */,
 				05F233BB2A2AF3D10091D5B3 /* LocationService.swift in Sources */,
@@ -898,13 +904,12 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = NaOng/NaOng.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_ASSET_PATHS = "\"NaOng/Preview Content\"";
-				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = W2QDPU2ZUJ;
+				DEVELOPMENT_TEAM = W2QDPU2ZUJ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = NaOng/Info.plist;
@@ -925,7 +930,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = Seohyeon.NaOng;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "Seohyeon Park";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -942,13 +946,12 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = NaOng/NaOng.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_ASSET_PATHS = "\"NaOng/Preview Content\"";
-				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = W2QDPU2ZUJ;
+				DEVELOPMENT_TEAM = W2QDPU2ZUJ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = NaOng/Info.plist;
@@ -969,7 +972,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = Seohyeon.NaOng;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "Seohyeon Park";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;

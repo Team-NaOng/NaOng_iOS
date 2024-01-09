@@ -113,59 +113,67 @@ class WeatherViewModel: ObservableObject, GeoDataService {
     
     // MARK: -
     // MARK: 데이터 관련 메서드
-    func setUpCurrentLocation() {
-        var coordinate = LocationService.shared.getLocation()
-        if (coordinate.lat < 33 || coordinate.lat > 39) || (coordinate.lon < 125 || coordinate.lon > 132) {
-            coordinate = Coordinates(lat: 37.49806749166401, lon: 127.02801316172545)
+    func setUpMessage() async {
+        let coordinate = getValidCoordinate()
+        let weatherServiceManager = getWeatherServiceManager(coordinate)
+        
+        if let todayWeatherInfo = await weatherServiceManager.getWeather() {
+            contents = generateCurrentWeatherMessages(from: todayWeatherInfo, weatherServiceManager: weatherServiceManager)
+            contents += generateWeatherAdviceMessages(from: todayWeatherInfo, weatherServiceManager: weatherServiceManager)
         }
-
+        
         guard let urlRequest = getKakaoLocalGeoURLRequest(coordinate: coordinate) else {
             return
         }
 
-        NetworkManager.fetchData(from: urlRequest, responseType: KakaoLocal.self)
-            .receive(on: DispatchQueue.main)
-            .sink(receiveCompletion: { result in
-                switch result {
-                case .finished:
-                    break
-                case .failure(let failure):
-                    let osLog = OSLog(subsystem: "Seohyeon.NaOng", category: "Weather")
-                    let log = Logger(osLog)
-                    log.log(level: .error, "현재 위치를 가져올 수 없습니다. Error Message: \(failure)")
+        fetchDustData(dustPublisher: getDustPublisherWithCurrentLocation(urlRequest))
+    }
+    
+    private func getValidCoordinate() -> Coordinates {
+        var coordinate = LocationService.shared.getLocation()
+        if isCoordinateInKorea(coordinate) == false {
+            coordinate = Coordinates(lat: 37.49806749166401, lon: 127.02801316172545)
+        }
+        
+        return coordinate
+    }
+    
+    private func isCoordinateInKorea(_ coordinate: Coordinates) -> Bool {
+        return (33...39).contains(coordinate.lat) && (125...132).contains(coordinate.lon)
+    }
+    
+    private func getWeatherServiceManager(_ coordinate: Coordinates ) -> WeatherServiceManager {
+        let location = CLLocation(latitude: coordinate.lat, longitude: coordinate.lon)
+        return WeatherServiceManager(location: location)
+    }
+
+    private func getDustPublisherWithCurrentLocation(_ urlRequest: URLRequest) -> AnyPublisher<AirKorea, Error> {
+        return NetworkManager.fetchData(from: urlRequest, responseType: KakaoLocal.self)
+            .tryMap { [weak self] kakaoLocal in
+                guard let self = self else {
+                    throw NetworkError.invalidResponse
                 }
-            }, receiveValue: { [weak self] kakaoLocal in
+
                 var stationName: String?
                 if kakaoLocal.documents.first?.address?.region1DepthName == "서울" {
-                    self?.currentLocation = kakaoLocal.documents.first?.address?.region3DepthName
+                    self.currentLocation = kakaoLocal.documents.first?.address?.region3DepthName
                     stationName = kakaoLocal.documents.first?.address?.region2DepthName
                 } else {
-                    self?.currentLocation = kakaoLocal.documents.first?.address?.region2DepthName
+                    self.currentLocation = kakaoLocal.documents.first?.address?.region2DepthName
                     stationName = kakaoLocal.documents.first?.address?.region3DepthName
                 }
-                
-                let dustPublisher = self?.getDustPublisher(stationName: stationName)
-                let weatherPublisher = self?.getWeatherPublisher(coordinate: coordinate)
-                self?.executeAsyncOperations(dustPublisher: dustPublisher, weatherPublisher: weatherPublisher)
-            })
-            .store(in: &cancellables)
-    }
-    
-    private func getDustPublisher(stationName: String?) -> AnyPublisher<AirKorea, Error>? {
-        guard let stationName = stationName,
-        let urlRequest = getDustMeasurementRequest(stationName: stationName) else {
-            return nil
-        }
-    
-        return NetworkManager.fetchData(from: urlRequest, responseType: AirKorea.self)
-    }
-    
-    private func getWeatherPublisher(coordinate: Coordinates) -> AnyPublisher<OpenWeather, Error>? {
-        guard let urlRequest = getWeatherRequest(coordinate: coordinate) else {
-            return nil
-        }
-    
-        return NetworkManager.fetchData(from: urlRequest, responseType: OpenWeather.self)
+
+                return stationName
+            }
+            .flatMap { [weak self] stationName in
+                if let stationName = stationName,
+                   let urlRequest = self?.getDustMeasurementRequest(stationName: stationName) {
+                    return NetworkManager.fetchData(from: urlRequest, responseType: AirKorea.self)
+                }
+
+                return Empty(completeImmediately: true).eraseToAnyPublisher()
+            }
+            .eraseToAnyPublisher()
     }
 
     private func getDustMeasurementRequest(stationName: String) -> URLRequest? {
@@ -185,125 +193,77 @@ class WeatherViewModel: ObservableObject, GeoDataService {
             .build()
     }
     
-    private func getWeatherRequest(coordinate: Coordinates) -> URLRequest? {
-        guard let apiId = Bundle.main.openWeatherKey else {
-            return nil
-        }
-        return URLRequestBuilder()
-            .setHost("api.openweathermap.org")
-            .setPath("/data/2.5/weather")
-            .addQueryItem(name: "lat", value: "\(coordinate.lat)")
-            .addQueryItem(name: "lon", value: "\(coordinate.lon)")
-            .addQueryItem(name: "appid", value: apiId)
-            .addQueryItem(name: "mode", value: "json")
-            .addQueryItem(name: "units", value: "metric")
-            .build()
+    private func setupWeatherInfoMessage(todayWetherInfo: WeatherServiceManager.TodayWeatherInfo) {
+        
     }
     
-    private func executeAsyncOperations(dustPublisher: AnyPublisher<AirKorea, Error>?, weatherPublisher: AnyPublisher<OpenWeather, Error>?) {
-            guard let dustPublisher = dustPublisher,
-            let weatherPublisher = weatherPublisher else {
-                return
-            }
-            
-            Publishers.Zip(dustPublisher, weatherPublisher)
-                .receive(on: DispatchQueue.main)
-                .sink(receiveCompletion: { result in
-                    switch result {
-                    case .finished:
-                        break
-                    case .failure(let failure):
-                        let osLog = OSLog(subsystem: "Seohyeon.NaOng", category: "Weather")
-                        let log = Logger(osLog)
-                        log.log(level: .error, "미세먼지와 날씨를 가져올 수 없습니다. Error Message: \(failure)")
-                    }
-                }, receiveValue: { [weak self] dustResponse, weatherResponse in
-                    let currentTemperatureMessage = self?.addCurrentTemperatureMessage(currentWeatherInformation: weatherResponse)
-                    let currentDustMessage = self?.addCurrentDustMessage(item: dustResponse.response?.body?.items?.first)
-                    let adviceMessage = self?.addAdviceMessage(
-                        weatherState: weatherResponse.weather?.first?.main,
-                        item: dustResponse.response?.body?.items?.first)
-
-                    self?.contents = (currentTemperatureMessage ?? [String]()) + (currentDustMessage ?? [String]()) + (adviceMessage ?? [String]())
+    private func fetchDustData(dustPublisher: AnyPublisher<AirKorea, Error>?) {
+        guard let dustPublisher = dustPublisher else {
+            return
+        }
+        
+        dustPublisher
+            .receive(on: DispatchQueue.main)
+            .sink(receiveCompletion: { [weak self] result in
+                switch result {
+                case .finished:
+                    break
+                case .failure(let failure):
                     self?.isLoading = false
-                })
-                .store(in: &cancellables)
-        }
-    
-    private func addCurrentTemperatureMessage(currentWeatherInformation: OpenWeather?) -> [String] {
-        var messages = [String]()
-        var message: String = "현재 날씨: "
-        switch currentWeatherInformation?.weather?.first?.id {
-        case 200,201,202,230,231,232:
-            message += "⛈️ 비와 천둥번개"
-            break
-        case 210,211,212,221:
-            message += "🌩️ 뇌우"
-            break
-        case 300,301,302,310,311,312,313,314,321,500,501,502,503,504,511,520,521,522,531:
-            message += "🌧️ 비옴"
-            break
-        case 600,601,602,611,612,613,615,616,620,621,622:
-            message += "❄️ 눈옴"
-            break
-        case 800:
-            message += "☀️ 맑음"
-            break
-        case 801:
-            message += "🌤️ 대체로 맑음"
-            break
-        case 802:
-            message += "⛅️ 대체로 흐림"
-            break
-        case 803:
-            message += "🌥️ 구름 많음"
-            break
-        case 804:
-            message += "☁️ 흐림"
-            break
-        case 731, 751, 761, 762:
-            message += "🌪️ 모래먼지"
-            break
-        case 771:
-            message += "🌪️ 돌풍"
-            break
-        default:
-            message += "🌪️ 안개"
-            break
+                    let osLog = OSLog(subsystem: "Seohyeon.NaOng", category: "Weather")
+                    let log = Logger(osLog)
+                    log.log(level: .error, "미세먼지와 날씨를 가져올 수 없습니다. Error Message: \(failure)")
+                }
+            }, receiveValue: { [weak self] dustResponse in
+                if let items = dustResponse.response?.body?.items,
+                   let message = self?.generateCurrentDustMessage(item: items.first).joined(separator: "\n") {
+                    self?.contents.append(message)
+                }
+                self?.isLoading = false
+            })
+            .store(in: &cancellables)
+    }
+
+    private func generateCurrentWeatherMessages(from todayWeatherInfo: WeatherServiceManager.TodayWeatherInfo, weatherServiceManager: WeatherServiceManager) -> [String] {
+        var messages: [String] = []
+
+        if let conditionMessage = weatherServiceManager.generateCurrentWeatherMessage(for: todayWeatherInfo.condition) {
+            messages.append(conditionMessage)
         }
 
-        let currentTemperature = Int(round(currentWeatherInformation?.main?.temp ?? 0))
-        message += " \(currentTemperature)℃"
-        messages.append(message)
+        if let temperatureMessage = weatherServiceManager.generateCurrentTemperatureMessage(currentTemperature: todayWeatherInfo.currentTemperature) {
+            messages.append(temperatureMessage)
+        }
+
+        if let summaryTemperatureMessage = weatherServiceManager.generateSummaryTemperatureMessage(highTemperature: todayWeatherInfo.highTemperature, lowTemperature: todayWeatherInfo.lowTemperature) {
+            messages.append(summaryTemperatureMessage)
+        }
         
-        let sunrise = convertUnixTimeToCurrentTime(unixTime: TimeInterval(currentWeatherInformation?.sys?.sunrise ?? 0))
-        let sunset = convertUnixTimeToCurrentTime(unixTime: TimeInterval(currentWeatherInformation?.sys?.sunset ?? 0))
-        message = "☀️ 일출 시간: \(sunrise)\n🌙 일몰 시간: \(sunset)"
-        messages.append(message)
-        
+        if let hourlyForecastsMessage = weatherServiceManager.generateHourlyForecastMessage(hourlyForecasts: todayWeatherInfo.hourlyForecasts) {
+            messages.append(hourlyForecastsMessage)
+        }
+
+        if let sunrise = todayWeatherInfo.sunrise,
+           let sunset = todayWeatherInfo.sunset,
+           let sunriseSunsetMessage = weatherServiceManager.generateSunriseSunsetMessage(sunrise: sunrise.getFormatDate("HH:mm"), sunset: sunset.getFormatDate("HH:mm")) {
+            messages.append(sunriseSunsetMessage)
+        }
+
         return messages
     }
     
-    private func convertUnixTimeToCurrentTime(unixTime: TimeInterval) -> String {
-        let date = Date(timeIntervalSince1970: unixTime)
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "HH:mm"
-        let formattedDate = dateFormatter.string(from: date)
-        return formattedDate
-    }
-    
-    private func addCurrentDustMessage(item: Item?) -> [String] {
+    private func generateCurrentDustMessage(item: Item?) -> [String] {
         guard let item = item else {
             return [String]()
         }
 
-        let fineDust = getIcon(grade: item.pm10Grade1h ?? "1")
-        let ultraFineDust = getIcon(grade: item.pm25Grade1h ?? "1")
+        let fineDust = getDustGradeIcon(grade: item.pm10Grade1h ?? "1")
+        let ultraFineDust = getDustGradeIcon(grade: item.pm25Grade1h ?? "1")
         let message = "\(fineDust[1]) 미세먼지: \(fineDust[0])\n\(ultraFineDust[1]) 초미세먼지: \(ultraFineDust[0])"
         return [message]
     }
     
-    private func getIcon(grade: String) -> [String] {
+    private func getDustGradeIcon(grade: String) -> [String] {
         switch grade {
         case "1":
             return ["좋음", "😍"]
@@ -316,41 +276,17 @@ class WeatherViewModel: ObservableObject, GeoDataService {
         }
     }
     
-    private func addAdviceMessage(weatherState: String?,item: Item?) -> [String] {
+    private func generateWeatherAdviceMessages(from todayWeatherInfo: WeatherServiceManager.TodayWeatherInfo, weatherServiceManager: WeatherServiceManager) -> [String] {
         var messages = [String]()
-        guard let weatherState = weatherState else {
-            return messages
+
+        if let uvMessage = weatherServiceManager.generateUVMessage(uv: todayWeatherInfo.uv) {
+            messages.append(uvMessage)
         }
         
-        switch weatherState {
-        case "Thunderstorm":
-            messages.append("천둥번개가 칠 때는 되도록 실내로 이동하세요.")
-            break
-        case "Drizzle", "Rain":
-            messages.append("나가기 전에 우산 챙겼나요?")
-            break
-        case "Snow":
-            messages.append("눈이 오면 도로가 미끄러울 수 있으니 주의하세요.")
-            break
-        case "Clear":
-            messages.append("당신의 미소처럼 맑은 하늘을 보며 한숨 돌리는 건 어떠세요?")
-            break
-        case "Clouds":
-            messages.append("오늘 하늘을 보면 행운의 구름을 찾을 수 있을지도 몰라요!")
-            break
-        default:
-            break
+        if let weatherMessage = weatherServiceManager.generateWeatherAdviceMessage(for: todayWeatherInfo.condition) {
+            messages.append(weatherMessage)
         }
 
-        guard let item = item else {
-            return messages
-        }
-        let fineDustGrade = Int(item.pm10Grade1h ?? "1") ?? 1
-        let ultraFineDustGrade = Int(item.pm25Grade1h ?? "1") ?? 1
-        if (fineDustGrade > 2) || (ultraFineDustGrade > 2) {
-            messages.append("나가기 전에 마스크 챙겼나요? 😷")
-        }
-        
         return messages
     }
 }
