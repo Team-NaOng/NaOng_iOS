@@ -19,7 +19,7 @@ import Foundation
 */
 struct OpenWeather: Decodable {
     let coord: Coordinates?
-    let weather: [Weather]?
+    let weather: [WeatherType]?
     let base: String?
     let main: Main?
     let visibility: Int?
@@ -42,7 +42,7 @@ struct OpenWeather: Decodable {
  - .description: 그룹 내의 날씨 상태
  - icon: 날씨 아이콘 ID
 */
-struct Weather: Decodable {
+struct WeatherType: Decodable {
     let id: Int?
     let main: String?
     let description: String?

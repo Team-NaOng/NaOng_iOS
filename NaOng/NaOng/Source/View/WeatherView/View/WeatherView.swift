@@ -75,7 +75,9 @@ struct WeatherView: View {
             }
         }
         .onAppear {
-            weatherViewModel.setUpCurrentLocation()
+            Task {
+                await weatherViewModel.setUpMessage()
+            }
         }
     }
 }
