@@ -113,33 +113,23 @@ class WeatherViewModel: ObservableObject, GeoDataService {
     
     // MARK: -
     // MARK: 데이터 관련 메서드
+    @MainActor
     func setUpMessage() async {
-        let coordinate = getValidCoordinate()
+        let coordinate = LocationService.shared.getValidCoordinate()
         let weatherServiceManager = getWeatherServiceManager(coordinate)
         
-        if let todayWeatherInfo = await weatherServiceManager.getWeather() {
-            contents = generateCurrentWeatherMessages(from: todayWeatherInfo, weatherServiceManager: weatherServiceManager)
-            contents += generateWeatherAdviceMessages(from: todayWeatherInfo, weatherServiceManager: weatherServiceManager)
-        }
+        async let weatherMessages = getWeatherMessages(weatherServiceManager: weatherServiceManager)
+        async let kakaoDistrict = getKakaoLocalDistrict(for: coordinate)
         
-        guard let urlRequest = getKakaoLocalGeoURLRequest(coordinate: coordinate) else {
-            return
+        let dustMessages = await getDustMessages(for: kakaoDistrict)
+        let combinedMessages = await combineMessages(weather: weatherMessages, dust: dustMessages)
+        
+        if !combinedMessages.isEmpty {
+            contents += combinedMessages
         }
 
-        fetchDustData(dustPublisher: getDustPublisherWithCurrentLocation(urlRequest))
-    }
-    
-    private func getValidCoordinate() -> Coordinates {
-        var coordinate = LocationService.shared.getLocation()
-        if isCoordinateInKorea(coordinate) == false {
-            coordinate = Coordinates(lat: 37.49806749166401, lon: 127.02801316172545)
-        }
-        
-        return coordinate
-    }
-    
-    private func isCoordinateInKorea(_ coordinate: Coordinates) -> Bool {
-        return (33...39).contains(coordinate.lat) && (125...132).contains(coordinate.lon)
+        setCurrentLocation(await kakaoDistrict)
+        isLoading = false
     }
     
     private func getWeatherServiceManager(_ coordinate: Coordinates ) -> WeatherServiceManager {
@@ -147,83 +137,14 @@ class WeatherViewModel: ObservableObject, GeoDataService {
         return WeatherServiceManager(location: location)
     }
 
-    private func getDustPublisherWithCurrentLocation(_ urlRequest: URLRequest) -> AnyPublisher<AirKorea, Error> {
-        return NetworkManager.fetchData(from: urlRequest, responseType: KakaoLocal.self)
-            .tryMap { [weak self] kakaoLocal in
-                guard let self = self else {
-                    throw NetworkError.invalidResponse
-                }
-
-                var stationName: String?
-                if kakaoLocal.documents.first?.address?.region1DepthName == "서울" {
-                    self.currentLocation = kakaoLocal.documents.first?.address?.region3DepthName
-                    stationName = kakaoLocal.documents.first?.address?.region2DepthName
-                } else {
-                    self.currentLocation = kakaoLocal.documents.first?.address?.region2DepthName
-                    stationName = kakaoLocal.documents.first?.address?.region3DepthName
-                }
-
-                return stationName
-            }
-            .flatMap { [weak self] stationName in
-                if let stationName = stationName,
-                   let urlRequest = self?.getDustMeasurementRequest(stationName: stationName) {
-                    return NetworkManager.fetchData(from: urlRequest, responseType: AirKorea.self)
-                }
-
-                return Empty(completeImmediately: true).eraseToAnyPublisher()
-            }
-            .eraseToAnyPublisher()
-    }
-
-    private func getDustMeasurementRequest(stationName: String) -> URLRequest? {
-        guard let serviceKey = Bundle.main.publicDataPortalKey else {
-            return nil
+    private func getWeatherMessages(weatherServiceManager: WeatherServiceManager) async -> [String]? {
+        if let todayWeatherInfo = await weatherServiceManager.getWeather() {
+            return generateCurrentWeatherMessages(from: todayWeatherInfo, weatherServiceManager: weatherServiceManager) +
+                   generateWeatherAdviceMessages(from: todayWeatherInfo, weatherServiceManager: weatherServiceManager)
         }
-        return URLRequestBuilder()
-            .setHost("apis.data.go.kr")
-            .setPath("/B552584/ArpltnInforInqireSvc/getMsrstnAcctoRltmMesureDnsty")
-            .addQueryItem(name: "serviceKey", value: serviceKey)
-            .addQueryItem(name: "returnType", value: "json")
-            .addQueryItem(name: "numOfRows", value: "100")
-            .addQueryItem(name: "pageNo", value: "1")
-            .addQueryItem(name: "stationName", value: stationName)
-            .addQueryItem(name: "dataTerm", value: "DAILY")
-            .addQueryItem(name: "ver", value: "1.3")
-            .build()
+        return nil
     }
     
-    private func setupWeatherInfoMessage(todayWetherInfo: WeatherServiceManager.TodayWeatherInfo) {
-        
-    }
-    
-    private func fetchDustData(dustPublisher: AnyPublisher<AirKorea, Error>?) {
-        guard let dustPublisher = dustPublisher else {
-            return
-        }
-        
-        dustPublisher
-            .receive(on: DispatchQueue.main)
-            .sink(receiveCompletion: { [weak self] result in
-                switch result {
-                case .finished:
-                    break
-                case .failure(let failure):
-                    self?.isLoading = false
-                    let osLog = OSLog(subsystem: "Seohyeon.NaOng", category: "Weather")
-                    let log = Logger(osLog)
-                    log.log(level: .error, "미세먼지와 날씨를 가져올 수 없습니다. Error Message: \(failure)")
-                }
-            }, receiveValue: { [weak self] dustResponse in
-                if let items = dustResponse.response?.body?.items,
-                   let message = self?.generateCurrentDustMessage(item: items.first).joined(separator: "\n") {
-                    self?.contents.append(message)
-                }
-                self?.isLoading = false
-            })
-            .store(in: &cancellables)
-    }
-
     private func generateCurrentWeatherMessages(from todayWeatherInfo: WeatherServiceManager.TodayWeatherInfo, weatherServiceManager: WeatherServiceManager) -> [String] {
         var messages: [String] = []
 
@@ -252,30 +173,6 @@ class WeatherViewModel: ObservableObject, GeoDataService {
         return messages
     }
     
-    private func generateCurrentDustMessage(item: Item?) -> [String] {
-        guard let item = item else {
-            return [String]()
-        }
-
-        let fineDust = getDustGradeIcon(grade: item.pm10Grade1h ?? "1")
-        let ultraFineDust = getDustGradeIcon(grade: item.pm25Grade1h ?? "1")
-        let message = "\(fineDust[1]) 미세먼지: \(fineDust[0])\n\(ultraFineDust[1]) 초미세먼지: \(ultraFineDust[0])"
-        return [message]
-    }
-    
-    private func getDustGradeIcon(grade: String) -> [String] {
-        switch grade {
-        case "1":
-            return ["좋음", "😍"]
-        case "2":
-            return ["보통","🙂"]
-        case "3":
-            return ["나쁨","😡"]
-        default:
-            return ["매우나쁨","🤬"]
-        }
-    }
-    
     private func generateWeatherAdviceMessages(from todayWeatherInfo: WeatherServiceManager.TodayWeatherInfo, weatherServiceManager: WeatherServiceManager) -> [String] {
         var messages = [String]()
 
@@ -288,5 +185,51 @@ class WeatherViewModel: ObservableObject, GeoDataService {
         }
 
         return messages
+    }
+
+    private func getDustMessages(for kakaoLocalDistrict: KakaoLocalDistrict?) async -> [String]? {
+        guard let kakaoLocalDistrict = kakaoLocalDistrict else {
+            return nil
+        }
+        
+        do {
+            let dustServiceManager = DustServiceManager()
+            let dustData = try await dustServiceManager.getDustData(kakaoLocalDistrict)
+            let cityName = kakaoLocalDistrict.documents.first?.region2DepthName.components(separatedBy: " ").first
+            let item = dustServiceManager.getDustItem(items: dustData.response?.body?.items, cityName: cityName)
+            return dustServiceManager.generateCurrentDustMessage(item: item)
+        } catch {
+            print(error)
+            return nil
+        }
+    }
+
+    private func getKakaoLocalDistrict(for coordinate: Coordinates) async -> KakaoLocalDistrict? {
+        guard let urlRequest = getKakaoLocalGeoURLRequest(coordinate: coordinate) else {
+            return nil
+        }
+        
+        return try? await getKakaoLocal(urlRequest)
+    }
+    
+    private func getKakaoLocal(_ urlRequest: URLRequest) async throws -> KakaoLocalDistrict {
+        do {
+            let data = try await NetworkManager.performRequest(urlRequest: urlRequest)
+            return try NetworkManager.performDecoding(data, responseType: KakaoLocalDistrict.self)
+        } catch {
+            throw error
+        }
+    }
+    
+    private func combineMessages(weather: [String]?, dust: [String]?) async -> [String] {
+        return [weather, dust].compactMap { $0 }.flatMap { $0 }
+    }
+
+    private func setCurrentLocation(_ kakaoDistrict: KakaoLocalDistrict?) {
+        guard let document = kakaoDistrict?.documents.first else {
+            return
+        }
+
+        currentLocation = document.region2DepthName.isEmpty ? document.addressName : document.region2DepthName
     }
 }

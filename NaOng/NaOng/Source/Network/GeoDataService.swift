@@ -16,7 +16,7 @@ extension GeoDataService {
     func getKakaoLocalGeoURLRequest(coordinate: Coordinates) -> URLRequest? {
         return URLRequestBuilder()
             .setHost("dapi.kakao.com")
-            .setPath("/v2/local/geo/coord2address.json")
+            .setPath("/v2/local/geo/coord2regioncode.json")
             .addQueryItem(name: "x", value: String(coordinate.lon))
             .addQueryItem(name: "y", value: String(coordinate.lat))
             .addHeader(key: "Authorization", value: "KakaoAK 54412f054c336a5a856d29cc91bfffcc")

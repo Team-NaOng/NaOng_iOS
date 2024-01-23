@@ -72,6 +72,8 @@ struct Body: Decodable {
  - no2Flag: 이산화질소 측정자료 상태정보 (점검및교정,장비점검,자료이상,통신장애)
  - pm10Flag: 미세먼지(PM10) 측정자료 상태정보 (점검및교정,장비점검,자료이상,통신장애)
  - pm25Flag: 미세먼지(PM2.5) 측정자료 상태정보 (점검및교정,장비점검,자료이상,통신장애)
+ - sidoName: 시도명(대기오염통계 현황 - 시군구별 실시간 평균정보 조회용)
+ - cityName: 시군구명(대기오염통계 현황 - 시군구별 실시간 평균정보 조회용)
 */
 struct Item: Decodable {
     let dataTime: String?
@@ -102,4 +104,7 @@ struct Item: Decodable {
     let no2Flag: String?
     let pm10Flag: String?
     let pm25Flag: String?
+    
+    let sidoName: String?
+    let cityName: String?
 }
