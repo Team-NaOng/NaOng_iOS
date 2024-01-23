@@ -38,6 +38,7 @@
 		05477D462A7C3A7F00C16F4A /* LocationSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05477D452A7C3A7F00C16F4A /* LocationSearchView.swift */; };
 		05477D482A7C3B4100C16F4A /* LocationCheckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05477D472A7C3B4100C16F4A /* LocationCheckView.swift */; };
 		05477D4F2A8222AB00C16F4A /* TimeToDoListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05477D4E2A8222AB00C16F4A /* TimeToDoListView.swift */; };
+		055A6C3A2B5F485F00E95B8E /* DustServiceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 055A6C392B5F485F00E95B8E /* DustServiceManager.swift */; };
 		055A6C3C2B5F57BB00E95B8E /* KakaoLocalDistrict.swift in Sources */ = {isa = PBXBuildFile; fileRef = 055A6C3B2B5F57BB00E95B8E /* KakaoLocalDistrict.swift */; };
 		055E58EB2A973600005B91DC /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 055E58EA2A973600005B91DC /* NetworkManager.swift */; };
 		055E58ED2A973702005B91DC /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 055E58EC2A973702005B91DC /* NetworkError.swift */; };
@@ -141,6 +142,7 @@
 		05477D452A7C3A7F00C16F4A /* LocationSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSearchView.swift; sourceTree = "<group>"; };
 		05477D472A7C3B4100C16F4A /* LocationCheckView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationCheckView.swift; sourceTree = "<group>"; };
 		05477D4E2A8222AB00C16F4A /* TimeToDoListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeToDoListView.swift; sourceTree = "<group>"; };
+		055A6C392B5F485F00E95B8E /* DustServiceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DustServiceManager.swift; sourceTree = "<group>"; };
 		055A6C3B2B5F57BB00E95B8E /* KakaoLocalDistrict.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoLocalDistrict.swift; sourceTree = "<group>"; };
 		055E58EA2A973600005B91DC /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		055E58EC2A973702005B91DC /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
@@ -521,6 +523,7 @@
 			children = (
 				056EDC422B0E8C2D004090F6 /* WeatherViewModel.swift */,
 				05BEC15B2B47E2D0008BFC02 /* WeatherServiceManager.swift */,
+				055A6C392B5F485F00E95B8E /* DustServiceManager.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -710,6 +713,7 @@
 			files = (
 				059126952B1D12A400F044D0 /* SwipeAnimationView.swift in Sources */,
 				05477D482A7C3B4100C16F4A /* LocationCheckView.swift in Sources */,
+				055A6C3A2B5F485F00E95B8E /* DustServiceManager.swift in Sources */,
 				05F1CBA12B3308F0002669A2 /* CustomDatePickerView.swift in Sources */,
 				0534F9A72A8FBBC000A90BF7 /* SettingViewModel.swift in Sources */,
 				058A9E7F2A95E70D005A498A /* MailView.swift in Sources */,

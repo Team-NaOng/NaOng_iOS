@@ -24,12 +24,21 @@ class LocationService: NSObject {
         locationManager?.requestWhenInUseAuthorization()
     }
     
+    func getValidCoordinate() -> Coordinates {
+        var coordinate = getLocation()
+        if isCoordinateInKorea(coordinate) == false {
+            coordinate = Coordinates(lat: 37.49806749166401, lon: 127.02801316172545)
+        }
+        
+        return coordinate
+    }
+    
     func getLocation() -> Coordinates {
         let lat = latitude
         let lon = longitude
         return Coordinates(lat: lat, lon: lon)
     }
-    
+
     func getCircularRegion(
         latitude: Double,
         longitude: Double,
@@ -46,6 +55,10 @@ class LocationService: NSObject {
         circularRegion.notifyOnEntry = false
         circularRegion.notifyOnExit = true
         return circularRegion
+    }
+    
+    private func isCoordinateInKorea(_ coordinate: Coordinates) -> Bool {
+        return (33...39).contains(coordinate.lat) && (125...132).contains(coordinate.lon)
     }
 }
 
